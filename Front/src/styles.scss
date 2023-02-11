@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+/* GLOBAL */
+:root {
+    --main-color: hsl(222, 36%, 59%);
+    --second-color: hsl(222, 36%, 59%);
+    --third-color: #99E2D0;
+
+    --dark: #00296b;
+    --darker: #2d2d4b;
+    --primary: hsla(212, 100%, 27%, 1);
+    --light: hsla(209, 100%, 31%, 1);
+    --gold: hsla(47, 100%, 50%, 1);
+    --light-gold: hsla(50, 100%, 50%, 1);
+    --back-light: #8989ba;
+    --cream: #ebeae5;
+
+    --white-color: #FFFFFF;
+    --light-color: #DEEBFF;
+    --dark-color: #EAEAEA;
+    --darker-color: #353535;
+    --back-color: #F6F6F6;
+    --border-color: #D9D9D9;
+    --soft-shadow-color: rgba(0, 0, 0, 0.05);
+    --hard-shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+    // font-family: 'Asul', sans-serif;
+}
+
+
+html {
+    font-size: 62.5%;
+    height: 100%;
+}
+
+body {
+    // background-color: #353535;
+    background-color: #8989ba;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    margin: 0;
+    height: 100%;
+}
+
+main {
+    margin: 0 5rem auto 5rem;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+/* End GLOBAL */

@@ -1,0 +1,91 @@
+.product-container {
+    display: flex;
+    column-gap: 5rem;
+    max-width: 100rem;
+    margin: auto;
+
+    padding: 10rem 2rem;
+
+    .image-container {
+        max-width: 50rem;
+        min-width: 30rem;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .informations-container {
+        display: flex;
+        flex-flow: column;
+
+        width: 100%;
+
+        .controls {
+            display: flex;
+            flex-flow: row wrap;
+            column-gap: 1rem;
+            row-gap: 1rem;
+
+            a {
+                background: linear-gradient(163deg, var(--light) 0%, var(--dark) 61%);
+                border: none;
+                color: #fff;
+                padding: 1.5rem 4rem;
+                border-radius: 1rem;
+                box-shadow: 4px 4px 4px 0px var(--hard-shadow-color);
+                cursor: pointer;
+
+                &:hover {
+                    background: linear-gradient(163deg, var(--gold) 10%, var(--light-gold));
+                    transform: scale(1.05);
+                    color: black;
+                }
+            }
+
+            .back-btn {
+                background: grey;
+            }
+
+            .delete-btn {
+                background: brown;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.simple-tab {
+    width: 97%;
+    margin: 10px auto 20px 20px;
+}
+
+.simple-tab,
+.simple-tab th,
+.simple-tab td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+th {
+    color: #fff;
+    background-color: hsl(0, 30%, 40%);
+}
+
+tr:nth-child(odd) {
+    background-color: hsl(0, 10%, 80%);
+}

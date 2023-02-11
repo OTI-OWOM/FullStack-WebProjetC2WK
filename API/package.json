@@ -1,0 +1,32 @@
+{
+    "name": "api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "mocha tests/modifyUser.test.js"
+    },
+    "author": "Thomas & Mile",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "chai": "^4.3.7",
+        "dotenv": "^16.0.2",
+        "express": "^4.18.1",
+        "helmet": "^6.0.0",
+        "jsonwebtoken": "^8.5.1",
+        "mocha": "^10.2.0",
+        "mongoose": "^6.7.5",
+        "mongoose-unique-validator": "^3.1.0",
+        "multer": "^1.4.5-lts.1",
+        "password-validator": "^5.3.0",
+        "sinon": "^15.0.0",
+        "validatorjs": "^3.22.1"
+    },
+    "devDependencies": {
+        "eslint": "^8.29.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "sinon-chai": "^3.7.0"
+    }
+}

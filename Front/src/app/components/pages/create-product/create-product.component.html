@@ -1,0 +1,21 @@
+<div class="wrapper">
+    <div class="new-product">
+        <h1 class="title">Create a new product</h1>
+        <div class="line">
+            <input #name placeholder="Name of the product" class="input-form" type="text" id="name" name="name" />
+        </div>
+
+        <div class="line">
+            <input #price placeholder="Price of the product in €" class="input-form" type="number" id="price" name="price" />
+        </div>
+
+        <div class="line">
+            <input #description placeholder="Description of the product" class="input-form" type="text" id="desc" name="desc" />
+        </div>
+        
+        <button class="button" (click)="addProduct(userID, name.value, price.value, description.value)" type="button">
+            Create Product!</button
+        ><br />
+    <p>{{message}}</p>
+    </div>
+</div>

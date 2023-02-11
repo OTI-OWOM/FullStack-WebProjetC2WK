@@ -1,0 +1,24 @@
+.simple-tab {
+    width: 97%;
+    margin: 1rem auto 2rem auto;
+
+    th {
+        color: var(--gold);
+        background-color: var(--darker);
+    }
+
+    tr {
+        cursor: pointer;
+    }
+
+    tr:nth-child(odd) {
+        background-color: var(--cream);
+    }
+}
+
+.simple-tab,
+.simple-tab th,
+.simple-tab td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+}

@@ -1,0 +1,34 @@
+<div class="wrapper">
+    <form class="register">
+        <h1 class="title">Sign up</h1>
+        <div class="line">
+            <i class="fa-solid fa-at"></i>
+            <input #email placeholder="Email" class="input-form" type="text" id="email" name="email"
+                (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
+        </div>
+        <div class="line">
+            <i class="fa-solid fa-lock"></i>
+            <input #password placeholder="Password" class="input-form" type="password" id="password" name="password"
+                (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
+        </div>
+        <div class="line">
+            <i class="fa fa-user"></i>
+            <input #username autofocus placeholder="Username" class="input-form" type="text" id="username"
+                name="username" (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
+        </div>
+        <div class="line">
+            <i class="fa-solid fa-location-dot"></i>
+            <input #adresse placeholder="Adress" class="input-form" type="text" id="adresses" name="adresses"
+                (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
+        </div>
+        <button class="button" (click)="addUser(username.value, password.value, email.value, adresse.value)"
+            type="button">Sign up!</button>
+        <div class="login-text">
+            <p routerLink="/login" class="login-link">
+                <i class="fa fa-user"></i>
+                Already have an account? Login!
+            </p>
+        </div>
+        <p class="message">{{ message }}</p>
+    </form>
+</div>

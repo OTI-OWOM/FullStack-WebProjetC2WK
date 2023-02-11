@@ -1,0 +1,7 @@
+<app-header *ngIf="router.url !== '/home'"></app-header>
+<div class="container">
+    <div class='content'>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<app-footer *ngIf="router.url !== '/home'"></app-footer>
