@@ -15,21 +15,21 @@ spec:
         app: webapp
     spec:
       containers:
-      - name: webappdb
-        image: mileristo/api:2.0
+      - name: webapp
+        image: mileristo/api:3.0
         ports:
         - containerPort: 3000
         env:
-        - name: NAME
-          valueFrom: 
-            secretKeyRef: 
+        - name: USER_NAME
+          valueFrom:
+            secretKeyRef:
               name: mongo-secret
               key: mongo-user
-        - name: PASSWORD
-          valueFrom: 
-            secretKeyRef: 
+        - name: USER_PWD
+          valueFrom:
+            secretKeyRef:
               name: mongo-secret
-              key: mongo-password
+              key: mongo-password 
         - name: DB_URL
           valueFrom:
             configMapKeyRef:
@@ -48,4 +48,4 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-      nodePort: 30100 
+      nodePort: 30100
