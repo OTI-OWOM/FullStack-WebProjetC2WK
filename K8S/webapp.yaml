@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: webappdb
-        image: mileristo/api:1.0
+        image: mileristo/api:2.0
         ports:
         - containerPort: 3000
         env:
@@ -30,15 +30,22 @@ spec:
             secretKeyRef: 
               name: mongo-secret
               key: mongo-password
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: mongo-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: webapp-service
 spec:
+  type: NodePort
   selector:
     app: webapp
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000
+      nodePort: 30100 
