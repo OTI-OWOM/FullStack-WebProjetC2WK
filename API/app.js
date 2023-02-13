@@ -7,7 +7,7 @@ require('dotenv').config();
 const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
 
-mongoose.connect(`mongodb://${process.env.NAME}:${process.env.PASSWORD}@mongo:27017`, {
+mongoose.connect(`mongodb://${process.env.USER_NAME}:${process.env.USER_PWD}@${process.env.DB_URL}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })

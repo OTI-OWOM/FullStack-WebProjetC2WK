@@ -12,8 +12,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      NAME: admin
-      PASSWORD: password
+      USER_NAME: admin
+      USER_PWD: password
   mongo:
     image: mongo
     restart: always
