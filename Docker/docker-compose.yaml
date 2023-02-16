@@ -7,13 +7,14 @@ services:
     ports:
       - 8000:80
   api:
-    image: mileristo/api:2.0
+    image: mileristo/api:3.0
     restart: always
     ports:
       - 3000:3000
     environment:
       USER_NAME: admin
       USER_PWD: password
+      DB_URL: mongo:27017
   mongo:
     image: mongo
     restart: always

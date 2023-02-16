@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: mileristo/angular:3.0
+        image: mileristo/angular:4.0
         ports:
         - containerPort: 80
 ---
@@ -25,11 +25,9 @@ kind: Service
 metadata:
   name: webapp-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: webapp
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 80
-      nodePort: 30100
