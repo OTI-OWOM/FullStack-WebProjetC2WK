@@ -100,6 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           'Email',
                           'Enter your email',
                           'Please enter an email',
+                          inputType: TextInputType.emailAddress
                         ),
                         formGeneralPassword(
                           password,

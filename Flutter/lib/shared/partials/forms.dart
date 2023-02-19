@@ -15,11 +15,11 @@ Padding formGeneralModify(TextEditingController controller, String label,
     Icon prefixIcon = const Icon(Icons.abc),
     bool floatLabel = true,
     bool readOnly = false,
-    bool numberOnly = false}) {
+    TextInputType inputType = TextInputType.text}) {
   return Padding(
     padding: const EdgeInsets.all(4.0),
     child: TextFormField(
-      keyboardType: numberOnly?TextInputType.number:TextInputType.text,
+      keyboardType: inputType,
       readOnly: readOnly,
       controller: controller,
       decoration: inputFormDecoration(label,
@@ -46,11 +46,11 @@ Padding formGeneral(TextEditingController controller, String label,
     Icon prefixIcon = const Icon(Icons.abc),
     bool floatLabel = true,
     bool readOnly = false, 
-    bool numberOnly = false}) {
+    TextInputType inputType = TextInputType.text}) {
   return Padding(
     padding: const EdgeInsets.all(4.0),
     child: TextFormField(
-      keyboardType: numberOnly?TextInputType.number:TextInputType.text,
+      keyboardType: inputType,
       readOnly: readOnly,
       controller: controller,
       decoration: inputFormDecoration(label,

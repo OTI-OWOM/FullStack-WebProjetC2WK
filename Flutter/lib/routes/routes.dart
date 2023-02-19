@@ -41,8 +41,6 @@ final GoRouter router = GoRouter(
           pageBuilder: (context, state) =>
               const NoTransitionPage(child: MePage()),
           redirect: (context, state) async {
-            bool test = await isLoggedIn();
-            debugPrint(test.toString());
             if (await isLoggedIn()) {
               return '/Login';
             }
