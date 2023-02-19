@@ -62,8 +62,7 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
     user = await ApiUserService().getUser(isMe: true);
     Future.delayed(const Duration(milliseconds: 300))
         .then((value) => setState(() {
-              if (user!.role != 'admin') {
-                debugPrint('True');
+              if (user!.role != 'admin' && user!.id != product!.userId) {
                 GoRouter.of(context).go('/Error');
               } else {
                 isLoaded = true;
@@ -83,7 +82,6 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
       "price": price == '' ? product!.price : num.parse(price),
       "description": description == '' ? product!.description : description,
     };
-    debugPrint(modifications.toString());
     message =
         await ApiProductsService().modifyProduct(product!.id, modifications);
     Future.delayed(const Duration(milliseconds: 300))
@@ -159,7 +157,7 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
                                   floatLabel: false),
                               formGeneral(
                                   price, 'Price', product!.price.toString(), '',
-                                  floatLabel: false, numberOnly: true),
+                                  floatLabel: false, inputType: TextInputType.number),
                               formGeneral(description, 'Description',
                                   product!.description, '',
                                   floatLabel: false),
