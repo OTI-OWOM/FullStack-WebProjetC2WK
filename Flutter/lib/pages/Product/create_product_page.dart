@@ -86,19 +86,10 @@ class _CreateProductState extends State<CreateProduct> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(bottom: 30, top: 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 4,
-                                      strokeAlign: StrokeAlign.center,
-                                    ),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(25))),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(24),
-                                  child: Image.asset('images/voiture.png',
-                                      width: 300),
-                                ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(24),
+                                child: Image.asset('images/voiture.png',
+                                    width: 300),
                               ),
                             ),
                             formGeneral(name, 'Name', 'Enter the name', ''),
