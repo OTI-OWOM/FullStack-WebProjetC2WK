@@ -102,7 +102,7 @@ class _CreateProductState extends State<CreateProduct> {
                               ),
                             ),
                             formGeneral(name, 'Name', 'Enter the name', ''),
-                            formGeneral(price, 'Price', 'Enter the price', '', numberOnly: true),
+                            formGeneral(price, 'Price', 'Enter the price', '', inputType: TextInputType.number),
                             formGeneral(description, 'Description',
                                 'Enter the description', ''),
                             Container(
