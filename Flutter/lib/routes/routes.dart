@@ -33,13 +33,14 @@ final GoRouter router = GoRouter(
       routes: <RouteBase>[
         GoRoute(
           path: '/Home',
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: HomePage()),
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: HomePage(),
+          ),
         ),
         GoRoute(
           path: '/Profile',
           pageBuilder: (context, state) =>
-              const NoTransitionPage(child: MePage()),
+              NoTransitionPage(child: const MePage(), key: UniqueKey()),
           redirect: (context, state) async {
             if (await isLoggedIn()) {
               return '/Login';
@@ -50,14 +51,14 @@ final GoRouter router = GoRouter(
         GoRoute(
             path: '/Users',
             pageBuilder: (context, state) =>
-                const NoTransitionPage(child: UsersPage()),
+                NoTransitionPage(child: const UsersPage(), key: UniqueKey()),
             routes: [
               GoRoute(
                 path: 'User/:id',
                 parentNavigatorKey: _rootNavigatorKey,
                 name: 'user',
-                pageBuilder: (context, state) =>
-                    NoTransitionPage(child: UserPage(id: state.params['id'])),
+                pageBuilder: (context, state) => NoTransitionPage(
+                    child: UserPage(id: state.params['id']), key: UniqueKey()),
                 redirect: (context, state) async {
                   if (await isLoggedIn()) {
                     return '/Login';
@@ -76,7 +77,8 @@ final GoRouter router = GoRouter(
                 parentNavigatorKey: _rootNavigatorKey,
                 name: 'product',
                 pageBuilder: (context, state) => NoTransitionPage(
-                    child: ProductPage(id: state.params['id'])),
+                    child: ProductPage(id: state.params['id']),
+                    key: UniqueKey()),
                 redirect: (context, state) async {
                   if (await isLoggedIn()) {
                     return '/Login';
@@ -91,7 +93,7 @@ final GoRouter router = GoRouter(
       path: '/Login',
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state) =>
-          const NoTransitionPage(child: LoginPage()),
+          NoTransitionPage(child: const LoginPage(), key: UniqueKey()),
     ),
     GoRoute(
       path: '/Error',
@@ -115,8 +117,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/CreateProduct/:id',
       parentNavigatorKey: _rootNavigatorKey,
-      pageBuilder: (context, state) =>
-          NoTransitionPage(child: CreateProduct(userId: state.params['id'],)),
+      pageBuilder: (context, state) => NoTransitionPage(
+          child: CreateProduct(
+        userId: state.params['id'],
+      )),
       redirect: (context, state) async {
         if (await isLoggedIn()) {
           return '/Login';
@@ -125,23 +129,27 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/modify/:id/:url',
+      path: '/CreateProduct',
+      parentNavigatorKey: _rootNavigatorKey,
+      pageBuilder: (context, state) =>
+          const NoTransitionPage(child: LoginPage()),
+    ),
+    GoRoute(
+      path: '/modify/:id',
       name: 'modify',
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state) => NoTransitionPage(
           child: ModifyUserPage(
         id: state.params['id'],
-        urlBack: state.params['url'],
       )),
     ),
     GoRoute(
-      path: '/modifyproduct/:id/:url',
+      path: '/modifyproduct/:id',
       name: 'modifyproduct',
       parentNavigatorKey: _rootNavigatorKey,
       pageBuilder: (context, state) => NoTransitionPage(
           child: ModifyProductPage(
         id: state.params['id'],
-        urlBack: state.params['url'],
       )),
     ),
   ],

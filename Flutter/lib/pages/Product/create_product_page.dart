@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:projet_c2w/models/products_model.dart';
 import 'package:projet_c2w/services/api_products_service.dart';
 
@@ -44,6 +45,10 @@ class _CreateProductState extends State<CreateProduct> {
     message = await ApiProductsService().createProduct(product);
     Future.delayed(const Duration(milliseconds: 300)).then(
       (value) => setState(() {
+        if (message == 'Product added !') {
+          message = "";
+          GoRouter.of(context).go('/Products');
+        }
         isLoading = true;
       }),
     );
@@ -85,7 +90,8 @@ class _CreateProductState extends State<CreateProduct> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 30, top: 10),
+                              padding:
+                                  const EdgeInsets.only(bottom: 30, top: 10),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(24),
                                 child: Image.asset('images/voiture.png',
@@ -93,17 +99,20 @@ class _CreateProductState extends State<CreateProduct> {
                               ),
                             ),
                             formGeneral(name, 'Name', 'Enter the name', ''),
-                            formGeneral(price, 'Price', 'Enter the price', '', inputType: TextInputType.number),
+                            formGeneral(price, 'Price', 'Enter the price', '',
+                                inputType: TextInputType.number),
                             formGeneral(description, 'Description',
                                 'Enter the description', ''),
                             Container(
                               margin: const EdgeInsets.only(top: 15),
                               child: Text(
+                                style: const TextStyle(color: Colors.red),
                                 message!,
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Visibility(
                                 visible: isLoading,
                                 replacement: const Center(
@@ -113,13 +122,19 @@ class _CreateProductState extends State<CreateProduct> {
                                     if (_formKey.currentState!.validate()) {
                                       setState(() {
                                         isLoading = false;
-                                        _sendData(ProductsModel(
-                                            id: "",
-                                            price: num.parse(price.text),
-                                            name: name.text,
-                                            userId: widget.userId,
-                                            description: description.text,
-                                            v: 0));
+                                        if (price.text.contains(',')) {
+                                            message = 'Price needs to be a whole number';
+                                            price.text = '';
+                                            isLoading = true;
+                                        } else {
+                                          _sendData(ProductsModel(
+                                              id: "",
+                                              price: num.parse(price.text),
+                                              name: name.text,
+                                              userId: widget.userId,
+                                              description: description.text,
+                                              v: 0));
+                                        }
                                       });
                                     }
                                   },

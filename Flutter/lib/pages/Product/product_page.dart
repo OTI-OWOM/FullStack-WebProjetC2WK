@@ -100,8 +100,8 @@ class _ProductPageState extends State<ProductPage> {
           centerTitle: true,
           actions: [
             IconButton(
-                onPressed: () => GoRouter.of(context).goNamed('modifyproduct',
-                    params: {'id': product!.id, 'url': 'product'}),
+                onPressed: () => GoRouter.of(context).pushNamed('modifyproduct',
+                    params: {'id': product!.id}),
                 icon: const Icon(Icons.edit))
           ],
         ),

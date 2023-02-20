@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:projet_c2w/models/authentication_model.dart';
 import 'package:projet_c2w/models/user_model.dart';
 
@@ -53,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
       (value) => setState(() {
         if (message == 'User created !') {
           setToken(posts: tokenNewUser);
-          isLoggedIn = true;
+          GoRouter.of(context).go('/Home');
         }
         isLoading = true;
       }),
@@ -86,74 +87,81 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: Form(
                     key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        formGeneral(
-                          email,
-                          'Email',
-                          'Enter your email',
-                          'Please enter an email',
-                          inputType: TextInputType.emailAddress
-                        ),
-                        formGeneralPassword(
-                          password,
-                          'Password',
-                          'Please enter an password',
-                        ),
-                        formGeneral(
-                          username,
-                          'Username',
-                          'Enter your username',
-                          'Please enter an username',
-                        ),
-                        formGeneral(
-                          adresse,
-                          'Adresse',
-                          'Enter your adresse',
-                          'Please enter an adresse',
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            style: TextStyle(
-                              color: isLoggedIn ? Colors.black : Colors.black,
-                            ),
-                            isLoggedIn ? 'You are signed up' : message!,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          formGeneral(
+                            email,
+                            'Email',
+                            'Enter your email',
+                            'Please enter an email',
+                            inputType: TextInputType.emailAddress,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 50, bottom: 20),
-                          child: Visibility(
-                            visible: isLoading,
-                            replacement:
-                                const Center(child: CircularProgressIndicator()),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  setState(() {
-                                    isLoading = false;
-                                    _sendData(UserModel(
-                                        id: "",
-                                        username: username.text,
-                                        password: password.text,
-                                        role: "",
-                                        email: email.text,
-                                        adresse: adresse.text));
-                                  });
-                                }
-                              },
-                              child: const Text('Register'),
+                          formGeneralPassword(
+                            password,
+                            'Password',
+                            'Please enter an password',
+                          ),
+                          formGeneral(
+                            username,
+                            'Username',
+                            'Enter your username',
+                            'Please enter an username',
+                          ),
+                          formGeneral(
+                            adresse,
+                            'Adresse',
+                            'Enter your adresse',
+                            'Please enter an adresse',
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 25),
+                            child: Text(
+                              style: TextStyle(
+                                color: isLoggedIn
+                                    ? Colors.black
+                                    : Colors.redAccent,
+                              ),
+                              isLoggedIn ? '' : message!,
                             ),
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 25, bottom: 20),
+                            child: Visibility(
+                              visible: isLoading,
+                              replacement: const Center(
+                                  child: CircularProgressIndicator()),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      isLoading = false;
+                                      _sendData(UserModel(
+                                          id: "",
+                                          username: username.text,
+                                          password: password.text,
+                                          role: "",
+                                          email: email.text,
+                                          adresse: adresse.text));
+                                    });
+                                  }
+                                },
+                                child: const Text('Register'),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

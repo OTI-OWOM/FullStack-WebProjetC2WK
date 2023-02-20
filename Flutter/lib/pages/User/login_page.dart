@@ -47,9 +47,11 @@ class _LoginPageState extends State<LoginPage> {
       (value) => setState(() {
         if (posts!.message == '') {
           setToken(posts: posts);
-          isLoggedIn = true;
+          GoRouter.of(context).go('/Home');
         }
-        isLoading = true;
+        else {
+            isLoading = true;
+        }
       }),
     );
   }
@@ -74,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
           title: const Text('Login Page'),
           leading: IconButton(
             onPressed: () => GoRouter.of(context).go('/Home'),
-            icon: const Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back),
           ),
         ),
         body: SingleChildScrollView(
@@ -102,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                             'Email',
                             'Enter your email',
                             'Please enter an email',
+                            inputType: TextInputType.emailAddress,
                           ),
                           formGeneralPassword(
                             password,
@@ -115,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                                 color:
                                     isLoggedIn ? Colors.black : Colors.redAccent,
                               ),
-                              isLoggedIn ? 'You are logged in' : posts!.message,
+                              isLoggedIn ? '' : posts!.message,
                             ),
                           ),
                           Padding(
@@ -138,7 +141,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () => GoRouter.of(context).push('/Register'),
+                            onPressed: () =>
+                                GoRouter.of(context).push('/Register'),
                             child: const Text('Register'),
                           )
                         ],

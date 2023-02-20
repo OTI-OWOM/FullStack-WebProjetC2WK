@@ -7,9 +7,8 @@ import '../../models/authentication_model.dart';
 import '../../shared/partials/forms.dart';
 
 class ModifyUserPage extends StatefulWidget {
-  const ModifyUserPage({super.key, this.id = '', this.urlBack = ''});
+  const ModifyUserPage({super.key, this.id = ''});
   final String? id;
-  final String? urlBack;
 
   @override
   State<ModifyUserPage> createState() => _ModifyUserPageState();
@@ -27,9 +26,6 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
 
   // A Map that will contain the modifications
   Map userModification = {};
-
-  // A message that indicates the state of the widget
-  String? message = '';
 
   // Visibility indicators initialisers
   bool isLoaded = false;
@@ -60,7 +56,7 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
   /// Gets the user that is searched and adds it to a user varibale.
   void _getData() async {
     user = await ApiUserService().getUser(userId: widget.id, isMe: false);
-    Future.delayed(const Duration(milliseconds: 500))
+    Future.delayed(const Duration(milliseconds: 300))
         .then((value) => setState(() {
               isLoaded = true;
             }));
@@ -82,10 +78,10 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
       "adresse": adresse
     };
     modifications.removeWhere((key, value) => value == "");
-    message = await ApiUserService().modifyUser(user!.id, modifications);
-    Future.delayed(const Duration(milliseconds: 500))
+    await ApiUserService().modifyUser(user!.id, modifications);
+    Future.delayed(const Duration(milliseconds: 300))
         .then((value) => setState(() {
-              isLoading = true;
+              GoRouter.of(context).pop();
             }));
   }
 
@@ -102,19 +98,8 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           centerTitle: true,
           title: const Text('Modify User'),
-          leading: IconButton(
-              onPressed: () {
-                if (widget.urlBack == 'user') {
-                  GoRouter.of(context)
-                      .goNamed(widget.urlBack ?? '', params: {'id': user!.id});
-                } else {
-                  GoRouter.of(context).go(widget.urlBack ?? '');
-                }
-              },
-              icon: const Icon(Icons.arrow_back)),
         ),
         body: Visibility(
           visible: isLoaded,
@@ -185,13 +170,8 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
                                 readOnly: modify,
                                 floatLabel: false,
                               ),
-                              Container(
-                                margin: const EdgeInsets.only(top: 15),
-                                child: Text(message!),
-                              ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                padding: const EdgeInsets.only(top: 45.0),
                                 child: Visibility(
                                   visible: isLoading,
                                   replacement: const Center(
@@ -200,7 +180,6 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
                                         setState(() {
-                                          message = '';
                                           isLoading = false;
                                           _sendData(email.text, password.text,
                                               username.text, adresse.text);

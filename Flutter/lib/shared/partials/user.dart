@@ -34,8 +34,9 @@ Card userCardDefault(List<UserModel>? posts, int index, BuildContext context) {
       contentPadding:
           const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       horizontalTitleGap: 10,
-      onTap: () =>
-          GoRouter.of(context).goNamed('user', params: {'id': posts[index].id}),
+      onTap: () => {
+          GoRouter.of(context).pushNamed('user', params: {'id': posts[index].id}),
+      },
       trailing: const Icon(Icons.keyboard_arrow_right),
     ),
   );
