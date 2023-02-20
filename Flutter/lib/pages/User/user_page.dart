@@ -55,7 +55,7 @@ class _UserPageState extends State<UserPage> {
   /// Gets the user that is searched and adds it to a user varibale.
   void _getData() async {
     user = await ApiUserService().getUser(userId: widget.id, isMe: false);
-    Future.delayed(const Duration(milliseconds: 500))
+    Future.delayed(const Duration(milliseconds: 300))
         .then((value) => setState(() {
               if (user == null) {
                 GoRouter.of(context).go('/Error');
@@ -134,23 +134,34 @@ class _UserPageState extends State<UserPage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Text(message!),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() => GoRouter.of(context).push(
-                                          '/ProductsFromUser/${widget.id}'));
-                                    },
-                                    child: const Text('User Products'),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        message = '';
-                                        isLoading = false;
-                                        _deleteUser();
-                                      });
-                                    },
-                                    child: const Text('Delete'),
-                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            setState(() => GoRouter.of(context).push(
+                                                '/ProductsFromUser/${widget.id}'));
+                                          },
+                                          child: const Text('User Products'),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 20),
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                message = '';
+                                                isLoading = false;
+                                                _deleteUser();
+                                              });
+                                            },
+                                            child: const Text('Delete'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             ],
@@ -166,9 +177,9 @@ class _UserPageState extends State<UserPage> {
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                       child: IconButton(
-                          onPressed: () => GoRouter.of(context).goNamed(
+                          onPressed: () => GoRouter.of(context).pushNamed(
                               'modify',
-                              params: {'id': user!.id, 'url': 'user'}),
+                              params: {'id': user!.id}),
                           icon: const Icon(Icons.edit)),
                     ),
                   ),

@@ -24,8 +24,10 @@ class _RootPageState extends State<RootPage> {
   }
 
   void _getData() async {
-    userId = await currentUserId();
     bool userLog = await isLoggedIn();
+    if (!userLog) {
+      userId = await currentUserId();
+    }
     setState(() {
       userLoggedIn = userLog;
     });
@@ -67,7 +69,8 @@ class _RootPageState extends State<RootPage> {
           floatingActionButton: FloatingActionButton(
             backgroundColor: const Color.fromARGB(255, 158, 160, 206),
             isExtended: true,
-            onPressed: () => GoRouter.of(context).push('/CreateProduct/$userId'),
+            onPressed: () =>
+                GoRouter.of(context).push('/CreateProduct/$userId'),
             child: const Icon(Icons.add),
           ),
           bottomNavigationBar: BottomNavigationBar(
