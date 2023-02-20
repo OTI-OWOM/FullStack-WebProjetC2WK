@@ -98,8 +98,14 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           centerTitle: true,
           title: const Text('Modify User'),
+          leading: IconButton(
+              onPressed: () {
+                GoRouter.of(context).pop();
+              },
+              icon: const Icon(Icons.arrow_back)),
         ),
         body: Visibility(
           visible: isLoaded,
