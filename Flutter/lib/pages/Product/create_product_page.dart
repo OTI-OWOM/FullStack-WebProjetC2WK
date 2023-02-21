@@ -123,18 +123,15 @@ class _CreateProductState extends State<CreateProduct> {
                                       setState(() {
                                         isLoading = false;
                                         if (price.text.contains(',')) {
-                                            message = 'Price needs to be a whole number';
-                                            price.text = '';
-                                            isLoading = true;
-                                        } else {
-                                          _sendData(ProductsModel(
-                                              id: "",
-                                              price: num.parse(price.text),
-                                              name: name.text,
-                                              userId: widget.userId,
-                                              description: description.text,
-                                              v: 0));
+                                          price.text = price.text.split(',').join();
                                         }
+                                        _sendData(ProductsModel(
+                                            id: "",
+                                            price: num.parse(price.text),
+                                            name: name.text,
+                                            userId: widget.userId,
+                                            description: description.text,
+                                            v: 0));
                                       });
                                     }
                                   },

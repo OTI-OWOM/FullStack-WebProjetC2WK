@@ -137,7 +137,7 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
                               formGeneral(name, 'Name', product!.name, '',
                                   floatLabel: false),
                               formGeneral(
-                                  price, 'Price', product!.price.toString(), '',
+                                  price, 'Price', (product!.price/100).toString(), '',
                                   floatLabel: false,
                                   inputType: TextInputType.number),
                               formGeneral(description, 'Description',
@@ -153,6 +153,9 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
                                     onPressed: () {
                                       setState(() {
                                         isLoading = false;
+                                        if (price.text.contains(',')) {
+                                          price.text = price.text.split(',').join();
+                                        }
                                         _sendData(name.text, price.text,
                                             description.text);
                                       });

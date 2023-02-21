@@ -136,7 +136,7 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ),
                             productText(product!.name, 'Name'),
-                            productText(product!.price.toString(), 'Price'),
+                            productText((product!.price/100).toString(), 'Price'),
                             productText(product!.description, 'Descriptions'),
                           ],
                         ),
