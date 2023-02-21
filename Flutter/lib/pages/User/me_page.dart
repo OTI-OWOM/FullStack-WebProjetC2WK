@@ -62,7 +62,7 @@ class _MePageState extends State<MePage> {
     await ApiUserService().deleteUser(user!.id);
     Future.delayed(const Duration(milliseconds: 500))
         .then((value) => setState(() {
-              GoRouter.of(context).go('/Home');
+              GoRouter.of(context).go('/Login');
               isLoading = false;
             }));
   }
