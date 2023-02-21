@@ -75,6 +75,15 @@ class _UserPageState extends State<UserPage> {
             }));
   }
 
+  /// This function is for esthetic purposes
+  void _myProducts() async {
+    Future.delayed(const Duration(milliseconds: 500))
+        .then((value) => setState(() {
+              GoRouter.of(context).push('/ProductsFromUser/${widget.id}');
+              isLoading = false;
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -136,30 +145,39 @@ class _UserPageState extends State<UserPage> {
                                   Text(message!),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 15),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            setState(() => GoRouter.of(context).push(
-                                                '/ProductsFromUser/${widget.id}'));
-                                          },
-                                          child: const Text('User Products'),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 20),
-                                          child: ElevatedButton(
+                                    child: Visibility(
+                                      visible: isLoading,
+                                      replacement:
+                                          const CircularProgressIndicator(),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
                                             onPressed: () {
                                               setState(() {
-                                                message = '';
                                                 isLoading = false;
-                                                _deleteUser();
+                                                _myProducts();
                                               });
                                             },
-                                            child: const Text('Delete'),
+                                            child: const Text('User Products'),
                                           ),
-                                        ),
-                                      ],
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  message = '';
+                                                  isLoading = false;
+                                                  _deleteUser();
+                                                });
+                                              },
+                                              child: const Text('Delete'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   )
                                 ],
@@ -177,9 +195,8 @@ class _UserPageState extends State<UserPage> {
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                       child: IconButton(
-                          onPressed: () => GoRouter.of(context).pushNamed(
-                              'modify',
-                              params: {'id': user!.id}),
+                          onPressed: () => GoRouter.of(context)
+                              .pushNamed('modify', params: {'id': user!.id}),
                           icon: const Icon(Icons.edit)),
                     ),
                   ),
