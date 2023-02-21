@@ -17,7 +17,7 @@ Padding formGeneralModify(TextEditingController controller, String label,
     bool readOnly = false,
     TextInputType inputType = TextInputType.text}) {
   return Padding(
-    padding: const EdgeInsets.all(4.0),
+    padding: const EdgeInsets.all(2.0),
     child: TextFormField(
       keyboardType: inputType,
       readOnly: readOnly,
