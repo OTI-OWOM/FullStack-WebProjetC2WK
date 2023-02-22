@@ -168,13 +168,10 @@ class _ModifyUserPageState extends State<ModifyUserPage> {
                                 readOnly: modify,
                                 floatLabel: false,
                               ),
-                              formGeneralModify(
+                              formGeneralPassword(
                                 password,
                                 'Password',
                                 user!.password,
-                                '',
-                                readOnly: modify,
-                                floatLabel: false,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 45.0),

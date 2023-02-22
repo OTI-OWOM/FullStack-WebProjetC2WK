@@ -112,7 +112,7 @@ class _MePageState extends State<MePage> {
                                   radius: 120,
                                   child: CircleAvatar(
                                     backgroundColor:
-                                        Color.fromARGB(255, 244, 230, 230),
+                                        Color.fromARGB(255, 255, 255, 255),
                                     radius: 115,
                                     backgroundImage:
                                         AssetImage('images/user2.png'),
@@ -172,7 +172,7 @@ class _MePageState extends State<MePage> {
                   ),
                   Positioned(
                     right: 70,
-                    top: 200,
+                    top: 190,
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,

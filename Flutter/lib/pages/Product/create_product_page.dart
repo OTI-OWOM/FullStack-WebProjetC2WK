@@ -28,6 +28,7 @@ class _CreateProductState extends State<CreateProduct> {
 
   // A message that indicates the state of the widget
   String? message = '';
+  String thePrice = '';
 
   @override
   void dispose() {
@@ -47,7 +48,7 @@ class _CreateProductState extends State<CreateProduct> {
       (value) => setState(() {
         if (message == 'Product added !') {
           message = "";
-          GoRouter.of(context).go('/Products');
+          GoRouter.of(context).pop();
         }
         isLoading = true;
       }),
@@ -123,11 +124,14 @@ class _CreateProductState extends State<CreateProduct> {
                                       setState(() {
                                         isLoading = false;
                                         if (price.text.contains(',')) {
-                                          price.text = price.text.split(',').join();
+                                          thePrice = price.text.split(',').join();
+                                        }
+                                        if (price.text.contains('.')) {
+                                          thePrice = price.text.split('.').join();
                                         }
                                         _sendData(ProductsModel(
                                             id: "",
-                                            price: num.parse(price.text),
+                                            price: num.parse(thePrice),
                                             name: name.text,
                                             userId: widget.userId,
                                             description: description.text,

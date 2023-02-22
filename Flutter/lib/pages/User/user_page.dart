@@ -72,6 +72,7 @@ class _UserPageState extends State<UserPage> {
     Future.delayed(const Duration(milliseconds: 500))
         .then((value) => setState(() {
               isLoading = true;
+              GoRouter.of(context).pop();
             }));
   }
 
@@ -125,11 +126,11 @@ class _UserPageState extends State<UserPage> {
                                 padding: EdgeInsets.only(bottom: 30, top: 10),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.black,
-                                  radius: 120,
+                                  radius: 118,
                                   child: CircleAvatar(
                                     backgroundColor:
                                         Color.fromARGB(255, 244, 230, 230),
-                                    radius: 115,
+                                    radius: 113,
                                     backgroundImage:
                                         AssetImage('images/user2.png'),
                                   ),
@@ -142,7 +143,6 @@ class _UserPageState extends State<UserPage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(message!),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 15),
                                     child: Visibility(
@@ -190,7 +190,7 @@ class _UserPageState extends State<UserPage> {
                   ),
                   Positioned(
                     right: 70,
-                    top: 200,
+                    top: 190,
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,

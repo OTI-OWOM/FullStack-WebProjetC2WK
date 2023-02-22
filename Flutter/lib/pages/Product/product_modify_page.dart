@@ -35,6 +35,7 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
 
   // The current product
   late ProductsModel? product;
+  String thePrice = '';
 
   // Auth model initialiser
 
@@ -154,9 +155,12 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
                                       setState(() {
                                         isLoading = false;
                                         if (price.text.contains(',')) {
-                                          price.text = price.text.split(',').join();
+                                          thePrice = price.text.split(',').join();
                                         }
-                                        _sendData(name.text, price.text,
+                                        if (price.text.contains('.')) {
+                                          thePrice = price.text.split('.').join();
+                                        }
+                                        _sendData(name.text, thePrice,
                                             description.text);
                                       });
                                     },
