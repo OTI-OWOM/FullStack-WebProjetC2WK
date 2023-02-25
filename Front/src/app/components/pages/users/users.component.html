@@ -4,22 +4,7 @@
             USERS
         </h1>
     </div>
-    <!-- <table class="simple-tab">
-        <tr>
-            <th>_id</th>
-            <th>username</th>
-            <th>role</th>
-            <th>email</th>
-            <th>adresse</th>
-        </tr>
-        <tr *ngFor="let user of user_list">
-            <td><a routerLink="../user/{{ user._id }}">{{ user._id }}</a></td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.role }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.adresse }}</td>
-        </tr>
-    </table> -->
+    <hr class="solid">
 
     <div class="users-container">
         <div routerLink="../user/{{ user._id }}" class="user-card" *ngFor="let user of user_list">
