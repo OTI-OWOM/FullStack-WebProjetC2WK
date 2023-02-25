@@ -42,7 +42,6 @@ app-products {
                 font-size: 16px;
                 font-weight: bold;
                 color: var(--gold);
-                background-color: var(--back-light);
                 outline: none;
 
                 input[type=text] {
@@ -50,7 +49,7 @@ app-products {
                     border: none;
                     width: 80px;
                     color: var(--gold);
-                    background-color: var(--back-light);
+                    background-color: #7497c3;
                     font-size: 16px;
                     font-weight: bold;
 
