@@ -2,26 +2,25 @@ $back-color : var(--darker);
 
 footer {
     background-color: $back-color;
-    padding: 1.5rem 1rem;
+    padding: 1rem 1rem;
 
     .footer-container {
-        max-width: 1300px;
+        max-width: 1600px;
         margin: auto;
 
         h3 {
             color: var(--gold);
         }
 
-        img {
-            width: 32rem;
-            margin: 1rem 0;
-        }
-
         nav {
             display: flex;
             column-gap: 30%;
+            justify-content: space-between;
+            margin: 0 5rem 2rem 2rem;
 
             ul {
+                display: flex;
+                flex-direction: row;
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
@@ -29,6 +28,7 @@ footer {
                 li a {
                     line-height: 2;
                     color: var(--cream);
+                    margin: 0 2rem;
 
                     i {
                         font-size: 15px;
