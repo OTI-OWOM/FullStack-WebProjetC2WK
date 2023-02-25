@@ -1,7 +1,6 @@
 .wrapper {
     display: flex;
     align-items: center;
-
     flex-direction: column;
     justify-content: center;
     position: relative;
@@ -10,9 +9,15 @@
     padding: 3rem 2rem;
 }
 
+hr.solid {
+    width: 90%;
+    border-top: 1px solid white;
+    margin-bottom: 5rem;
+}
+
 .user-title {
     display: flex;
-    margin: 2rem 0 6rem 0;
+    margin: 2rem 0 2rem 0;
     border: 3px solid #0f0f0f;
     border-radius: 5rem;
     background-color: white;
@@ -32,11 +37,11 @@
     align-items: center;
     justify-content: space-evenly;
     row-gap: 5rem;
-    column-gap: 5rem;
+    column-gap: 10rem;
     margin: 2rem 1rem;
 
     .user-card {
-        width: 25rem;
+        width: 28rem;
         border: 1px solid #ccc;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         border-radius: 2rem;
@@ -60,8 +65,10 @@
         }
 
         .user-image {
+            display: flex;
             width: 100%;
             height: auto;
+            justify-content: center;
             margin: 1rem 0 1rem 0;
         }
 
