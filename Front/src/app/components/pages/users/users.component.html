@@ -1,33 +1,38 @@
 <div class="wrapper">
+    <div class="user-title">
+        <h1>
+            USERS
+        </h1>
+    </div>
+    <!-- <table class="simple-tab">
+        <tr>
+            <th>_id</th>
+            <th>username</th>
+            <th>role</th>
+            <th>email</th>
+            <th>adresse</th>
+        </tr>
+        <tr *ngFor="let user of user_list">
+            <td><a routerLink="../user/{{ user._id }}">{{ user._id }}</a></td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.adresse }}</td>
+        </tr>
+    </table> -->
 
-    <!-- <div class="users-container">
-        <div class="user-card" *ngFor="let user of user_list">
-            <a routerLink="../user/{{ user._id }}">
-                <img src="../../../../assets/images/user2.png" alt="{{ user.username }}" class="user-image">
-                <div class="user-text">
-                    <h2 class="user-name">{{ user.username }}</h2>
-                    <p class="user-description">{{ user.role }}</p>
-                    <p class="user-description">{{ user.email }}</p>
+    <div class="users-container">
+        <div routerLink="../user/{{ user._id }}" class="user-card" *ngFor="let user of user_list">
+            <div class="user-image">
+                <img src="../../../../assets/images/user2.png" alt="{{ user.username }}">
+            </div>
+            <div class="user-text">
+                <h2 class="user-name">{{ user.username }}</h2>
+                <p class="user-description">{{ user.role }}</p>
+                <p class="user-description">{{ user.email }}</p>
                 <p class="user-description">{{ user.adresse }}</p>
             </div>
-        </a>
+        </div>
     </div>
-</div> -->
 
-<table class="simple-tab">
-    <tr>
-        <th>_id</th>
-        <th>username</th>
-        <th>role</th>
-        <th>email</th>
-        <th>adresse</th>
-    </tr>
-    <tr *ngFor="let user of user_list">
-        <td><a routerLink="../user/{{ user._id }}">{{ user._id }}</a></td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.adresse }}</td>
-    </tr>
-</table>
 </div>

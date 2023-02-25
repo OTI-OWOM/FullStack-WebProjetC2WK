@@ -7,28 +7,23 @@
     position: relative;
     width: 100%;
     min-height: 100%;
-    padding: 8rem 2rem;
+    padding: 3rem 2rem;
 }
 
-.simple-tab {
-    width: 97%;
-    margin: 1rem auto 2rem auto;
+.user-title {
+    display: flex;
+    margin: 2rem 0 6rem 0;
+    border: 3px solid #0f0f0f;
+    border-radius: 5rem;
+    background-color: white;
+    width: 60%;
+    justify-content: center;
+    background: rgb(228, 234, 245) 100%;
 
-    th {
-        color: var(--gold);
-        background-color: var(--darker);
+    h1 {
+        font-size: 50px;
+        letter-spacing: 1rem;
     }
-
-    tr:nth-child(odd) {
-        background-color: var(--cream);
-    }
-}
-
-.simple-tab,
-.simple-tab th,
-.simple-tab td {
-    border: 1px solid #000;
-    border-collapse: collapse;
 }
 
 .users-container {
@@ -37,7 +32,7 @@
     align-items: center;
     justify-content: space-evenly;
     row-gap: 5rem;
-    column-gap: 1rem;
+    column-gap: 5rem;
     margin: 2rem 1rem;
 
     .user-card {
@@ -46,52 +41,48 @@
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         border-radius: 2rem;
         overflow: hidden;
+        background: rgb(26, 102, 225);
 
         &:hover {
             transform: scale(1.05);
-            .user-image{
-                filter: hue-rotate(100deg)
+            background: rgb(61, 203, 97);
+            .user-image {
+                filter: hue-rotate(80deg);
+            }
+
+            .user-text {
+                background: linear-gradient(
+                    360deg,
+                    var(--cream) 85%,
+                    rgb(61, 203, 97)
+                );
             }
         }
 
         .user-image {
             width: 100%;
             height: auto;
+            margin: 1rem 0 1rem 0;
         }
 
         .user-text {
             padding: 1rem;
+            background: linear-gradient(
+                360deg,
+                var(--cream) 85%,
+                rgb(26, 102, 225) 100%
+            );
 
             .user-name {
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: bold;
-                margin: 1rem 0;
+                margin: 3rem 0 1rem 0;
             }
 
             .user-description {
                 font-size: 14px;
                 color: #666;
                 margin: 1rem 0;
-            }
-        }
-
-
-        .user-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background-color: #f8f8f8;
-
-            .user-price {
-                font-size: 16px;
-                font-weight: bold;
-                color: #00b894;
-            }
-
-            .user-owner {
-                font-size: 14px;
-                color: #666;
             }
         }
     }
