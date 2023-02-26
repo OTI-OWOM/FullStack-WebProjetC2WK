@@ -35,7 +35,7 @@ const routes: Routes = [
     { path: 'me', component: MeComponent, canActivate: [AuthGuard] },
     { path: 'modify', component: ModifyUserComponent, canActivate: [AuthGuard] },
     { path: 'user/delete/:id', component: DeleteUserComponent, canActivate: [AuthGuard] },
-    { path: 'user/:id', component: UserComponent },
+    { path: 'user/:id', component: UserComponent, canActivate: [AuthGuard] },
     { path: 'user/notloggedin', component: UserComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: Error404Component },

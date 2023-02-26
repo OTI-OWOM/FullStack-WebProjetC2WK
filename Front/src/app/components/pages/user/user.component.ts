@@ -15,7 +15,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     targetUser = {} as Partial<User>;
 
-    isVisitorAdmin = false;
+    isVisitorAllowed = false;
 
     paramID!: string;
 
@@ -39,7 +39,7 @@ export class UserComponent implements OnInit, OnDestroy {
                 .userSelect(localStorage.getItem('token') ?? '', this.paramID)
                 .subscribe((res) => {
                     this.targetUser = res;
-                    console.log(this.targetUser);
+                    this.isVisitorAllowed = true;
                 }),
         );
     }

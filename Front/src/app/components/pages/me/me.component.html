@@ -23,14 +23,14 @@
         </div>
 
         <button class="button" (click)="userModify(username.value, email.value, adresse.value, password.value)">Modify account</button>
-        
+
         <div class="products-text">
             <p routerLink="/products/{{ userID }}" class="products-link">
                 <i class="fa-solid fa-eye"></i>
                 See all your products !
             </p>
         </div>
-        
+
         <button class="button delete" (click)="userDelete()">Delete account</button>
         <p class="message">{{ message }}</p>
     </div>
