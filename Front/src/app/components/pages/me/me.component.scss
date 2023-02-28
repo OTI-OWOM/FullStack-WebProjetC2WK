@@ -26,6 +26,25 @@
         border-bottom: 1px solid #eee;
     }
 
+    .create {
+        background: #7187bc;
+        border: none;
+        color: #fff;
+        padding: 1.5rem 4rem;
+        width: 45%;
+        border-radius: 1rem;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 0 1px 3px #7187bc;
+        }
+
+        &:active {
+            border-bottom-width: 3px;
+            outline: none;
+        }
+    }
+
     .admin-text{
         color: var(--gold);
         background-color: var(--dark);
@@ -102,6 +121,7 @@
     }
 
     .delete{
+        margin-top: 1rem;
         background-color: #b95071;
     }
 

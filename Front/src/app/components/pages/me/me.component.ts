@@ -43,7 +43,6 @@ export class MeComponent implements OnInit, OnDestroy {
             this.usersService
                 .me(localStorage.getItem('token') ?? '')
                 .subscribe((res) => {
-                    console.log(`This is a test${res}`);
                     this.data = res;
                 }),
         );
