@@ -9,12 +9,12 @@
             <p *ngIf="targetUser.role == 'admin'" class="admin-text">Admin</p>
             <div class="line">
                 <i class="fa-solid fa-at"></i>
-                <input #email value="{{ targetUser.email }}" class="input-form" type="text" id="email" name="email" />
+                <input #email autofocus value="{{ targetUser.email }}" class="input-form" type="text" id="email" name="email" />
             </div>
 
             <div class="line">
                 <i class="fa fa-user"></i>
-                <input #username autofocus value="{{ targetUser.username }}" class="input-form" type="text"
+                <input #username value="{{ targetUser.username }}" class="input-form" type="text"
                     id="username" name="username" />
             </div>
 

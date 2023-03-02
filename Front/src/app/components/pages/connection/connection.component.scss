@@ -1,8 +1,6 @@
-
 .wrapper {
     display: flex;
     align-items: center;
-
     flex-direction: column;
     justify-content: center;
     position: relative;
@@ -25,7 +23,7 @@
             color: var(--dark);
             text-align: center;
             margin: 1rem 0 3rem 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #bebebe;
             padding-bottom: 2rem;
     }
 

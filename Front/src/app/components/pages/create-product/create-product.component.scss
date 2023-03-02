@@ -8,7 +8,6 @@
     width: 100%;
     min-height: 100%;
     padding: 8rem 2rem;
-    background-color: #8989ba;
 }
 
 .new-product {
@@ -24,7 +23,8 @@
     .title {
         color: var(--dark);
         text-align: center;
-        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #bebebe;
     }
 
     .admin-text {
