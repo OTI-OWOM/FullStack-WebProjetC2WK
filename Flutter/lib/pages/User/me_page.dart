@@ -23,9 +23,6 @@ class _MePageState extends State<MePage> {
   // A Map that will contain the modifications
   Map userModification = {};
 
-  // A message that indicates the state of the widget
-  String? message = '';
-
   // Visibility indicators initialisers
   bool isLoaded = false;
   bool isLoading = true;
@@ -62,11 +59,20 @@ class _MePageState extends State<MePage> {
 
   /// Calls the delete method from the UserServices
   void _deleteUser() async {
-    message = await ApiUserService().deleteUser(user!.id);
-    setState(() {});
+    await ApiUserService().deleteUser(user!.id);
     Future.delayed(const Duration(milliseconds: 500))
         .then((value) => setState(() {
-              isLoading = true;
+              GoRouter.of(context).go('/Login');
+              isLoading = false;
+            }));
+  }
+
+  /// This function is for esthetic purposes
+  void _myProducts() async {
+    Future.delayed(const Duration(milliseconds: 500))
+        .then((value) => setState(() {
+              GoRouter.of(context).push('/ProductsFromUser/${user!.id}');
+              isLoading = false;
             }));
   }
 
@@ -106,7 +112,7 @@ class _MePageState extends State<MePage> {
                                   radius: 120,
                                   child: CircleAvatar(
                                     backgroundColor:
-                                        Color.fromARGB(255, 244, 230, 230),
+                                        Color.fromARGB(255, 255, 255, 255),
                                     radius: 115,
                                     backgroundImage:
                                         AssetImage('images/user2.png'),
@@ -117,36 +123,46 @@ class _MePageState extends State<MePage> {
                               profileText(user!.email, "Email"),
                               profileText(user!.adresse, "Adresse"),
                               profileText(user!.role, "Role"),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(message!),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          setState(() => GoRouter.of(context).push(
-                                              '/ProductsFromUser/${user!.id}'));
-                                        },
-                                        child: const Text('My Products'),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Visibility(
+                                      visible: isLoading,
+                                      replacement:
+                                          const CircularProgressIndicator(),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                isLoading = false;
+                                                _myProducts();
+                                              });
+                                            },
+                                            child: const Text('My Products'),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  isLoading = false;
+                                                  _deleteUser();
+                                                });
+                                              },
+                                              child: const Text('Delete'),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 20),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              message = '';
-                                              isLoading = false;
-                                              _deleteUser();
-                                            });
-                                          },
-                                          child: const Text('Delete'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -156,14 +172,13 @@ class _MePageState extends State<MePage> {
                   ),
                   Positioned(
                     right: 70,
-                    top: 200,
+                    top: 190,
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                       child: IconButton(
-                          onPressed: () => GoRouter.of(context).goNamed(
-                              'modify',
-                              params: {'id': user!.id, 'url': '/Profile'}),
+                          onPressed: () => GoRouter.of(context)
+                              .pushNamed('modify', params: {'id': user!.id}),
                           icon: const Icon(Icons.edit)),
                     ),
                   ),

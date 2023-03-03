@@ -35,7 +35,6 @@ class _ProductPageState extends State<ProductPage> {
   // Visibility indicators initialisers
   bool isLoaded = false;
   bool isLoading = true;
-  bool isDeleted = false;
 
   // The current product
   late ProductsModel? product;
@@ -73,11 +72,11 @@ class _ProductPageState extends State<ProductPage> {
     message = await ApiProductsService().deleteProduct(product!.id);
     Future.delayed(const Duration(milliseconds: 300))
         .then((value) => setState(() {
-              if (user!.role != 'admin') {
-                GoRouter.of(context).go('/Error');
-              } else {
-                isDeleted = true;
+              if (user!.role == 'admin' || user!.id == product!.userId) {
                 isLoaded = true;
+                GoRouter.of(context).pop();
+              } else {
+                GoRouter.of(context).go('/Error');
               }
               isLoading = true;
             }));
@@ -100,8 +99,8 @@ class _ProductPageState extends State<ProductPage> {
           centerTitle: true,
           actions: [
             IconButton(
-                onPressed: () => GoRouter.of(context).goNamed('modifyproduct',
-                    params: {'id': product!.id, 'url': 'product'}),
+                onPressed: () => GoRouter.of(context).pushNamed('modifyproduct',
+                    params: {'id': product!.id}),
                 icon: const Icon(Icons.edit))
           ],
         ),
@@ -136,37 +135,27 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ),
                             productText(product!.name, 'Name'),
-                            productText(product!.price.toString(), 'Price'),
+                            productText((product!.price/100).toString(), 'Price'),
                             productText(product!.description, 'Descriptions'),
                           ],
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            style: TextStyle(
-                              color:
-                                  isDeleted ? Colors.black : Colors.redAccent,
+                        Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Visibility(
+                            visible: isLoading,
+                            replacement: const Center(
+                              child: CircularProgressIndicator(),
                             ),
-                            message!,
-                          ),
-                        ),
-                        Visibility(
-                          visible: isLoading,
-                          replacement: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(30.0),
                             child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  message = '';
-                                  isLoading = false;
-                                  _deleteProduct();
-                                });
-                              },
-                              child: const Text('Delete'),
-                            ),
+                                onPressed: () {
+                                  setState(() {
+                                    message = '';
+                                    isLoading = false;
+                                    _deleteProduct();
+                                  });
+                                },
+                                child: const Text('Delete'),
+                              ),
                           ),
                         ),
                       ],

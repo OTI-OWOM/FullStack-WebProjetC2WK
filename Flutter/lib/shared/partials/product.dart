@@ -39,7 +39,7 @@ Card productCardDefault(
           const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       horizontalTitleGap: 10,
       onTap: () => GoRouter.of(context)
-          .goNamed('product', params: {'id': posts[index].id}),
+          .pushNamed('product', params: {'id': posts[index].id}),
       trailing: const Icon(Icons.keyboard_arrow_right),
       subtitle: Row(
         children: [

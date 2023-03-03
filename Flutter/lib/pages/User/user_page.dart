@@ -55,7 +55,7 @@ class _UserPageState extends State<UserPage> {
   /// Gets the user that is searched and adds it to a user varibale.
   void _getData() async {
     user = await ApiUserService().getUser(userId: widget.id, isMe: false);
-    Future.delayed(const Duration(milliseconds: 500))
+    Future.delayed(const Duration(milliseconds: 300))
         .then((value) => setState(() {
               if (user == null) {
                 GoRouter.of(context).go('/Error');
@@ -72,6 +72,16 @@ class _UserPageState extends State<UserPage> {
     Future.delayed(const Duration(milliseconds: 500))
         .then((value) => setState(() {
               isLoading = true;
+              GoRouter.of(context).pop();
+            }));
+  }
+
+  /// This function is for esthetic purposes
+  void _myProducts() async {
+    Future.delayed(const Duration(milliseconds: 500))
+        .then((value) => setState(() {
+              GoRouter.of(context).push('/ProductsFromUser/${widget.id}');
+              isLoading = false;
             }));
   }
 
@@ -116,11 +126,11 @@ class _UserPageState extends State<UserPage> {
                                 padding: EdgeInsets.only(bottom: 30, top: 10),
                                 child: CircleAvatar(
                                   backgroundColor: Colors.black,
-                                  radius: 120,
+                                  radius: 118,
                                   child: CircleAvatar(
                                     backgroundColor:
                                         Color.fromARGB(255, 244, 230, 230),
-                                    radius: 115,
+                                    radius: 113,
                                     backgroundImage:
                                         AssetImage('images/user2.png'),
                                   ),
@@ -133,24 +143,43 @@ class _UserPageState extends State<UserPage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(message!),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() => GoRouter.of(context).push(
-                                          '/ProductsFromUser/${widget.id}'));
-                                    },
-                                    child: const Text('User Products'),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        message = '';
-                                        isLoading = false;
-                                        _deleteUser();
-                                      });
-                                    },
-                                    child: const Text('Delete'),
-                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Visibility(
+                                      visible: isLoading,
+                                      replacement:
+                                          const CircularProgressIndicator(),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                isLoading = false;
+                                                _myProducts();
+                                              });
+                                            },
+                                            child: const Text('User Products'),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 20),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  message = '';
+                                                  isLoading = false;
+                                                  _deleteUser();
+                                                });
+                                              },
+                                              child: const Text('Delete'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ],
@@ -161,14 +190,13 @@ class _UserPageState extends State<UserPage> {
                   ),
                   Positioned(
                     right: 70,
-                    top: 200,
+                    top: 190,
                     child: CircleAvatar(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                       child: IconButton(
-                          onPressed: () => GoRouter.of(context).goNamed(
-                              'modify',
-                              params: {'id': user!.id, 'url': 'user'}),
+                          onPressed: () => GoRouter.of(context)
+                              .pushNamed('modify', params: {'id': user!.id}),
                           icon: const Icon(Icons.edit)),
                     ),
                   ),

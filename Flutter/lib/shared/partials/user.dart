@@ -34,8 +34,9 @@ Card userCardDefault(List<UserModel>? posts, int index, BuildContext context) {
       contentPadding:
           const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       horizontalTitleGap: 10,
-      onTap: () =>
-          GoRouter.of(context).goNamed('user', params: {'id': posts[index].id}),
+      onTap: () => {
+          GoRouter.of(context).pushNamed('user', params: {'id': posts[index].id}),
+      },
       trailing: const Icon(Icons.keyboard_arrow_right),
     ),
   );
@@ -48,44 +49,47 @@ Card userCardDefault(List<UserModel>? posts, int index, BuildContext context) {
 ///    - header - The header
 ///
 /// Return : A custom Text field.
-Column profileText(String? user, String header) {
-  return Column(
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            header,
-            style: const TextStyle(
-                fontSize: 15, fontWeight: FontWeight.w500, color: Colors.grey),
-          ),
-          const SizedBox(
-            height: 1,
-          ),
-          Container(
-            width: 350,
-            height: 40,
-            decoration: const BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-              color: Colors.grey,
-              width: 1,
-            ))),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                    user!,
-                    style: const TextStyle(
-                        fontSize: 18, height: 1.8, color: Colors.black),
-                  ),
-                ),
-              ],
+Padding profileText(String? user, String header) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+    child: Column(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              header,
+              style: const TextStyle(
+                  fontSize: 15, fontWeight: FontWeight.w500, color: Colors.grey),
             ),
-          )
-        ],
-      ),
-    ],
+            const SizedBox(
+              height: 1,
+            ),
+            Container(
+              width: 350,
+              height: 40,
+              decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                color: Colors.grey,
+                width: 1,
+              ))),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      user!,
+                      style: const TextStyle(
+                          fontSize: 18, height: 1.8, color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ],
+    ),
   );
 }

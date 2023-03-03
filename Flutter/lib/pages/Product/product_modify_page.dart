@@ -26,9 +26,6 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
   // A Map that will contain the modifications
   Map userModification = {};
 
-  // A message that indicates the state of the widget
-  String? message = '';
-
   // The current user
   late UserModel? user;
 
@@ -38,6 +35,7 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
 
   // The current product
   late ProductsModel? product;
+  String thePrice = '';
 
   // Auth model initialiser
 
@@ -82,11 +80,10 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
       "price": price == '' ? product!.price : num.parse(price),
       "description": description == '' ? product!.description : description,
     };
-    message =
-        await ApiProductsService().modifyProduct(product!.id, modifications);
+    await ApiProductsService().modifyProduct(product!.id, modifications);
     Future.delayed(const Duration(milliseconds: 300))
         .then((value) => setState(() {
-              isLoading = true;
+              GoRouter.of(context).pop();
             }));
   }
 
@@ -103,15 +100,9 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-            automaticallyImplyLeading: false,
-            centerTitle: true,
-            title: const Text('Product'),
-            leading: IconButton(
-                onPressed: () {
-                  GoRouter.of(context).goNamed(widget.urlBack ?? '',
-                      params: {'id': product!.id});
-                },
-                icon: const Icon(Icons.arrow_back))),
+          centerTitle: true,
+          title: const Text('Product'),
+        ),
         body: Visibility(
           visible: isLoaded,
           replacement: const Center(
@@ -137,37 +128,24 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
                             children: <Widget>[
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(bottom: 30, top: 20),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 4,
-                                        strokeAlign: StrokeAlign.center,
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(25))),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(24),
-                                    child: Image.asset('images/voiture.png',
-                                        width: 300),
-                                  ),
+                                    const EdgeInsets.only(bottom: 30, top: 10),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(24),
+                                  child: Image.asset('images/voiture.png',
+                                      width: 300),
                                 ),
                               ),
                               formGeneral(name, 'Name', product!.name, '',
                                   floatLabel: false),
                               formGeneral(
-                                  price, 'Price', product!.price.toString(), '',
-                                  floatLabel: false, inputType: TextInputType.number),
+                                  price, 'Price', (product!.price/100).toString(), '',
+                                  floatLabel: false,
+                                  inputType: TextInputType.number),
                               formGeneral(description, 'Description',
                                   product!.description, '',
                                   floatLabel: false),
-                              Container(
-                                margin: const EdgeInsets.only(top: 15),
-                                child: Text(message!),
-                              ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                padding: const EdgeInsets.only(top: 50.0),
                                 child: Visibility(
                                   visible: isLoading,
                                   replacement: const Center(
@@ -175,9 +153,14 @@ class _ModifyProductPageState extends State<ModifyProductPage> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       setState(() {
-                                        message = '';
                                         isLoading = false;
-                                        _sendData(name.text, price.text,
+                                        if (price.text.contains(',')) {
+                                          thePrice = price.text.split(',').join();
+                                        }
+                                        if (price.text.contains('.')) {
+                                          thePrice = price.text.split('.').join();
+                                        }
+                                        _sendData(name.text, thePrice,
                                             description.text);
                                       });
                                     },
