@@ -31,7 +31,7 @@ export class MeComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.userID = localStorage.getItem('userID') ?? '';
+        this.userID = localStorage.getItem('userId') ?? '';
         this.subscription.add(
             this.productService
                 .getAllProductsFromUser(this.userID, localStorage.getItem('token') ?? '')

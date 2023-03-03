@@ -29,7 +29,7 @@ export class ConnectionComponent {
                         next: (res: any) => {
                             this.auth.loginUser(email, password);
                             localStorage.setItem('token', `${res.token}`);
-                            localStorage.setItem('id', res.userId);
+                            localStorage.setItem('userId', res.userId);
                             this.router.navigateByUrl('me');
                         },
                         error: (err: any) => {

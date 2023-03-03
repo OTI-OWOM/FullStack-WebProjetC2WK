@@ -19,7 +19,7 @@ export class CreateProductComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.userID = localStorage.getItem('userID') ?? '';
+        this.userID = localStorage.getItem('userId') ?? '';
     }
 
     addProduct(
