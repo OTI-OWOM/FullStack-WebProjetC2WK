@@ -48,7 +48,6 @@ export class ProductsService {
     public modifyProduct(
         token: string,
         productId: string,
-        userId: string,
         name: string,
         price: string,
         description: string,
@@ -57,7 +56,6 @@ export class ProductsService {
         return this.http.put(
             URL.PRODUCT + productId,
             {
-                userId,
                 name,
                 price,
                 description,
