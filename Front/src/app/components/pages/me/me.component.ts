@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { delay, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/services/products.service';
 import { Product } from 'src/app/shared/interfaces/Product';
 import { User } from 'src/app/shared/interfaces/Users';
@@ -65,7 +65,11 @@ export class MeComponent implements OnInit, OnDestroy {
                 )
                 .subscribe((res: any) => {
                     if (res) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('userId');
                         this.message = res.message;
+                        delay(1000);
+                        this.router.navigateByUrl('login');
                     }
                 }),
         );
