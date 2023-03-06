@@ -31,9 +31,6 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.productsService.getProductById(this.paramID, localStorage.getItem('token') ?? '')
             .subscribe((response:Product) => {
                 this.product = response;
-                console.log('local storage : ');
-                console.log(localStorage.getItem('userId'));
-                console.log(this.product.userId);
                 this.isOwnProduct = this.product.userId === localStorage.getItem('userId') ?? '';
                 this.setImage();
             });

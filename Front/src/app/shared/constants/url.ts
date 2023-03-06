@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:57156';
+const BASE_URL = 'http://localhost:3000';
 
 export const REGISTER_URL = `${BASE_URL}/register`;
 export const LOGIN_URL = `${BASE_URL}/login`;

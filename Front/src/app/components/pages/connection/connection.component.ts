@@ -27,10 +27,9 @@ export class ConnectionComponent {
                     .loginUser(email, password)
                     .subscribe({
                         next: (res: any) => {
-                            this.auth.loginUser(email, password);
                             localStorage.setItem('token', `${res.token}`);
                             localStorage.setItem('userId', res.userId);
-                            this.router.navigateByUrl('me');
+                            this.router.navigateByUrl('/products').then(() => window.location.reload());
                         },
                         error: (err: any) => {
                             this.message = err.error.message;

@@ -6,7 +6,7 @@
     <div class="right-options">
         <div class="slider-container">
             <div class="text-input">
-                < <input type="text" name="limit" [(ngModel)]="priceRange" (change)="updateResult()">
+                <input type="text" name="limit" [(ngModel)]="priceRange" (change)="updateResult()">
                     €
             </div>
             <input type="range" min="0" max={{maxPriceRange}} value={{maxPriceRange}} step="100" class="slider"

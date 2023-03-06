@@ -22,24 +22,30 @@ export class AuthService {
 
     private isAdmin = false;
 
-    constructor(
-        private http: HttpClient,
-        private router: Router,
-    ) {}
+    constructor(private http: HttpClient, private router: Router) {}
 
-    createUser(username: string, email: string, password: string, adresse: string) {
+    createUser(
+        username: string,
+        email: string,
+        password: string,
+        adresse: string,
+    ) {
         return this.http.post<{ message: string }>(URL.REGISTER, {
-            username, password, email, adresse,
+            username,
+            password,
+            email,
+            adresse,
         });
     }
 
     loginUser(email: string, password: string) {
-        return this.http.post<{
-            userId: string,
-            isAdmin: boolean,
-            token: any
-        }>(URL.LOGIN, { email, password }).subscribe(
-            (response) => {
+        return this.http
+            .post<{
+            userId: string;
+            isAdmin: boolean;
+            token: any;
+        }>(URL.LOGIN, { email, password })
+            .subscribe((response) => {
                 const { userId, isAdmin, token } = response;
                 console.log(`userId: ${userId}`);
                 console.log(`authToken: ${token}`);
@@ -48,26 +54,11 @@ export class AuthService {
                 this.userId = userId;
                 this.authToken = token;
                 this.isAdmin = isAdmin;
-            },
-        );
-    }
-
-    getToken() {
-        return this.authToken;
-    }
-
-    getUserId() {
-        return this.userId;
+            });
     }
 
     isAuthenticated() {
-        console.log(`token: ${this.authToken}`);
-        console.log(`expired: ${isExpired(this.authToken)}`);
-        return (this.authToken.length > 0 && !isExpired(this.authToken));
-    }
-
-    isUserAdmin() {
-        return this.isAdmin;
+        return this.authToken.length > 0 && !isExpired(this.authToken);
     }
 
     logout() {
