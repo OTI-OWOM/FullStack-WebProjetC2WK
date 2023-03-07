@@ -9,30 +9,32 @@
 
         <div class="line">
             <i class="fa fa-user"></i>
-            <input #username value="{{ data.username }}" class="input-form" type="text" id="username"
-                name="username" />
+            <input #username value="{{ data.username }}" class="input-form" type="text" id="username" name="username" />
         </div>
 
         <div class="line">
             <i class="fa-solid fa-location-dot"></i>
             <input #adresse value="{{ data.adresse }}" class="input-form" type="text" id="adresses" name="adresses" />
         </div>
-
         <div class="line">
             <i class="fa-solid fa-lock"></i>
             <input #password placeholder="Password" class="input-form" type="password" id="password" name="password" />
         </div>
-        <button class="button" (click)="userModify(username.value, email.value, adresse.value, password.value)">Modify
-            account</button>
+        <div style="display: flex; flex-direction: row; margin-top: 3rem;">
+            <button class="button"
+                (click)="userModify(username.value, email.value, adresse.value, password.value)">Modify
+                account</button>
+            <div style="display: flex; align-items: center; flex-direction: column;">
+                <a routerLink="../newproduct/create" class="create">Create Product</a>
+            </div>
+        </div>
         <div class="products-text">
             <p routerLink="/products/{{ userID }}" class="products-link">
                 <i class="fa-solid fa-eye"></i>
                 See all your products !
             </p>
         </div>
-        <div style="display: flex; align-items: center; flex-direction: column;">
-            <a routerLink="../newproduct/create" class="create">Create Product</a>
-        </div>
+
         <button class="button delete" (click)="userDelete()">Delete account</button>
         <p class="message">{{ message }}</p>
     </div>
