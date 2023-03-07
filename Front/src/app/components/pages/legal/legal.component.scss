@@ -1,24 +1,30 @@
 .wrapper {
     display: flex;
     align-items: center;
-
     flex-direction: column;
     justify-content: center;
     position: relative;
     width: 100%;
-    min-height: 100%;
-    padding: 8rem 2rem;
+    min-height: 69vh;
+    padding: 8rem 5rem 8rem;
     background-color: #8989ba;
 }
 
-.legal{
-    padding: 0 3rem;
-        
-        p {
-            text-align: justify;
-        }
-    
-        h1 {
-            text-decoration: underline;
-        }
+.legal {
+    padding: 3rem;
+    border: 0.1rem solid;
+    border-color: rgb(28, 60, 116);
+    border-radius: 1rem;
+    background-color: rgba(245, 245, 245, 0.9);
+    box-shadow: 10px 5px 5px #59595f70;
+
+    p {
+        text-align: justify;
+    }
+
+    h1 {
+        margin-bottom: 5rem;
+        text-align: center;
+        text-decoration: underline;
+    }
 }
