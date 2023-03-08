@@ -14,6 +14,8 @@ import { User } from '../../../shared/interfaces/Users';
 export class ModifyProductComponent implements OnInit {
     product!:Product;
 
+    image!:string;
+
     subscription: Subscription = new Subscription();
 
     users_list!: User[];
@@ -43,6 +45,7 @@ export class ModifyProductComponent implements OnInit {
         this.product_service.getProductById(this.paramID, localStorage.getItem('token') ?? '')
             .subscribe((response:Product) => {
                 this.product = response;
+                this.setImage();
             });
     }
 
@@ -59,5 +62,11 @@ export class ModifyProductComponent implements OnInit {
                     }),
             );
         }
+    }
+
+    setImage() {
+        // eslint-disable-next-line no-underscore-dangle
+        const index = (parseInt(this.product._id, 16) % 25) + 1;
+        this.image = `voiture (${index}).jpg`;
     }
 }

@@ -1,43 +1,27 @@
-<div>
-    <label for="name">name:</label>
-    <input
-        #name
-        class="input-font"
-        type="text"
-        onfocus="if(this.value=='Enter Name here'){this.value='';}"
-        onblur="if(this.value==''){this.value='Enter Name here';}"
-        color=""
-        id="name"
-        name="name"
-        value={{product.name}}
-        (keyup.enter)="changeProduct(name.value, price.value, description.value)"
-    /><br />
-    <label for="price">price:</label>
-    <input
-        #price
-        class="input-font"
-        type="number"
-        onfocus="if(this.value=='Enter price here'){this.value='';}"
-        onblur="if(this.value==''){this.value='Enter price here';}"
-        id="price"
-        name="price"
-        value={{product.price}}
-        (keyup.enter)="changeProduct(name.value, price.value, description.value)"
-    /><br />
-    <label for="descriptions">description:</label>
-    <input
-        #description
-        class="input-font"
-        type="text"
-        onfocus="if(this.value=='Enter description here'){this.value='';}"
-        onblur="if(this.value==''){this.value='Enter description here';}"
-        id="descriptions"
-        name="descriptions"
-        value={{product.description}}
-        (keyup.enter)="changeProduct(name.value, price.value, description.value)"
-    /><br />
-    <button (click)="changeProduct(name.value, price.value, description.value)" type="button">
-        Modify Product!</button
-    ><br />
-    <p>{{message}}</p>
+<div class="wrapper">
+    <div class="new-product">
+        <div class="image-container">
+            <img src="../../../../assets/images/{{ image }}" alt="{{ product.name }}" class="product-image">
+        </div>
+        <h1 class="title">{{product.name}}</h1>
+        <div class="line">
+            <i class="fa-solid fa-car"></i>
+            <input #name class="input-form" type="text" id="name" name="name" value={{product.name}}/>
+        </div>
+
+        <div class="line">
+            <i class="fa-solid fa-usd" style="padding: 0 4px 0 3px;"></i>
+            <input #price class="input-form" type="number" id="price" name="price" value={{product.price}} />
+        </div>
+
+        <div class="line">
+            <i class="fa-solid fa-commenting"></i>
+            <input #description class="input-form" type="text" id="desc"
+                name="desc" value={{product.description}}/>
+        </div>
+
+        <button class="button" (click)="changeProduct(name.value, price.value, description.value)" type="button">
+            Modify Product!</button><br />
+        <p style="align-self: center;">{{message}}</p>
+    </div>
 </div>
