@@ -18,9 +18,9 @@
             <hr class="hr-info" />
             <div class="controls">
                 <a routerLink="../../products" class="back-btn">Back</a>
-                <a *ngIf="isOwnProduct" routerLink="../../product/modify/{{ product._id }}"
+                <a *ngIf="isOwnProduct || isAdmin" routerLink="../../product/modify/{{ product._id }}"
                     class="modify-btn">Modify</a>
-                <a *ngIf="isOwnProduct" routerLink="../../product/delete/{{ product._id }}"
+                <a *ngIf="isOwnProduct || isAdmin" routerLink="../../product/delete/{{ product._id }}"
                     class="delete-btn">Delete</a>
             </div>
         </div>
