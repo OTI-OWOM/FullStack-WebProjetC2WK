@@ -1,24 +1,85 @@
-.simple-tab {
-    width: 97%;
-    margin: 1rem auto 2rem auto;
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0.1rem solid;
+    border-radius: 1rem;
+    margin: 5rem 5rem 8rem 5rem;
+    background-color: rgba(245, 245, 245, 0.848);
 
-    th {
-        color: var(--gold);
-        background-color: var(--darker);
+
+    h1 {
+        font-size: 5rem;
+        margin-bottom: 1rem;
     }
 
-    tr {
-        cursor: pointer;
-    }
-
-    tr:nth-child(odd) {
-        background-color: var(--cream);
+    hr {
+        width: 80%;
+        margin-bottom: 3rem;
     }
 }
 
-.simple-tab,
-.simple-tab th,
-.simple-tab td {
-    border: 1px solid #000;
-    border-collapse: collapse;
+.products-container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    row-gap: 5rem;
+    column-gap: 2rem;
+    margin: 2rem 1rem;
+
+    .product-card {
+        &:hover {
+            transform: scale(1.05);
+        }
+
+        width: 300px;
+        background-color: var(--cream);
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 2rem;
+        overflow: hidden;
+        cursor: pointer;
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .product-text {
+            padding: 0rem 1rem 1rem 1rem;
+            background: var(--cream);
+            background: linear-gradient(180deg, var(--cream) 85%, rgba(0, 41, 107, 1) 100%);
+            .product-name {
+                font-size: 18px;
+                font-weight: bold;
+                margin: 10px 0;
+            }
+
+            .product-description {
+                font-size: 14px;
+                color: #666;
+                margin: 10px 0;
+            }
+        }
+
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--dark);
+
+            .product-price {
+                font-size: 16px;
+                font-weight: bold;
+                color: var(--gold);
+            }
+        }
+    }
 }
