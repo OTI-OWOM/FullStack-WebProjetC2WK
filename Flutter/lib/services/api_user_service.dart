@@ -101,7 +101,16 @@ class ApiUserService {
         },
         body: jsonEncode(user.toJson()),
       );
-      return jsonDecode(response.body)["message"];
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 201) {
+        return jsonDecode(response.body)["message"];
+      } else if (response.statusCode == 422) {
+        return jsonDecode(response.body)["error"];
+      } else {
+        debugPrint(response.statusCode.toString());
+        debugPrint(response.body);
+        return 'Username and email must be unique';
+      }
     } catch (e) {
       debugPrint('ERROR - $e');
     }
