@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/shared/interfaces/Users';
 import { ProductsService } from '../../../services/products.service';
 import { Product } from '../../../shared/interfaces/Product';
 
@@ -36,7 +37,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
             }
         });
         this.currentUser = this.paramID;
-        this.currentUserID = localStorage.getItem('userID') ?? '';
+        this.currentUserID = localStorage.getItem('userId') ?? '';
     }
 
     ngOnInit(): void {
@@ -50,6 +51,14 @@ export class UserProductsComponent implements OnInit, OnDestroy {
                 this.sortByAscendingPrice();
                 this.setImages();
             });
+
+        this.subscription.add(
+            this.usersService
+                .userSelect(localStorage.getItem('token') ?? '', this.paramID)
+                .subscribe((res: Partial<User>) => {
+                    this.currentUser = res.username ?? '';
+                }),
+        );
     }
 
     back(): void {
