@@ -71,6 +71,11 @@ hr.solid {
             }
         }
 
+        &:active {
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+
         .user-image {
             display: flex;
             width: 100%;

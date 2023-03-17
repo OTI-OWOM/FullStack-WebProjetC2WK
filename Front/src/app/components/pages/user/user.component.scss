@@ -11,6 +11,8 @@
 }
 
 #allowed {
+    display: flex;
+    flex-direction: column;
     border-radius: 5px;
     padding: 1rem 2rem 2rem 2rem;
     width: 50rem;
@@ -47,15 +49,20 @@
         padding: 1.5rem 5rem;
         width: 100%;
         border-radius: 1rem;
+        transition: 0.2s;
         cursor: pointer;
 
         &:hover {
             box-shadow: 0 1px 3px #7187bc;
+            transform: scale(1.01);
+            transition: 0.2s;
         }
 
         &:active {
             border-bottom-width: 3px;
+            transform: scale(0.95);
             outline: none;
+            transition: 0.2s;
         }
     }
 
@@ -110,15 +117,20 @@
         border-bottom-width: 7px;
         color: #fff;
         font-size: large;
+        transition: 0.2s;
         cursor: pointer;
 
         &:hover {
+            transform: scale(1.01);
             box-shadow: 0 1px 3px #7187bc;
+            transition: 0.2s;
         }
 
         &:active {
+            transform: scale(0.95);
             border-bottom-width: 3px;
             outline: none;
+            transition: 0.2s;
         }
     }
 
@@ -128,6 +140,16 @@
 
     .message {
         text-align: center;
+        align-self: center;
+        padding: 1rem;
+        border: 1px solid;
+        border-radius: 18px;
+        border-color: rgb(121, 121, 121);
+        font-size: 2rem;
+        min-width: 250px;
+        max-width: 400px;
+        min-height: 45px;
+        position: static;
     }
 }
 

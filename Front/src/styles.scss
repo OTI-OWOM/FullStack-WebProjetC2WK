@@ -26,7 +26,7 @@
 
 * {
     box-sizing: border-box;
-    // font-family: 'Asul', sans-serif;
+    font-family: 'Alegreya';
 }
 
 
@@ -37,8 +37,7 @@ html {
 
 body {
     // background-color: #353535;
-    // background-color:  #7497c3;
-    background: url('./assets/images/GarageBackground2.png');
+    background-image: url('./assets/images/GarageBackground2.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: inherit;
@@ -46,7 +45,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.8rem;
     margin: 0;
-    // height: 100%;
+    height: 100%;
 }
 
 main {
