@@ -37,8 +37,14 @@ hr.solid {
     align-items: center;
     justify-content: space-evenly;
     row-gap: 5rem;
-    column-gap: 10rem;
+    column-gap: 5rem;
     margin: 2rem 1rem;
+    border: 1px solid;
+    border-color: rgba(98, 98, 98, 0.286);
+    border-radius: 1rem;
+    backdrop-filter: blur(5px);
+    background-color: rgba(122, 115, 151, 0.089);
+    padding: 8rem;
 
     .user-card {
         width: 28rem;
@@ -51,6 +57,7 @@ hr.solid {
         &:hover {
             transform: scale(1.05);
             background: rgb(61, 203, 97);
+            transition: transform 0.3s;
             .user-image {
                 filter: hue-rotate(80deg);
             }

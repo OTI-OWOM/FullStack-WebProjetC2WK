@@ -25,18 +25,33 @@
     align-items: center;
     justify-content: space-evenly;
     row-gap: 5rem;
-    column-gap: 2rem;
-    margin: 2rem 1rem;
+    column-gap: 4rem;
+    margin: 1rem 15rem 5rem 15rem;
+    border: 1px solid;
+    border-color: rgba(98, 98, 98, 0.286);
+    border-radius: 1rem;
+    backdrop-filter: blur(5px);
+    background-color: rgba(122, 115, 151, 0.089);
+    padding: 7rem;
 
     .product-card {
         &:hover {
             transform: scale(1.05);
+            box-shadow: 10px 10px 15px black;
+            transition: 0.2s;
         }
 
+        &:active {
+            transform: scale(0.95);
+        }
+
+        transition: 0.1s;
         width: 300px;
         background-color: var(--cream);
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         border-radius: 2rem;
+        border: 4px groove;
+        border-color: rgba(89, 89, 89, 0.405);
         overflow: hidden;
         cursor: pointer;
 
