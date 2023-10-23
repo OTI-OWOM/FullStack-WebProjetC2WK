@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo-container
+        image: mongo
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: admin
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: password
+      volumes:
+      - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongo-pvc

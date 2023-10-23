@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: angular
+  template:
+    metadata:
+      labels:
+        app: angular
+    spec:
+      containers:
+      - name: angular-container
+        image: mileristo/angular:v1
