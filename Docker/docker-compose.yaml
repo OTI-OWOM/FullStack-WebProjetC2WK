@@ -2,12 +2,12 @@ version: "3.1"
 
 services:
   angular:
-    image: mileristo/angular:3.0
+    image: mileristo/angular:v1
     restart: always
     ports:
       - 8000:80
   api:
-    image: mileristo/api:3.0
+    image: mileristo/api:v1
     restart: always
     ports:
       - 3000:3000

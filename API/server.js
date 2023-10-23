@@ -3,7 +3,7 @@ const http = require('http');
 const app = require('./app');
 require('dotenv').config();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.set('port', port);
 
 const server = http.createServer(app);
@@ -14,4 +14,4 @@ server.on('listening', () => {
     console.log(`Listening on ${bind}`);
 });
 
-server.listen(port);
+server.listen(port, '0.0.0.0');
