@@ -1,9 +1,9 @@
-variable "ami" {
-    type = string
-    default = "ami-008bcc0a51a849165"
-}
-
-variable "instance_type" {
-    type = string
-    default = "t2.micro"
-}
+ variable "subnet_id_1" {
+  type = string
+  default = "subnet-04786b509918c2c59"
+ }
+ 
+ variable "subnet_id_2" {
+  type = string
+  default = "subnet-0e3b33d3a1acdddf9"
+ }
