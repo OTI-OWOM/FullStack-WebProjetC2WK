@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-deployment
+  labels:
+    app: api
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: api
@@ -13,12 +15,23 @@ spec:
         app: api
     spec:
       containers:
-      - name: api-container
+      - name: api
         image: mileristo/api:v1
+        ports:
+        - containerPort: 3000
         env:
         - name: USER_NAME
-          value: admin
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-user
         - name: USER_PWD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-password 
         - name: DB_URL
-          value: mongo:27017
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: mongo-url

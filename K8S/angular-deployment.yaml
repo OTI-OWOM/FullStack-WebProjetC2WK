@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: angular-deployment
+  labels:
+    app: angular
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: angular
@@ -13,5 +15,7 @@ spec:
         app: angular
     spec:
       containers:
-      - name: angular-container
+      - name: angular
         image: mileristo/angular:v1
+        ports:
+        - containerPort: 80
