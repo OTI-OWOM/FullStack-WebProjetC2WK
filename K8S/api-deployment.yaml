@@ -39,4 +39,4 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: mongo-secret
-              key: mongo-url
+              key: api-token
