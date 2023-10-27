@@ -35,3 +35,8 @@ spec:
             configMapKeyRef:
               name: mongo-config
               key: mongo-url
+        - name: TOKEN_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-secret
+              key: mongo-url
