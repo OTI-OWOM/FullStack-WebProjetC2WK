@@ -30,13 +30,13 @@ spec:
             secretKeyRef:
               name: mongo-secret
               key: mongo-password 
+        - name: TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: api-token 
         - name: DB_URL
           valueFrom:
             configMapKeyRef:
               name: mongo-config
               key: mongo-url
-        - name: TOKEN_SECRET
-          valueFrom:
-            configMapKeyRef:
-              name: mongo-secret
-              key: api-token
