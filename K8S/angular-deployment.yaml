@@ -15,7 +15,13 @@ spec:
         app: angular
     spec:
       containers:
-      - name: angular
-        image: mileristo/angular:v1
-        ports:
-        - containerPort: 80
+        - name: angular
+          image: mileristo/angular:v3
+          ports:
+            - containerPort: 80
+          env:
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: api-config
+                  key: api-url
