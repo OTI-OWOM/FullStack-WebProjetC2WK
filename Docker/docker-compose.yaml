@@ -7,7 +7,7 @@ services:
     ports:
       - 8000:80
     environment:
-      API_URL: api:3000
+      API_URL: localhost
   api:
     image: mileristo/api:v1
     restart: always
