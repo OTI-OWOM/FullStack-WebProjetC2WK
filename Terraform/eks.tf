@@ -19,7 +19,7 @@ module "eks" {
 
   eks_managed_node_groups = {
     general = {
-      desired_size = 1
+      desired_size = 3
       min_size     = 1
       max_size     = 10
 
@@ -31,24 +31,24 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
     }
 
-    spot = {
-      desired_size = 1
-      min_size     = 1
-      max_size     = 10
+    # spot = {
+    #   desired_size = 1
+    #   min_size     = 1
+    #   max_size     = 10
 
-      labels = {
-        role = "spot"
-      }
+    #   labels = {
+    #     role = "spot"
+    #   }
 
-      taints = [{
-        key    = "market"
-        value  = "spot"
-        effect = "NO_SCHEDULE"
-      }]
+    #   taints = [{
+    #     key    = "market"
+    #     value  = "spot"
+    #     effect = "NO_SCHEDULE"
+    #   }]
 
-      instance_types = ["t3.micro"]
-      capacity_type  = "SPOT"
-    }
+    #   instance_types = ["t3.micro"]
+    #   capacity_type  = "SPOT"
+    # }
   }
 
   tags = {
