@@ -1,40 +1,40 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: service-a
+  name: api-service
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
-  - host: public.my-services.com
+  - host: mileristovski.fr
     http:
       paths:
-      - path: /path-a(/|$)(.*)
+      - path: /api(/|$)(.*)
         pathType: Prefix
         backend:
           service:
-            name: service-a
+            name: api-service
             port:
               number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: service-b
+  name: angular-service
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
-  - host: public.my-services.com
+  - host: mileristovski.fr
     http:
       paths:
-      - path: /path-b(/|$)(.*)
+      - path: /app(/|$)(.*)
         pathType: Prefix
         backend:
           service:
-            name: service-b
+            name: angular-service
             port:
               number: 80
 ---
