@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: mileristovski.fr
+  - host: testsite.fr
     http:
       paths:
       - path: /api(/|$)(.*)
@@ -23,18 +23,38 @@ kind: Ingress
 metadata:
   name: angular-service
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: mileristovski.fr
+  - host: testsite.fr
     http:
       paths:
-      - path: /app(/|$)(.*)
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: angular-service
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: service-a
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: testsite.fr
+    http:
+      paths:
+      - path: /path-a(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: service-a
             port:
               number: 80
 ---
