@@ -1,4 +1,4 @@
-const BASE_URL = 'http://__API_URL__';
+const BASE_URL = 'https://mileristovski.fr/api/';
 
 export const REGISTER_URL = `${BASE_URL}/register`;
 export const LOGIN_URL = `${BASE_URL}/login`;

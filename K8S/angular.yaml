@@ -16,15 +16,9 @@ spec:
     spec:
       containers:
         - name: angular
-          image: mileristovski/front:v2
+          image: mileristovski/front:v3
           ports:
             - containerPort: 80
-          env:
-            - name: API_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: api-config
-                  key: api-url
 ---
 apiVersion: v1
 kind: Service
