@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Brand.init({
-    BrandName: DataTypes.STRING
+    BrandName: {
+      type: DataTypes.STRING,
+      unique: true, // Enforce uniqueness on the email field
+    },
   }, {
     sequelize,
     modelName: 'Brand',
