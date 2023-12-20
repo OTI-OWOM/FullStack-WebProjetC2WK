@@ -5,24 +5,24 @@ const router = express.Router();
 const authorize = require('../middleware/authorize');
 const validateInput = require('../middleware/input-validator');
 
-const productController = require('../controllers/product');
+const carController = require('../controllers/car');
 
-// route to get a product
-router.get('/product/:id', authorize, productController.getOneProduct);
+// route to get a car
+router.get('/car/:id', authorize, carController.getOnecar);
 
-// route to get all products
-router.get('/products/', productController.getAllProducts);
+// route to get all cars
+router.get('/cars/', carController.getAllcars);
 
-// route to get all products of an user
-router.get('/products/:user', productController.getAllProductsFromUser);
+// route to get all cars of an user
+router.get('/cars/:user', carController.getAllcarsFromUser);
 
-// route to add a new product
-router.post('/product/create', authorize, validateInput, productController.createProduct);
+// route to add a new car
+router.post('/car/create', authorize, validateInput, carController.createcar);
 
-// route to update a product
-router.put('/product/:id', authorize, validateInput, productController.modifyProduct);
+// route to update a car
+router.put('/car/:id', authorize, validateInput, carController.modifycar);
 
-// route to delete a product
-router.delete('/product/:id', authorize, productController.deleteProduct);
+// route to delete a car
+router.delete('/car/:id', authorize, carController.deletecar);
 
 module.exports = router;

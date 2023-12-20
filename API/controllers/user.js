@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const db = require('../db/models');
+const User = db.User;
+const Op = db.Sequelize.Op;
 
 /**
  * register - Create a new user in the database.
@@ -9,25 +11,30 @@ const User = require('../models/user');
  * @param {Object} res  The response object used to send back the response to the client.
  */
 exports.register = (req, res) => {
-    if (!req.body.password || !req.body.email) return res.status(400).send('Invalid request');
+    if (!req.body.Password || !req.body.Email) return res.status(400).send('Invalid request');
     // we salt the password 10 times
-    return bcrypt.hash(req.body.password, 10)
+    return bcrypt.hash(req.body.Password, 10)
         .then((hash) => {
-            const user = new User({
-                username: req.body.username,
-                password: hash,
-                role: 'user',
-                email: req.body.email,
-                adresse: req.body.adresse,
-            });
-            user.save()
+            User.create({
+                Name: req.body.Name,
+                Password: hash,
+                Email: req.body.Email,
+                IsSeller: req.body.IsSeller,
+                Role: req.body.Role,
+            })
                 // 201 : successfully created a user (Created)
                 .then(() => res.status(201).json({ message: 'User created !' }))
                 // 400 : bad request
-                .catch((error) => res.status(400).json({ error }));
+                .catch((error) => {
+                    console.log(error);
+                    res.status(400).json({message : error.errors[0].message});
+                });
         })
         // 500 : internal server error
-        .catch((error) => res.status(500).json({ error }));
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({ error })
+        });
 };
 
 /**
@@ -36,14 +43,15 @@ exports.register = (req, res) => {
 * @param {object} res - response
 */
 exports.login = (req, res) => {
-    User.findOne({ email: req.body.email })
-        .then((user) => {
+    User.findOne({ where: { Email: req.body.Email } })
+        .then(user => {
             if (!user) {
                 // 401 : unauthorized
                 return res.status(401).json({ message: 'Login or password incorrect.' });
             }
             // compare password with hash
-            return bcrypt.compare(req.body.password, user.password)
+            console.log(`${req.body.Password}, ${user.Password}`);
+            return bcrypt.compare(req.body.Password, user.Password)
                 .then((valid) => {
                     if (!valid) {
                         // 401 : unauthorized
@@ -53,18 +61,22 @@ exports.login = (req, res) => {
                     return res.status(200).json({
                         userId: user.id,
                         token: jwt.sign(
-                            { userId: user.id },
-                            process.env.TOKEN_SECRET,
+                            { userId: user.id }, 
+                            process.env.TOKEN_SECRET, 
                             { expiresIn: '24h' },
                         ),
                     });
                 })
                 // 500 : internal server error
-                .catch((error) => { res.status(500).json({ error }); });
+                .catch((error) => {
+                    console.log(error);
+                    res.status(502).json({ error })
+                });
         })
         // 500 : internal server error
-        .catch((error) => res.status(500).json({ error }));
+        .catch(error => res.status(500).json({ error }));
 };
+
 
 /**
 * Get data for the current user
@@ -72,29 +84,26 @@ exports.login = (req, res) => {
 * @param {object} res - response
 */
 exports.getCurrentUser = (req, res) => {
-    const filter = { _id: req.auth.userId };
-
-    User.findOne(filter)
-        .select('-password')
-        .then((user) => res.status(200).json(user))
-        // 500 : internal Server Error
-        .catch((error) => res.status(500).json({ error }));
+    User.findByPk(req.auth.userId, {
+        attributes: { exclude: ['Password'] }
+    })
+    .then(user => res.status(200).json(user))
+    .catch(error => res.status(500).json({ error }));
 };
+
 
 /**
 * Get all the users data
 * @param {object} res - response
 */
 exports.getAllUsers = (req, res) => {
-    User.find()
-        .select('-password')
-        .then((users) => {
-            // 200 : successful request (OK)
-            res.status(200).json(users);
-        })
-        // 500 : internal Server Error
-        .catch((error) => res.status(500).json({ error }));
+    User.findAll({
+        attributes: { exclude: ['Password'] }
+    })
+    .then(users => res.status(200).json(users))
+    .catch(error => res.status(500).json({ error }));
 };
+
 
 /**
  * modifyUser - Let an admin or the user modify its data.
@@ -106,31 +115,27 @@ exports.getAllUsers = (req, res) => {
  * or the request was not authorized.
  */
 exports.modifyUser = async (req, res) => {
-    // Check if the target user exists
-    const targetUser = await User.findOne({ _id: req.params.userId });
-    if (!targetUser) {
-        // 404 : Not Found
-        return res.status(404).send('User not found');
+    try {
+        const user = await User.findByPk(req.params.userId);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        if (req.auth.userId !== user.id && !req.auth.isAdmin) {
+            return res.status(401).send('Unauthorized');
+        }
+
+        if (req.body.Password) {
+            req.body.Password = await bcrypt.hash(req.body.Password, 10);
+        }
+
+        await User.update(req.body, { where: { id: req.params.userId } });
+        res.status(200).json({ message: 'User modified!' });
+    } catch (error) {
+        res.status(400).json({ error });
     }
-
-    // Check if the authenticated user is authorized to modify the target user
-    if (req.auth.userId !== req.params.userId && !req.auth.isAdmin) {
-        // 401 : Unauthorized
-        return res.status(401).send('You do not have authorization to modify this user');
-    }
-
-    const filter = { _id: req.params.userId };
-    const newUserObject = { ...req.body };
-
-    if (req.body.password) newUserObject.password = await bcrypt.hash(req.body.password, 10);
-
-    // Update the user with the new one we created
-    return User.updateOne(filter, newUserObject)
-        // 200 : successful request (OK)
-        .then(() => res.status(200).json({ message: 'User modified !' }))
-        // 400 : bad request
-        .catch((error) => res.status(400).json({ error }));
 };
+
 
 /**
  * getOneUser - Retrieve a single user from the database.
@@ -142,21 +147,22 @@ exports.modifyUser = async (req, res) => {
  *                    or the request was not authorized.
  */
 exports.getOneUser = (req, res) => {
-    const filter = { _id: req.params.userId };
-    User.findOne(filter)
-        .select('-password')
-        .then((user) => {
-            if (req.auth.userId === user.id || req.auth.isAdmin) {
-                // 200 : successful request (OK)
-                res.status(200).json(user);
-            } else {
-                // 403 : Forbidden
-                res.status(403).json({ error: 'access denied' });
-            }
-        })
-        // 404 : page not found
-        .catch((error) => res.status(404).json({ error }));
+    User.findByPk(req.params.userId, {
+        attributes: { exclude: ['Password'] }
+    })
+    .then(user => {
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        if (req.auth.userId === user.id || req.auth.isAdmin) {
+            res.status(200).json(user);
+        } else {
+            res.status(403).json({ error: 'Access denied' });
+        }
+    })
+    .catch(error => res.status(500).json({ error }));
 };
+
 
 /**
 * Get data from the user
@@ -164,18 +170,26 @@ exports.getOneUser = (req, res) => {
 * @param {object} res - response
 */
 exports.deleteUser = (req, res) => {
-    const filter = { _id: req.params.userId };
-    User.findOne(filter)
-        .then((user) => {
+    User.findByPk(req.params.userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+            console.log(req.auth.userId);
+            console.log(user.id );
+            console.log(req.auth.isAdmin);
             if (req.auth.userId === user.id || req.auth.isAdmin) {
-                user.remove();
-                // 200 : successful request (OK)
-                res.status(200).json({ message: 'User successfully deleted.' });
+                return user.destroy()
+                    .then(() => res.status(200).json({ message: 'User successfully deleted.' }))
+                    .catch(error => {
+                        // Handle error during deletion
+                        res.status(500).json({ error });
+                    });
             } else {
-                // 403 : Forbidden
-                res.status(403).json({ error: 'access denied' });
+                res.status(403).json({ error: 'Access denied' });
             }
         })
-        // 404 : page not found
-        .catch((error) => res.status(404).json({ error }));
+        .catch(error => res.status(500).json({ error }));
 };
+
+

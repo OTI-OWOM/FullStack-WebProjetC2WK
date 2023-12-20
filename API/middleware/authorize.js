@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const db = require('../db/models');
+const User = db.User;
 
 async function isUserAdmin(userId) {
-    const filter = { _id: userId };
-
-    const user = await User.findOne(filter);
-    return user && user.role === 'admin';
+    const user = await User.findOne({ where: { id: userId } });
+    console.log(`Role : ${user.Role}`);
+    return user && user.Role;
 }
 
 module.exports = async (req, res, next) => {
@@ -22,6 +22,7 @@ module.exports = async (req, res, next) => {
         next();
     } catch (error) {
         // 401 : unauthorized
+        console.log(error);
         res.status(401).json({ error });
     }
 };

@@ -1,33 +1,44 @@
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize("C2WK", process.env.MYSQL_NAME, process.env.MYSQL_PWD, {
-  host: process.env.MYSQL_URL,
-  dialect: "mariadb",
-  operatorsAliases: false,
+'use strict';
 
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const process = require('process');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../../config/config.js')[env];
+const db = {};
+
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (
+      file.indexOf('.') !== 0 &&
+      file !== basename &&
+      file.slice(-3) === '.js' &&
+      file.indexOf('.test.js') === -1
+    );
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach(modelName => {
+  console.log("Loaded model: " + modelName);
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
   }
 });
 
-const db = {};
-
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-
-// Import models
-db.user = require("./user.js")(sequelize, Sequelize);
-db.car = require("./car.js")(sequelize, Sequelize);
-db.brand = require("./brand.js")(sequelize, Sequelize);
-db.model = require("./model.js")(sequelize, Sequelize);
-db.carImage = require("./carImage.js")(sequelize, Sequelize);
-db.carDetail = require("./carDetail.js")(sequelize, Sequelize);
-db.review = require("./review.js")(sequelize, Sequelize);
-
-// Define associations
-const setupAssociations = require('./relations');
-setupAssociations(sequelize);
+db.Sequelize = Sequelize;
 
 module.exports = db;

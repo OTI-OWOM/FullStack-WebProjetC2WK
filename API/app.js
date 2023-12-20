@@ -1,19 +1,26 @@
 /* eslint-disable no-console */
 const express = require('express');
-const mongoose = require('mongoose');
+const db = require('./db/models');
 const helmet = require('helmet');
 require('dotenv').config();
 
 const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
 
-mongoose.connect(`mongodb://${process.env.USER_NAME}:${process.env.USER_PWD}@${process.env.DB_URL}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => console.log('Connected to MongoDB successfully !'))
-    .catch((error) => console.log(`MongoDB connection failed !\n${error}`));
+// mongoose.connect(`mongodb://${process.env.USER_NAME}:${process.env.USER_PWD}@${process.env.DB_URL}`, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// })
+//     .then(() => console.log('Connected to MongoDB successfully !'))
+//     .catch((error) => console.log(`MongoDB connection failed !\n${error}`));
 
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 const app = express();
 
 // We use helmet to secure our application headers
