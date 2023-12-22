@@ -1,5 +1,8 @@
+const formatHelper = require('../helpers/formatHelper');
 const db = require('../db/models');
 const Car = db.Car;
+const Brand = db.Brand;
+const ModelBrand = db.ModelBrand;
 
 
 /**
@@ -9,8 +12,49 @@ const Car = db.Car;
 */
 exports.getAllcars = (req, res) => {
     Car.findAll()
-        .then(cars => res.status(200).json(cars))
+        .then(async cars => {
+            const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+            res.status(200).json(formattedCars);
+        })
         .catch(error => res.status(400).json({ error }));
+};
+
+/**
+* Get all existing Brands from the api
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.getAllBrands = (req, res) => {
+    Brand.findAll()
+        .then(brands => res.status(200).json(brands.map(function(carBrand) {
+            return { id: carBrand.id, BrandName: carBrand.BrandName }; 
+        })))
+        .catch(error => res.status(400).json({ error }));
+};
+
+/**
+* Get all existing Brand Models from the api
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.getAllModelbrand = async (req, res) => {
+    try {
+        const modelbrands = await ModelBrand.findAll();
+
+        const modelDetails = await Promise.all(modelbrands.map(async (model) => {
+            const brand = await Brand.findByPk(model.BrandID);
+            return { 
+                id: model.id, 
+                ModelName: model.ModelName, 
+                BrandID: model.BrandID, 
+                BrandName: brand.BrandName
+            };
+        }));
+
+        res.status(200).json(modelDetails);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
 };
 
 
@@ -20,9 +64,15 @@ exports.getAllcars = (req, res) => {
 * @param {object} res - response
 */
 exports.getAllcarsFromUser = (req, res) => {
-    Car.findAll({ where: { UserId: req.params.userId } })
-        .then(cars => res.status(200).json(cars))
-        .catch(error => res.status(400).json({ error }));
+    Car.findAll({ where: { SellerID: req.params.user } })
+        .then(async cars => {
+            const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+            res.status(200).json(formattedCars);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(400).json({ error })
+        });
 };
 
 
@@ -33,11 +83,11 @@ exports.getAllcarsFromUser = (req, res) => {
 */
 exports.getOnecar = (req, res) => {
     Car.findByPk(req.params.id)
-        .then(car => {
+        .then(async car => {
             if (!car) {
                 return res.status(404).json({ error: 'car not found' });
             }
-            res.status(200).json(car);
+            res.status(200).json(await formatHelper.carFormat(car));
         })
         .catch(error => res.status(404).json({ error }));
 };
@@ -67,11 +117,14 @@ exports.modifycar = (req, res) => {
             if (!car) {
                 return res.status(404).json({ error: 'car not found' });
             }
-            return Car.update(req.body)
+            return car.update(req.body)
                 .then(() => res.status(200).json({ message: 'car modified!' }))
                 .catch(error => res.status(400).json({ error }));
         })
-        .catch(error => res.status(404).json({ error }));
+        .catch(error => {
+            console.log(error);
+            res.status(404).json({ error });
+        });
 };
 
 
@@ -86,7 +139,7 @@ exports.deletecar = (req, res) => {
             if (!car) {
                 return res.status(404).json({ error: 'car not found' });
             }
-            return Car.destroy()
+            return car.destroy()
                 .then(() => res.status(200).json({ message: 'car deleted!' }))
                 .catch(error => res.status(400).json({ error }));
         })
