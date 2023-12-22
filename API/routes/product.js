@@ -1,4 +1,5 @@
 const express = require('express');
+const upload = require('../helpers/multer')
 
 const router = express.Router();
 
@@ -27,8 +28,11 @@ router.get('/cars/:user', carController.getAllcarsFromUser);
 // route to add a new car
 router.post('/car/create', authorize, validateInputCreate, carController.createcar);
 
-// route to add a new car
+// route to add a new car detail
 router.post('/car/detail/create', authorize, validateInputCreateDetail, carController.createcardetail);
+
+// route to add a new car image
+router.post('/car/uploadImage/:id', authorize, upload.array('images', 5), carController.uploadCarImages);
 
 // route to update a car
 router.put('/car/:id', authorize, validateInputUpdate, carController.modifycar);

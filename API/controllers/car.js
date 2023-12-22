@@ -4,6 +4,7 @@ const Car = db.Car;
 const Brand = db.Brand;
 const ModelBrand = db.ModelBrand;
 const CarDetail = db.CarDetail;
+const CarImage = db.CarImage;
 
 
 /**
@@ -34,6 +35,26 @@ exports.getAllBrands = (req, res) => {
             return { id: carBrand.id, BrandName: carBrand.BrandName }; 
         })))
         .catch(error => res.status(400).json({ error }));
+};
+
+/**
+* Get all existing Brands from the api
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.uploadCarImages = (req, res) => {
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    const imagePaths = req.files.map(file => ({
+        ImageURL: file.path, // Use the same field name as in your model
+        CarID: req.params.id
+    }));
+
+    CarImage.bulkCreate(imagePaths)
+        .then(() => res.status(201).send('Images successfully uploaded.'))
+        .catch(error => res.status(500).send(error.message));
 };
 
 /**
