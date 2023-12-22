@@ -14,8 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   CarImage.init({
-    ImageURL: DataTypes.STRING,
-    UploadDate: DataTypes.DATE
+    ImageURL: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'CarImage',

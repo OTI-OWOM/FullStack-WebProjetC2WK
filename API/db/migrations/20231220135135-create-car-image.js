@@ -12,9 +12,6 @@ module.exports = {
       ImageURL: {
         type: Sequelize.STRING
       },
-      UploadDate: {
-        type: Sequelize.DATE
-      },
       CarID: {
         type: Sequelize.INTEGER,
         references: {
