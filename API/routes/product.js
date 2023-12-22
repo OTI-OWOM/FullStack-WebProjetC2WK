@@ -4,6 +4,7 @@ const router = express.Router();
 
 const authorize = require('../middleware/authorize');
 const validateInputCreate = require('../middleware/input-validator-create');
+const validateInputCreateDetail = require('../middleware/input-validator-create-detail');
 const validateInputUpdate = require('../middleware/input-validator-update');
 
 const carController = require('../controllers/car');
@@ -25,6 +26,9 @@ router.get('/cars/:user', carController.getAllcarsFromUser);
 
 // route to add a new car
 router.post('/car/create', authorize, validateInputCreate, carController.createcar);
+
+// route to add a new car
+router.post('/car/detail/create', authorize, validateInputCreateDetail, carController.createcardetail);
 
 // route to update a car
 router.put('/car/:id', authorize, validateInputUpdate, carController.modifycar);

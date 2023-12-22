@@ -3,6 +3,7 @@ const db = require('../db/models');
 const Car = db.Car;
 const Brand = db.Brand;
 const ModelBrand = db.ModelBrand;
+const CarDetail = db.CarDetail;
 
 
 /**
@@ -16,7 +17,10 @@ exports.getAllcars = (req, res) => {
             const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
             res.status(200).json(formattedCars);
         })
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => {
+            console.log(error);
+            res.status(400).json({ error })
+        });
 };
 
 /**
@@ -99,9 +103,23 @@ exports.getOnecar = (req, res) => {
 * @param {object} res - response
 */
 exports.createcar = (req, res) => {
-    const carObject = req.body;
+    let carObject = req.body;
+    carObject.SellerID = req.auth.userId;
+
     Car.create(carObject)
         .then(() => res.status(201).json({ message: 'car added!' }))
+        .catch(error => res.status(400).json({ error }));
+};
+
+/**
+* Add a new car
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.createcardetail = (req, res) => {
+    const carObject = req.body;
+    CarDetail.create(carObject)
+        .then(() => res.status(201).json({ message: 'car detail added!' }))
         .catch(error => res.status(400).json({ error }));
 };
 

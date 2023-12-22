@@ -1,15 +1,14 @@
 const Validator = require('validatorjs');
 const db = require('../db/models');
-const User = db.User;
 const ModelBrand = db.ModelBrand;
 
 module.exports = async (req, res, next) => {
     let data = {};
-    if (req.body.product) {
+    if (req.body) {
         try {
-            data = JSON.parse(req.body.product);
+            data = JSON.parse(req.body);
         } catch (error) {
-            data = req.body.product;
+            data = req.body;
         }
     } else {
         data = req.body;
@@ -20,9 +19,18 @@ module.exports = async (req, res, next) => {
         Year: ['required', 'integer', `between: 1886, ${new Date().getFullYear()}`],
         Description: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
         Available: ['required', 'integer', 'between: 0, 1'],
-        SellerID : ['required', 'integer', 'between: 0, 9007199254740991'], // Number.MAX_SAFE_INTEGER = 9007199254740991
+        Price : ['required', 'integer', 'between: 0, 9007199254740991'],
         ModelBrandID: ['required', 'integer', 'between: 0, 9007199254740991'],
     };
+
+    // Check for additional fields not in the schema
+    const extraneousFields = Object.keys(data).filter(key => !inputSchema.hasOwnProperty(key));
+    if (extraneousFields.length > 0) {
+        return res.status(422).json({
+            message: 'Invalid input: contains extraneous fields',
+            extraneousFields
+        });
+    }
 
     const validation = new Validator(data, inputSchema);
 
@@ -35,12 +43,6 @@ module.exports = async (req, res, next) => {
     }
 
     try {
-        // Verify SellerID
-        const sellerExists = await User.findByPk(data.SellerID);
-        if (!sellerExists) {
-            return res.status(404).json({ message: 'Seller not found' });
-        }
-
         // Verify ModelBrandID
         const modelBrandExists = await ModelBrand.findByPk(data.ModelBrandID);
         if (!modelBrandExists) {
