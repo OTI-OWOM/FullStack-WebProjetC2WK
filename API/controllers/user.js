@@ -49,8 +49,8 @@ exports.login = (req, res) => {
                 // 401 : unauthorized
                 return res.status(401).json({ message: 'Login or password incorrect.' });
             }
+
             // compare password with hash
-            console.log(`${req.body.Password}, ${user.Password}`);
             return bcrypt.compare(req.body.Password, user.Password)
                 .then((valid) => {
                     if (!valid) {
@@ -116,14 +116,14 @@ exports.getAllUsers = (req, res) => {
  */
 exports.modifyUser = async (req, res) => {
     try {
-        const user = await User.findByPk(req.params.userId);
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
+        // const user = await User.findByPk(req.params.userId);
+        // if (!user) {
+        //     return res.status(404).send('User not found');
+        // }
 
-        if (req.auth.userId !== user.id && !req.auth.isAdmin) {
-            return res.status(401).send('Unauthorized');
-        }
+        // if (req.auth.userId !== user.id && !req.auth.isAdmin) {
+        //     return res.status(401).send('Unauthorized');
+        // }
 
         if (req.body.Password) {
             req.body.Password = await bcrypt.hash(req.body.Password, 10);
@@ -151,14 +151,14 @@ exports.getOneUser = (req, res) => {
         attributes: { exclude: ['Password'] }
     })
     .then(user => {
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        if (req.auth.userId === user.id || req.auth.isAdmin) {
-            res.status(200).json(user);
-        } else {
-            res.status(403).json({ error: 'Access denied' });
-        }
+        // if (!user) {
+        //     return res.status(404).json({ error: 'User not found' });
+        // }
+        // if (req.auth.userId === user.id || req.auth.isAdmin) {
+        res.status(200).json(user);
+        // } else {
+        //     res.status(403).json({ error: 'Access denied' });
+        // }
     })
     .catch(error => res.status(500).json({ error }));
 };
@@ -172,22 +172,20 @@ exports.getOneUser = (req, res) => {
 exports.deleteUser = (req, res) => {
     User.findByPk(req.params.userId)
         .then(user => {
-            if (!user) {
-                return res.status(404).json({ error: 'User not found' });
-            }
-            console.log(req.auth.userId);
-            console.log(user.id );
-            console.log(req.auth.isAdmin);
-            if (req.auth.userId === user.id || req.auth.isAdmin) {
+            // if (!user) {
+            //     return res.status(404).json({ error: 'User not found' });
+            // }
+
+            // if (req.auth.userId === user.id || req.auth.isAdmin) {
                 return user.destroy()
                     .then(() => res.status(200).json({ message: 'User successfully deleted.' }))
                     .catch(error => {
                         // Handle error during deletion
                         res.status(500).json({ error });
                     });
-            } else {
-                res.status(403).json({ error: 'Access denied' });
-            }
+            // } else {
+            //     res.status(403).json({ error: 'Access denied' });
+            // }
         })
         .catch(error => res.status(500).json({ error }));
 };

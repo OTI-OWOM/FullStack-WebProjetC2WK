@@ -1,18 +1,10 @@
 const Validator = require('validatorjs');
+const helper = require('../helpers/validationHelper')
 const db = require('../db/models');
 const ModelBrand = db.ModelBrand;
 
 module.exports = async (req, res, next) => {
-    let data = {};
-    if (req.body.product) {
-        try {
-            data = JSON.parse(req.body.product);
-        } catch (error) {
-            data = req.body.product;
-        }
-    } else {
-        data = req.body;
-    }
+    let data = helper.dataPass(req);
 
     // Schema that our data must match to
     const inputSchema = {
@@ -35,7 +27,7 @@ module.exports = async (req, res, next) => {
 
     if (!validation.passes()) {
         // 422 : Unprocessable Entity
-        res.status(422).json({ 
+        return res.status(422).json({ 
             message: 'invalid input: did not pass validation',
             errors: validation.errors.all()
          });

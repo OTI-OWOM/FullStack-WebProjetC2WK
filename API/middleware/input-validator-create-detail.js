@@ -1,23 +1,15 @@
 const Validator = require('validatorjs');
+const helper = require('../helpers/validationHelper')
 const db = require('../db/models');
 const Car = db.Car;
 
 module.exports = async (req, res, next) => {
-    let data = {};
-    if (req.body.product) {
-        try {
-            data = JSON.parse(req.body.product);
-        } catch (error) {
-            data = req.body.product;
-        }
-    } else {
-        data = req.body;
-    }
+    let data = helper.dataPass(req);
 
     // Schema that our data must match to
     const inputSchema = {
         DetailName: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
-        DetailValue: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
+        DetailValue: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+,%#\\-]+$/', 'max:200'],
         CarID : ['required', 'integer', 'between: 0, 9007199254740991'] // Number.MAX_SAFE_INTEGER = 9007199254740991
     };
 
@@ -25,14 +17,13 @@ module.exports = async (req, res, next) => {
 
     if (!validation.passes()) {
         // 422 : Unprocessable Entity
-        res.status(422).json({ 
+        return res.status(422).json({ 
             message: 'invalid input: did not pass validation',
             errors: validation.errors.all()
          });
     }
 
     try {
-        // Verify CarID
         const carExists = await Car.findByPk(data.CarID);
         if (!carExists) {
             return res.status(404).json({ message: 'Car not found' });

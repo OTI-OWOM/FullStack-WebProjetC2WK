@@ -15,18 +15,18 @@ router.post('/register', emailValidation, passwordValidation, userController.reg
 router.post('/login', userController.login);
 
 // route to current user info
-router.get('/me', authorize, userController.getCurrentUser);
+router.get('/me', authorize.JWTAthorization, userController.getCurrentUser);
 
 // route to all users
-router.get('/users', userController.getAllUsers);
+router.get('/users', authorize.JWTAthorization, authorize.adminAuth, userController.getAllUsers);
 
 // route to get data from a specific user
-router.get('/user/:userId', authorize, userController.getOneUser);
+router.get('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserAuth, userController.getOneUser);
 
 // route to modify a user
-router.put('/user/:userId', authorize, emailValidation, passwordValidation, userController.modifyUser);
+router.put('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserAuth, emailValidation, passwordValidation, userController.modifyUser);
 
 // route to delete data from a specific user
-router.delete('/user/:userId', authorize, userController.deleteUser);
+router.delete('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserAuth, userController.deleteUser);
 
 module.exports = router;
