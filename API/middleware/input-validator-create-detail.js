@@ -9,8 +9,7 @@ module.exports = async (req, res, next) => {
     // Schema that our data must match to
     const inputSchema = {
         DetailName: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
-        DetailValue: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+,%#\\-]+$/', 'max:200'],
-        CarID : ['required', 'integer', 'between: 0, 9007199254740991'] // Number.MAX_SAFE_INTEGER = 9007199254740991
+        DetailValue: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+,%.#\\-]+$/', 'max:200']
     };
 
     const validation = new Validator(data, inputSchema);
@@ -24,7 +23,8 @@ module.exports = async (req, res, next) => {
     }
 
     try {
-        const carExists = await Car.findByPk(data.CarID);
+        const carExists = await Car.findByPk(req.params.carId);
+        console.log(carExists);
         if (!carExists) {
             return res.status(404).json({ message: 'Car not found' });
         } else if(carExists.SellerID !== req.auth.userId) {

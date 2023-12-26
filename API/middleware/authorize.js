@@ -41,6 +41,7 @@ exports.adminOrUserAuth = async (req, res, next) => {
 
 exports.adminOrCarUserAuth = async (req, res, next) => {
     const car = await Car.findByPk(req.params.carId);
+    
     if (!car) {
         return res.status(404).send('Car not found');
     }

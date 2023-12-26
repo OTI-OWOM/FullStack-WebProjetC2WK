@@ -1,5 +1,7 @@
 const formatHelper = require('../helpers/formatHelper');
 const db = require('../db/models');
+const path = require('path');
+const fs = require('fs');
 const Car = db.Car;
 const Brand = db.Brand;
 const ModelBrand = db.ModelBrand;
@@ -38,7 +40,7 @@ exports.getAllBrands = (req, res) => {
 };
 
 /**
-* Get all existing Brands from the api
+* Upload car Images to the DB and API
 * @param {object} req - request
 * @param {object} res - response
 */
@@ -49,12 +51,71 @@ exports.uploadCarImages = (req, res) => {
 
     const imagePaths = req.files.map(file => ({
         ImageURL: file.path, // Use the same field name as in your model
-        CarID: req.params.id
+        CarID: req.params.carId
     }));
 
     CarImage.bulkCreate(imagePaths)
         .then(() => res.status(201).send('Images successfully uploaded.'))
         .catch(error => res.status(500).send(error.message));
+};
+
+/**
+* Get the images from the API
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.getImageURLs = async (req, res) => {
+    try {
+        const carId = req.params.carId;
+        const carImages = await CarImage.findAll({
+            where: { CarID: carId }
+        });
+
+        const imageUrls = carImages.map(img => img.ImageURL.split("/")[1]);
+
+        res.json({ images: imageUrls });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+/**
+* Get the Image
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.getImage = async (req, res) => {
+    const filename = req.params.filename;
+    const imagePath = path.join(__dirname, '..', 'images', filename);
+    
+    if (fs.existsSync(imagePath)) {
+        res.sendFile(imagePath);
+    } else {
+        res.status(404).send('Image not found');
+    }
+};
+
+/**
+* Delete the Image
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.deleteImage = async (req, res) => {
+    const image = await CarImage.findByPk(req.params.imageId);
+    if (!image) {
+        return res.status(404).send('Image not found');
+    }
+    console.log(image);
+    const imagePath = path.join(__dirname, '..', image.ImageURL);
+    fs.unlink(imagePath, (err) => {
+        if (err) {
+            console.error('Error deleting the file:', err);
+        } else {
+            image.destroy();
+            res.status(200).json({ message: 'Image deleted!' });
+        }
+    });
 };
 
 /**
@@ -89,7 +150,7 @@ exports.getAllModelbrand = async (req, res) => {
 * @param {object} res - response
 */
 exports.getAllcarsFromUser = (req, res) => {
-    Car.findAll({ where: { SellerID: req.params.user } })
+    Car.findAll({ where: { SellerID: req.params.userId } })
         .then(async cars => {
             const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
             res.status(200).json(formattedCars);
@@ -107,7 +168,7 @@ exports.getAllcarsFromUser = (req, res) => {
 * @param {object} res - response
 */
 exports.getOnecar = (req, res) => {
-    Car.findByPk(req.params.id)
+    Car.findByPk(req.params.carId)
         .then(async car => {
             if (!car) {
                 return res.status(404).json({ error: 'car not found' });
@@ -133,15 +194,34 @@ exports.createcar = (req, res) => {
 };
 
 /**
-* Add a new car
+* Add a new car detail
 * @param {object} req - request
 * @param {object} res - response
 */
-exports.createcardetail = (req, res) => {
+exports.createCarDetail = async (req, res) => {
     const carObject = req.body;
+    carObject.CarID = req.params.carId;
+    const cars = await CarDetail.findAll({ where: { DetailName: req.body.DetailName, CarID: req.body.CarID }});
+
+    if (cars.length !== 0) {
+        return res.status(400).json({message: 'The Detail Name should be unique'})
+    }
     CarDetail.create(carObject)
-        .then(() => res.status(201).json({ message: 'car detail added!' }))
+        .then(() => res.status(201).json({ message: 'Car detail added!' }))
         .catch(error => res.status(400).json({ error }));
+};
+
+/**
+* Delete a new car detail
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.deleteCarDetail = async (req, res) => {
+    const detail = await CarDetail.findByPk(req.params.detailId);
+
+    detail.destroy()        
+        .then(() => res.status(200).json({ message: 'Car detail deleted!' }))
+        .catch(error => res.status(400).json({ error }));;
 };
 
 
@@ -151,7 +231,7 @@ exports.createcardetail = (req, res) => {
 * @param {object} res - response
 */
 exports.modifycar = (req, res) => {
-    Car.findByPk(req.params.id)
+    Car.findByPk(req.params.carId)
         .then(car => {
             if (!car) {
                 return res.status(404).json({ error: 'car not found' });
@@ -172,77 +252,28 @@ exports.modifycar = (req, res) => {
 * @param {object} req - request
 * @param {object} res - response
 */
-exports.deletecar = (req, res) => {
-    Car.findByPk(req.params.id)
-        .then(car => {
-            if (!car) {
-                return res.status(404).json({ error: 'car not found' });
+exports.deletecar = async (req, res) => {
+    const car = await Car.findByPk(req.params.carId);
+    const details = await CarDetail.findAll({ where: {CarID: car.id}});
+    const images = await CarImage.findAll({ where: { CarID: car.id } });
+
+    details.forEach(detail => {
+        detail.destroy();
+    });
+
+    images.forEach(image => {
+        const imagePath = path.join(__dirname, '..', image.ImageURL);
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error('Error deleting the file:', err);
+            } else {
+                image.destroy();
             }
-            return car.destroy()
-                .then(() => res.status(200).json({ message: 'car deleted!' }))
-                .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(404).json({ error }));
+        });
+    });
+
+    return car.destroy()
+        .then(() => res.status(200).json({ message: 'car deleted!' }))
+        .catch(error => res.status(400).json({ error }));
 };
 
-
-/**
-* Like or Dislike a car
-* @param {object} req - request
-* @param {object} res - response
-*/
-exports.likeDislikecar = (req, res) => {
-    const filter = { _id: req.params.id };
-
-    // Check value of like to know what the user did
-    if (req.body.like === 1) {
-        // use the $inc and $push operators provided by Mongo DB to update the car
-        Car.updateOne(filter, {
-            $inc: { likes: 1 },
-            $push: { usersLiked: req.body.userId },
-        })
-            // 200 : successful request (OK)
-            .then(() => res.status(200).json({ message: 'Like' }))
-            // 400 : bad request
-            .catch((error) => res.status(400).json({ error }));
-    } else if (req.body.like === -1) {
-        // use the $inc and $push operators provided by Mongo DB to update the car
-        Car.updateOne(filter, {
-            $inc: { dislikes: 1 },
-            $push: { usersDisliked: req.body.userId },
-        })
-            // 200 : successful request (OK)
-            .then(() => res.status(200).json({ message: 'Dislike' }))
-            // 400 : bad request
-            .catch((error) => res.status(400).json({ error }));
-    } else if (req.body.like === 0) {
-        Car.findOne(filter)
-            .then((car) => {
-                // Check if the user has liked the car
-                if (Car.usersLiked.includes(req.body.userId)) {
-                    // use the $inc and $pull operators provided by Mongo DB to update the car
-                    car.updateOne(filter, {
-                        $inc: { likes: -1 },
-                        $pull: { usersLiked: req.body.userId },
-                    })
-                        // 200 : successful request (OK)
-                        .then(() => { res.status(200).json({ message: 'Like removed' }); })
-                        // 400 : bad request
-                        .catch((error) => res.status(400).json({ error }));
-                } else if (car.usersDisliked.includes(req.body.userId)) {
-                    // Check if the user has disliked the car
-                    // use the $inc and $pull operators provided by Mongo DB to update the car
-                    car.updateOne(filter, {
-                        $inc: { dislikes: -1 },
-                        $pull: { usersDisliked: req.body.userId },
-                    })
-                        // 200 : successful request (OK)
-                        .then(() => { res.status(200).json({ message: 'Dislike removed' }); })
-                        // 400 : bad request
-                        .catch((error) => res.status(400).json({ error }));
-                }
-            })
-            // 400 : bad request
-            .catch((error) => res.status(400).json({ error }));
-    }
-};

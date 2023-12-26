@@ -29,16 +29,22 @@ router.get('/cars/:userId', authorize.JWTAthorization, authorize.adminOrUserAuth
 router.post('/car/create', authorize.JWTAthorization, validateInputCreate, carController.createcar);
 
 // route to add a new car detail
-router.post('/car/detail/create', authorize.JWTAthorization, validateInputCreateDetail, carController.createcardetail);
+router.post('/car/detail/:carId', authorize.JWTAthorization, authorize.adminOrCarUserAuth, validateInputCreateDetail, carController.createCarDetail);
 
-// route to add a new car image
-router.post('/car/uploadImage/:carId', authorize.JWTAthorization, authorize.adminOrCarUserAuth, upload.array('images', 5), carController.uploadCarImages);
+// // route to add a new car detail
+router.delete('/car/detail/:detailId', authorize.JWTAthorization, carController.deleteCarDetail);
 
 // route to get all car images
-router.get('/car/getCarImages/:carId', authorize.JWTAthorization, carController.getImageURLs);
+router.get('/car/images/:carId', authorize.JWTAthorization, carController.getImageURLs);
+
+// route to add a new car image
+router.post('/car/image/:carId', authorize.JWTAthorization, authorize.adminOrCarUserAuth, upload.array('images', 5), carController.uploadCarImages);
 
 // route to get an Image
-router.get('/car/getImage/:filename', authorize.JWTAthorization, carController.getImage);
+router.get('/car/image/:filename', authorize.JWTAthorization, carController.getImage);
+
+// route to delete an Image
+router.delete('/car/image/:imageId', authorize.JWTAthorization, carController.deleteImage);
 
 // route to update a car
 router.put('/car/:carId', authorize.JWTAthorization, authorize.adminOrCarUserAuth, passwordValidation, carController.modifycar);
