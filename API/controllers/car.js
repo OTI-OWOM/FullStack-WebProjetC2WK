@@ -103,11 +103,8 @@ exports.getImage = async (req, res) => {
 */
 exports.deleteImage = async (req, res) => {
     const image = await CarImage.findByPk(req.params.imageId);
-    if (!image) {
-        return res.status(404).send('Image not found');
-    }
-    console.log(image);
     const imagePath = path.join(__dirname, '..', image.ImageURL);
+    
     fs.unlink(imagePath, (err) => {
         if (err) {
             console.error('Error deleting the file:', err);

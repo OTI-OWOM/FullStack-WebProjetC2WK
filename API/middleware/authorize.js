@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const db = require('../db/models');
 const User = db.User;
 const Car = db.Car;
+const CarImage = db.CarImage;
+const CarDetail = db.CarDetail;
 
 async function isUserAdmin(userId) {
     const user = await User.findOne({ where: { id: userId } });
@@ -41,10 +43,48 @@ exports.adminOrUserAuth = async (req, res, next) => {
 
 exports.adminOrCarUserAuth = async (req, res, next) => {
     const car = await Car.findByPk(req.params.carId);
-    
     if (!car) {
         return res.status(404).send('Car not found');
     }
+
+    const user = await User.findByPk(car.SellerID);
+    if (req.auth.userId !== user.id && !req.auth.isAdmin) {
+        return res.status(401).send('Unauthorized');
+    } else {
+        next();
+    }
+}
+
+exports.adminOrCarUserImageAuth = async (req, res, next) => {
+    const image = await CarImage.findByPk(req.params.imageId);
+    if (!image) {
+        return res.status(404).send('Image not found');
+    }
+
+    const car = await Car.findByPk(image.CarID);
+    if (!car) {
+        return res.status(404).send('Car not found');
+    }
+    
+    const user = await User.findByPk(car.SellerID);
+    if (req.auth.userId !== user.id && !req.auth.isAdmin) {
+        return res.status(401).send('Unauthorized');
+    } else {
+        next();
+    }
+}
+
+exports.adminOrCarUserDetailAuth = async (req, res, next) => {
+    const detail = await CarDetail.findByPk(req.params.detailId);
+    if (!detail) {
+        return res.status(404).send('Detail not found');
+    }
+
+    const car = await Car.findByPk(detail.CarID);
+    if (!car) {
+        return res.status(404).send('Car not found');
+    }
+
     const user = await User.findByPk(car.SellerID);
     if (req.auth.userId !== user.id && !req.auth.isAdmin) {
         return res.status(401).send('Unauthorized');

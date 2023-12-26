@@ -32,7 +32,7 @@ router.post('/car/create', authorize.JWTAthorization, validateInputCreate, carCo
 router.post('/car/detail/:carId', authorize.JWTAthorization, authorize.adminOrCarUserAuth, validateInputCreateDetail, carController.createCarDetail);
 
 // // route to add a new car detail
-router.delete('/car/detail/:detailId', authorize.JWTAthorization, carController.deleteCarDetail);
+router.delete('/car/detail/:detailId', authorize.JWTAthorization, authorize.adminOrCarUserDetailAuth, carController.deleteCarDetail);
 
 // route to get all car images
 router.get('/car/images/:carId', authorize.JWTAthorization, carController.getImageURLs);
@@ -44,7 +44,7 @@ router.post('/car/image/:carId', authorize.JWTAthorization, authorize.adminOrCar
 router.get('/car/image/:filename', authorize.JWTAthorization, carController.getImage);
 
 // route to delete an Image
-router.delete('/car/image/:imageId', authorize.JWTAthorization, carController.deleteImage);
+router.delete('/car/image/:imageId', authorize.JWTAthorization, authorize.adminOrCarUserImageAuth, carController.deleteImage);
 
 // route to update a car
 router.put('/car/:carId', authorize.JWTAthorization, authorize.adminOrCarUserAuth, passwordValidation, carController.modifycar);
