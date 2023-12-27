@@ -6,6 +6,9 @@ require('dotenv').config();
 
 const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
+const carDetailRoutes = require('./routes/car-details');
+const carImagesRoutes = require('./routes/car-images');
+const carBrandsRoutes = require('./routes/car-brands');
 
 // mongoose.connect(`mongodb://${process.env.USER_NAME}:${process.env.USER_PWD}@${process.env.DB_URL}`, {
 //     useNewUrlParser: true,
@@ -42,5 +45,8 @@ app.use(express.json());
 
 app.use(productRoutes);
 app.use(userRoutes);
+app.use(carBrandsRoutes);
+app.use(carDetailRoutes);
+app.use(carImagesRoutes);
 
 module.exports = app;
