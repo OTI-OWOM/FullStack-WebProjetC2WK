@@ -10,9 +10,9 @@ const detailController = require('../controllers/car-details');
 
 
 // route to add a new car detail
-router.post('/car/detail/:carId', authorize.JWTAthorization, authorize.adminOrCarUserAuth, validateInputCreateDetail, detailController.createCarDetail);
+router.post('/car/detail/:carId', authorize.JWTAthorization, authorize.carCheck, authorize.adminOrUserCheck, validateInputCreateDetail, detailController.createCarDetail);
 
 // // route to add a new car detail
-router.delete('/car/detail/:detailId', authorize.JWTAthorization, authorize.adminOrCarUserDetailAuth, detailController.deleteCarDetail);
+router.delete('/car/detail/:detailId', authorize.JWTAthorization, authorize.detailCheck, authorize.carCheck, authorize.adminOrUserCheck, detailController.deleteCarDetail);
 
 module.exports = router;

@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../db/models');
 const User = db.User;
-const Op = db.Sequelize.Op;
 
 /**
  * register - Create a new user in the database.

@@ -29,11 +29,12 @@ exports.JWTAthorization = async (req, res, next) => {
     }
 };
 
-exports.adminOrUserAuth = async (req, res, next) => {
+exports.adminOrUserCheck = async (req, res, next) => {
     const user = await User.findByPk(req.params.userId);
     if (!user) {
         return res.status(404).send('User not found');
     }
+
     if (req.auth.userId !== user.id && !req.auth.isAdmin) {
         return res.status(401).send('Unauthorized');
     } else {
@@ -41,56 +42,34 @@ exports.adminOrUserAuth = async (req, res, next) => {
     }
 }
 
-exports.adminOrCarUserAuth = async (req, res, next) => {
+exports.carCheck = async (req, res, next) => {
     const car = await Car.findByPk(req.params.carId);
     if (!car) {
         return res.status(404).send('Car not found');
     }
-
-    const user = await User.findByPk(car.SellerID);
-    if (req.auth.userId !== user.id && !req.auth.isAdmin) {
-        return res.status(401).send('Unauthorized');
-    } else {
-        next();
-    }
+    
+    req.params.userId = car.SellerID;
+    next();
 }
 
-exports.adminOrCarUserImageAuth = async (req, res, next) => {
+exports.imageCheck = async (req, res, next) => {
     const image = await CarImage.findByPk(req.params.imageId);
     if (!image) {
         return res.status(404).send('Image not found');
     }
-
-    const car = await Car.findByPk(image.CarID);
-    if (!car) {
-        return res.status(404).send('Car not found');
-    }
     
-    const user = await User.findByPk(car.SellerID);
-    if (req.auth.userId !== user.id && !req.auth.isAdmin) {
-        return res.status(401).send('Unauthorized');
-    } else {
-        next();
-    }
+    req.params.carId = image.CarID;
+    next();
 }
 
-exports.adminOrCarUserDetailAuth = async (req, res, next) => {
+exports.detailCheck = async (req, res, next) => {
     const detail = await CarDetail.findByPk(req.params.detailId);
     if (!detail) {
         return res.status(404).send('Detail not found');
     }
 
-    const car = await Car.findByPk(detail.CarID);
-    if (!car) {
-        return res.status(404).send('Car not found');
-    }
-
-    const user = await User.findByPk(car.SellerID);
-    if (req.auth.userId !== user.id && !req.auth.isAdmin) {
-        return res.status(401).send('Unauthorized');
-    } else {
-        next();
-    }
+    req.params.carId = detail.CarID;
+    next();
 }
 
 exports.adminAuth = (req, res, next) => {

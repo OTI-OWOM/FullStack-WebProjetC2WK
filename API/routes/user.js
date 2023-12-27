@@ -21,12 +21,12 @@ router.get('/me', authorize.JWTAthorization, userController.getCurrentUser);
 router.get('/users', authorize.JWTAthorization, authorize.adminAuth, userController.getAllUsers);
 
 // route to get data from a specific user
-router.get('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserAuth, userController.getOneUser);
+router.get('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserCheck, userController.getOneUser);
 
 // route to modify a user
-router.put('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserAuth, emailValidation, passwordValidation, userController.modifyUser);
+router.put('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserCheck, emailValidation, passwordValidation, userController.modifyUser);
 
 // route to delete data from a specific user
-router.delete('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserAuth, userController.deleteUser);
+router.delete('/user/:userId', authorize.JWTAthorization, authorize.adminOrUserCheck, userController.deleteUser);
 
 module.exports = router;

@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "test": "mocha tests/modifyUser.test.js"
+        "test": "mocha ./tests"
     },
     "author": "Thomas & Mile",
     "license": "ISC",
