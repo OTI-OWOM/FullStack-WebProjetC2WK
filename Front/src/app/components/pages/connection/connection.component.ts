@@ -20,11 +20,11 @@ export class ConnectionComponent {
         private router: Router,
     ) {}
 
-    validation(Email: string, Password: string): void {
-        if (Email && Password) {
+    validation(Email: string, assword: string): void {
+        if (Email && assword) {
             this.subscription.add(
                 this.user_service
-                    .loginUser(Email, Password)
+                    .loginUser(Email, assword)
                     .subscribe({
                         next: (res: any) => {
                             localStorage.setItem('token', `${res.token}`);

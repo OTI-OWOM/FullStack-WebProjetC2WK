@@ -11,8 +11,6 @@ export class FooterComponent implements OnInit {
 
     ngOnInit(): void {
         this.loggedIn = localStorage.getItem('token') ?? '';
-        console.log(`Logged in : ${this.loggedIn}`);
-        
     }
 
     ngOnDestroy() {}

@@ -62,9 +62,13 @@ export class AuthService {
     }
 
     logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('id');
+    
         this.authToken = '';
         this.userId = '';
         this.isAdmin = false;
+    
         this.router.navigate(['login']);
     }
 }

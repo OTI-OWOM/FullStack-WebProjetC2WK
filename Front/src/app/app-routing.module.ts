@@ -4,6 +4,7 @@ import { ProductsComponent } from './components/pages/products/products.componen
 import { ProductComponent } from './components/partials/product/product.component';
 import { UsersComponent } from './components/pages/users/users.component';
 import { ConnectionComponent } from './components/pages/connection/connection.component';
+import { LogoutComponent } from './components/pages/logout/logout.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { MeComponent } from './components/pages/me/me.component';
 import { ModifyUserComponent } from './components/partials/modify-user/modify-user.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
     { path: 'product/modify/:id', component: ModifyProductComponent },
     { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
     { path: 'login', component: ConnectionComponent },
+    { path: 'logout', component: LogoutComponent },
     { path: 'register', component: SignupComponent },
     { path: 'me', component: MeComponent, canActivate: [AuthGuard] },
     { path: 'modify', component: ModifyUserComponent, canActivate: [AuthGuard] },

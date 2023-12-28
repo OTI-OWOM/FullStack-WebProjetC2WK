@@ -26,6 +26,7 @@ import { Error404Component } from './components/pages/error404/error404.componen
 import { HomeFooterComponent } from './components/partials/home-footer/home-footer.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { LegalComponent } from './components/pages/legal/legal.component';
+import { LogoutComponent } from './components/pages/logout/logout.component';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { LegalComponent } from './components/pages/legal/legal.component';
         HomeFooterComponent,
         ContactComponent,
         LegalComponent,
+        LogoutComponent,
     ],
     imports: [
         BrowserModule,
