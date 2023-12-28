@@ -27,7 +27,7 @@ exports.createCarDetail = async (req, res) => {
 exports.deleteCarDetail = async (req, res) => {
     const detail = await CarDetail.findByPk(req.params.detailId);
 
-    detail.destroy()        
+    return detail.destroy()        
         .then(() => res.status(200).json({ message: 'Car detail deleted!' }))
         .catch(error => res.status(400).json({ error }));;
 };

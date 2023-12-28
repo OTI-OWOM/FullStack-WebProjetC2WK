@@ -18,7 +18,7 @@ exports.uploadCarImages = (req, res) => {
         CarID: req.params.carId
     }));
 
-    CarImage.bulkCreate(imagePaths)
+    return CarImage.bulkCreate(imagePaths)
         .then(() => res.status(201).send('Images successfully uploaded.'))
         .catch(error => res.status(500).send(error.message));
 };

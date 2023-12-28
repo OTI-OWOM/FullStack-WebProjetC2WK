@@ -15,14 +15,14 @@ const CarImage = db.CarImage;
 * @param {object} res - response
 */
 exports.getAllcars = (req, res) => {
-    Car.findAll()
+    return Car.findAll()
         .then(async cars => {
             const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
-            res.status(200).json(formattedCars);
+            return res.status(200).json(formattedCars);
         })
         .catch(error => {
             console.log(error);
-            res.status(400).json({ error })
+            return res.status(400).json({ error })
         });
 };
 
@@ -33,7 +33,7 @@ exports.getAllcars = (req, res) => {
 * @param {object} res - response
 */
 exports.getAllcarsFromUser = (req, res) => {
-    Car.findAll({ where: { SellerID: req.params.userId } })
+    return Car.findAll({ where: { SellerID: req.params.userId } })
         .then(async cars => {
             const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
             res.status(200).json(formattedCars);
@@ -51,7 +51,7 @@ exports.getAllcarsFromUser = (req, res) => {
 * @param {object} res - response
 */
 exports.getOnecar = (req, res) => {
-    Car.findByPk(req.params.carId)
+    return Car.findByPk(req.params.carId)
         .then(async car => {
             if (!car) {
                 return res.status(404).json({ error: 'car not found' });
@@ -71,7 +71,7 @@ exports.createCar = (req, res) => {
     let carObject = req.body;
     carObject.SellerID = req.auth.userId;
 
-    Car.create(carObject)
+    return Car.create(carObject)
         .then(() => res.status(201).json({ message: 'car added!' }))
         .catch(error => res.status(400).json({ error }));
 };
@@ -82,7 +82,7 @@ exports.createCar = (req, res) => {
 * @param {object} res - response
 */
 exports.modifyCar = (req, res) => {
-    Car.findByPk(req.params.carId)
+    return Car.findByPk(req.params.carId)
         .then(car => {
             if (!car) {
                 return res.status(404).json({ error: 'car not found' });
@@ -114,14 +114,12 @@ exports.deleteCar = async (req, res) => {
 
     images.forEach(image => {
         const imagePath = path.join(__dirname, '..', image.ImageURL);
-        fs.unlink(imagePath, (err) => {
-            if (err) {
-                console.error('Error deleting the file:', err);
-            } else {
-                image.destroy();
-            }
-        });
-    });
+        try {
+            fs.unlink(imagePath);
+            image.destroy();
+        } catch (err) {
+            console.error('Error deleting the file:', err);
+    }});
 
     return car.destroy()
         .then(() => res.status(200).json({ message: 'car deleted!' }))

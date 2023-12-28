@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-// tests/modifyUser.test.js
 
 const chai = require('chai');
 const sinon = require('sinon');

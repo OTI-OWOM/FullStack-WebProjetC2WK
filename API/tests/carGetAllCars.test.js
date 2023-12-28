@@ -1,10 +1,8 @@
 /* eslint-disable no-undef */
-// tests/modifyUser.test.js
 
 const sinon = require('sinon');
 const { expect } = require('chai');
 const { getAllcars  } = require('../controllers/car');
-const formatHelper = require('../helpers/formatHelper');
 
 const db = require('../db/models');
 const Car = db.Car;
@@ -27,7 +25,7 @@ describe('getAllcars', () => {
     });
 
     it('should return all cars with status 200', async () => {
-        const fakeCars = [{ id: 1, Year: 2020, Price: 30000, Description: 'Car 1', Available: 1, ModelBrandID: 1, SellerID: 1 }];
+        const fakeCars = [{ id: 1, Year: 2020, Price: 30000, Description: 'Car 1', Available: true, ModelBrandID: 1, SellerID: 1 }];
         sandbox.stub(Car, 'findAll').returns(Promise.resolve(fakeCars));
         sandbox.stub(ModelBrand, 'findByPk').returns(Promise.resolve({ ModelName: 'Model1', BrandID: 1 }));
         sandbox.stub(Brand, 'findByPk').returns(Promise.resolve({ BrandName: 'Brand1' }));
