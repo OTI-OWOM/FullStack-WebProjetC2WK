@@ -6,7 +6,7 @@ module.exports = {
     username: process.env.MYSQL_NAME,
     password: process.env.MYSQL_PWD,
     database: "C2WK",
-    host: process.env.MYSQL_URL,
+    host: process.env.DB_URL,
     port: 3306,
     dialect: 'mariadb',
     dialectOptions: {

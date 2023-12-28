@@ -10,13 +10,6 @@ const carDetailRoutes = require('./routes/car-details');
 const carImagesRoutes = require('./routes/car-images');
 const carBrandsRoutes = require('./routes/car-brands');
 
-// mongoose.connect(`mongodb://${process.env.USER_NAME}:${process.env.USER_PWD}@${process.env.DB_URL}`, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// })
-//     .then(() => console.log('Connected to MongoDB successfully !'))
-//     .catch((error) => console.log(`MongoDB connection failed !\n${error}`));
-
 db.sequelize.sync()
   .then(() => {
     console.log("Synced db.");
