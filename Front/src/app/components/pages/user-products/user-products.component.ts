@@ -56,7 +56,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
             this.usersService
                 .userSelect(localStorage.getItem('token') ?? '', this.paramID)
                 .subscribe((res: Partial<User>) => {
-                    this.currentUser = res.username ?? '';
+                    this.currentUser = res.Name ?? '';
                 }),
         );
     }
@@ -71,14 +71,14 @@ export class UserProductsComponent implements OnInit, OnDestroy {
     }
 
     sortByAscendingPrice(): void {
-        this.productList.sort((a, b) => a.price - b.price);
+        this.productList.sort((a, b) => a.Price - b.Price);
     }
 
     setImages() {
         for (const product of this.productList) {
-            const index = (parseInt(product._id, 16) % 25) + 1;
+            const index = (parseInt(product.id, 16) % 25) + 1;
             const image = `voiture (${index}).jpg`;
-            this.images[product._id] = image;
+            this.images[product.id] = image;
         }
     }
 }

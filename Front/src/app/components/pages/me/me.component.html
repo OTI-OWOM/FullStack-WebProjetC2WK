@@ -1,20 +1,20 @@
 <div class="wrapper">
     <div class="user-panel">
         <h1 class="title">Your account</h1>
-        <p *ngIf="data.role == 'admin'" class="admin-text">Admin</p>
+        <p *ngIf="data.Role == 'admin'" class="admin-text">Admin</p>
         <div class="line">
             <i class="fa-solid fa-at"></i>
-            <input #email autofocus value="{{ data.email }}" class="input-form" type="text" id="email" name="email" />
+            <input #email autofocus value="{{ data.Email }}" class="input-form" type="text" id="email" name="email" />
         </div>
 
         <div class="line">
             <i class="fa fa-user"></i>
-            <input #username value="{{ data.username }}" class="input-form" type="text" id="username" name="username" />
+            <input #username value="{{ data.Name }}" class="input-form" type="text" id="username" name="username" />
         </div>
 
         <div class="line">
             <i class="fa-solid fa-location-dot"></i>
-            <input #adresse value="{{ data.adresse }}" class="input-form" type="text" id="adresses" name="adresses" />
+            <input #adresse value="{{ data.Adresse }}" class="input-form" type="text" id="adresses" name="adresses" />
         </div>
         <div class="line">
             <i class="fa-solid fa-lock"></i>

@@ -1,7 +1,13 @@
+import { CarDetail } from "./Details";
+
 export interface Product {
-    '_id': string,
-    'name': string,
-    'description': string,
-    'price': number,
-    'userId': string
+    id: string;
+    Year: number;
+    Price: number;
+    Description: string;
+    Available: boolean;
+    SellerID: string;
+    ModelBrandName: string;
+    BrandName: string;
+    CarDetails: CarDetail[];
 }

@@ -58,37 +58,42 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     setImages() {
         for (const product of this.productList) {
-            const index = (parseInt(product._id, 16) % 25) + 1;
+            const index = (parseInt(product.id, 16) % 25) + 1;
             const image = `voiture (${index}).jpg`;
-            this.images[product._id] = image;
+            this.images[product.id] = image;
         }
     }
 
     getMaxPrice(): number {
         let maxPrice = 0;
         for (let i = 0; i < this.productList.length; i += 1) {
-            if (this.productList[i].price > maxPrice) {
-                maxPrice = this.productList[i].price;
+            if (this.productList[i].Price > maxPrice) {
+                maxPrice = this.productList[i].Price;
             }
         }
-        return maxPrice / 100;
+        
+        return (maxPrice / 100) + 100;
     }
 
     sortByAscendingPrice():void {
-        this.resultList.sort((a, b) => a.price - b.price);
+        this.resultList.sort((a, b) => a.Price - b.Price);
     }
 
     sortByDescendingPrice() {
-        this.resultList.sort((a, b) => b.price - a.price);
+        this.resultList.sort((a, b) => b.Price - a.Price);
     }
 
     updateResult() {
         this.resultList = this.productList.filter((product) => {
-            const name = product.name.toLowerCase();
-            const description = product.description.toLowerCase();
+            const name = product.BrandName.toLowerCase();
+            const description = product.Description.toLowerCase();
             const search = this.searchString.toLowerCase();
-            return (name.includes(search) || description.includes(search))
-            && product.price / 100 <= this.priceRange;
+    
+            const isNameMatch = name.includes(search);
+            const isDescriptionMatch = description.includes(search);
+            const isWithinPriceRange = product.Price <= this.priceRange * 100;
+    
+            return (isNameMatch || isDescriptionMatch) && isWithinPriceRange;
         });
     }
 }

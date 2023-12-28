@@ -9,13 +9,13 @@
     <div class="users-container">
         <div routerLink="../user/{{ user._id }}" class="user-card" *ngFor="let user of user_list">
             <div class="user-image">
-                <img src="../../../../assets/images/user2.png" alt="{{ user.username }}">
+                <img src="../../../../assets/images/user2.png" alt="{{ user.Name }}">
             </div>
             <div class="user-text">
-                <h2 class="user-name">{{ user.username }}</h2>
-                <p class="user-description">{{ user.role }}</p>
-                <p class="user-description">{{ user.email }}</p>
-                <p class="user-description">{{ user.adresse }}</p>
+                <h2 class="user-name">{{ user.Name }}</h2>
+                <p class="user-description">{{ user.Role }}</p>
+                <p class="user-description">{{ user.Email }}</p>
+                <p class="user-description">{{ user.Adresse }}</p>
             </div>
         </div>
     </div>

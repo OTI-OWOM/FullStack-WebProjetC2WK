@@ -54,7 +54,7 @@ export class ModifyProductComponent implements OnInit {
             this.subscription.add(
                 this.product_service
                     // eslint-disable-next-line no-underscore-dangle
-                    .modifyProduct(localStorage.getItem('token') ?? '', this.product._id, name, price, description)
+                    .modifyProduct(localStorage.getItem('token') ?? '', this.product.id, name, price, description)
                     .subscribe((res: any) => {
                         if (res) {
                             this.message = res.message;
@@ -66,7 +66,7 @@ export class ModifyProductComponent implements OnInit {
 
     setImage() {
         // eslint-disable-next-line no-underscore-dangle
-        const index = (parseInt(this.product._id, 16) % 25) + 1;
+        const index = (parseInt(this.product.id, 16) % 25) + 1;
         this.image = `voiture (${index}).jpg`;
     }
 }

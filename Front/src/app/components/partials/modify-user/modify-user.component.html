@@ -7,7 +7,7 @@
         color=""
         id="Username"
         name="Username"
-        value={{currentUser.username}}
+        value={{currentUser.Name}}
         (keyup.enter)="userModify(username.value, email.value, adresse.value, password.value)"
     /><br />
     <label for="password">Password:</label>
@@ -28,7 +28,7 @@
         onblur="if(this.value==''){this.value='Enter Email here';}"
         id="email"
         name="email"
-        value={{currentUser.email}}
+        value={{currentUser.Email}}
         (keyup.enter)="userModify(username.value, email.value, adresse.value, password.value)"
     /><br />
     <label for="adresses">Adresse:</label>
@@ -38,7 +38,7 @@
         type="text"
         id="adresses"
         name="adresses"
-        value={{currentUser.adresse}}
+        value={{currentUser.Adresse}}
         (keyup.enter)="userModify(username.value, email.value, adresse.value, password.value)"
     /><br />
     <button (click)="userModify(username.value, email.value, adresse.value, password.value)" type="button">

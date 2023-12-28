@@ -26,20 +26,21 @@
         </div>
     </div>
 </div>
-<hr style="width: 80%; margin-bottom: 5rem;"/>
-<div *ngIf="resultList.length == 0">
-    It looks like none of our products corresponds to your search.
-</div>
+<hr style="width: 80%; margin-bottom: 5rem;" />
 <div class="products-container">
-    <div routerLink="../product/{{ product._id }}" class="product-card" *ngFor="let product of resultList">
+    <div *ngIf="resultList.length == 0" style="color: white;">
+        It looks like none of our products corresponds to your search.
+    </div>
+    <div routerLink="../product/{{ product.id }}" class="product-card" *ngFor="let product of resultList">
         <div class="product-image">
-            <img src="../../../../assets/images/{{ images[product._id] }}" alt="{{ product.name }}">
+            <img src="../../../../assets/images/{{ images[product.id] }}" alt="{{ product.BrandName }}">
         </div>
         <div class="product-text">
-            <h2 class="product-name">{{ product.name }}</h2>
-            <p class="product-description">{{ product.description }}</p>
+            <h2 class="product-name">{{ product.BrandName }}</h2>
+            <p>{{ product.ModelBrandName }}</p>
+            <p class="product-description">{{ product.Description }}</p>
         </div>
         <div class="product-details">
-            <span class="product-price">{{ product.price/100 }} €</span>
+            <span class="product-price">{{ product.Price/100 }} €</span>
         </div>
     </div>

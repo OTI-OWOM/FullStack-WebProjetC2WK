@@ -45,7 +45,7 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     getProducts(): void {
-        localStorage.setItem('user', this.targetUser.username ?? '');
+        localStorage.setItem('user', this.targetUser.Name ?? '');
         // eslint-disable-next-line no-underscore-dangle
         localStorage.setItem('userId', this.targetUser._id ?? '');
         this.router.navigateByUrl(`products/${this.paramID}`);

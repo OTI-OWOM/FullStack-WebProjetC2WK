@@ -4,24 +4,24 @@
 
     <ng-template #thenBlock>
         <section id="allowed">
-            <h1 class="title">{{ targetUser.username }}</h1>
+            <h1 class="title">{{ targetUser.Name }}</h1>
 
-            <p *ngIf="targetUser.role == 'admin'" class="admin-text">Admin</p>
+            <p *ngIf="targetUser.Role == 'admin'" class="admin-text">Admin</p>
             <div class="line">
                 <i class="fa-solid fa-at"></i>
-                <input #email autofocus value="{{ targetUser.email }}" class="input-form" type="text" id="email"
+                <input #email autofocus value="{{ targetUser.Email }}" class="input-form" type="text" id="email"
                     name="email" />
             </div>
 
             <div class="line">
                 <i class="fa fa-user"></i>
-                <input #username value="{{ targetUser.username }}" class="input-form" type="text" id="username"
+                <input #username value="{{ targetUser.Name }}" class="input-form" type="text" id="username"
                     name="username" />
             </div>
 
             <div class="line">
                 <i class="fa-solid fa-location-dot"></i>
-                <input #adresse value="{{ targetUser.adresse }}" class="input-form" type="text" id="adresses"
+                <input #adresse value="{{ targetUser.Adresse }}" class="input-form" type="text" id="adresses"
                     name="adresses" />
             </div>
 
@@ -40,7 +40,7 @@
             <div class="products-text">
                 <p routerLink="/products/{{ paramID }}" class="products-link">
                     <i class="fa-solid fa-eye"></i>
-                    See all of {{ targetUser.username }} products !
+                    See all of {{ targetUser.Name }} products !
                 </p>
             </div>
 

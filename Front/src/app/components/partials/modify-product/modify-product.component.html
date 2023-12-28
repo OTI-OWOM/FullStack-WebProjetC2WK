@@ -1,23 +1,23 @@
 <div class="wrapper">
     <div class="new-product">
         <div class="image-container">
-            <img src="../../../../assets/images/{{ image }}" alt="{{ product.name }}" class="product-image">
+            <img src="../../../../assets/images/{{ image }}" alt="{{ product.BrandName }}" class="product-image">
         </div>
-        <h1 class="title">{{product.name}}</h1>
+        <h1 class="title">{{product.BrandName}}</h1>
         <div class="line">
             <i class="fa-solid fa-car"></i>
-            <input #name class="input-form" type="text" id="name" name="name" value={{product.name}}/>
+            <input #name class="input-form" type="text" id="name" name="name" value={{product.BrandName}}/>
         </div>
 
         <div class="line">
             <i class="fa-solid fa-usd" style="padding: 0 4px 0 3px;"></i>
-            <input #price class="input-form" type="number" id="price" name="price" value={{product.price}} />
+            <input #price class="input-form" type="number" id="price" name="price" value={{product.Price}} />
         </div>
 
         <div class="line">
             <i class="fa-solid fa-commenting"></i>
             <input #description class="input-form" type="text" id="desc"
-                name="desc" value={{product.description}}/>
+                name="desc" value={{product.Description}}/>
         </div>
 
         <button class="button" (click)="changeProduct(name.value, price.value, description.value)" type="button">

@@ -38,7 +38,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             .getProductById(this.paramID, localStorage.getItem('token') ?? '')
             .subscribe((response: Product) => {
                 this.product = response;
-                this.isOwnProduct = this.product.userId === localStorage.getItem('userId') ?? '';
+                this.isOwnProduct = this.product.SellerID === localStorage.getItem('userId') ?? '';
                 this.setImage();
             });
 
@@ -46,7 +46,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.usersService
                 .me(localStorage.getItem('token') ?? '')
                 .subscribe((res) => {
-                    this.isAdmin = res.role === 'admin';
+                    this.isAdmin = res.Role === 'admin';
                 }),
         );
     }
@@ -56,7 +56,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
     setImage() {
-        const index = (parseInt(this.product._id, 16) % 25) + 1;
+        const index = (parseInt(this.product.id, 16) % 25) + 1;
         this.image = `voiture (${index}).jpg`;
     }
 }

@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void _sendData(UserModel user) async {
     message = await ApiUserService().registerUser(user);
     debugPrint(message);
-    tokenNewUser = await ApiUserService().login(user.email, user.password);
+    tokenNewUser = await ApiUserService().login(user.Email, user.password);
     Future.delayed(const Duration(milliseconds: 500)).then(
       (value) => setState(() {
         if (message == 'User created !') {

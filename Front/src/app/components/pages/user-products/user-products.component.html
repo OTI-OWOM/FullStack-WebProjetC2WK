@@ -8,15 +8,15 @@
     It looks like none of our products corresponds to your search.
 </div>
 <div class="products-container">
-    <div routerLink="../../product/{{ product._id }}" class="product-card" *ngFor="let product of productList">
+    <div routerLink="../../product/{{ product.id }}" class="product-card" *ngFor="let product of productList">
         <div class="product-image">
-            <img src="../../../../assets/images/{{ images[product._id] }}" alt="{{ product.name }}">
+            <img src="../../../../assets/images/{{ images[product.id] }}" alt="{{ product.BrandName }}">
         </div>
         <div class="product-text">
-            <h2 class="product-name">{{ product.name }}</h2>
-            <p class="product-description">{{ product.description }}</p>
+            <h2 class="product-name">{{ product.BrandName }}</h2>
+            <p class="product-description">{{ product.Description }}</p>
         </div>
         <div class="product-details">
-            <span class="product-price">{{ product.price/100 }} €</span>
+            <span class="product-price">{{ product.Price/100 }} €</span>
         </div>
     </div>
