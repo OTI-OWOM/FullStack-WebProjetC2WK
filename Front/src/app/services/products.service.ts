@@ -25,20 +25,20 @@ export class ProductsService {
 
     public createProduct(
         token: string,
-        userId: string,
-        name: string,
-        price: string,
-        description: string,
+        sellerId: string,
+        BrandName: string,
+        Price: string,
+        Description: string,
     ) {
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
         return this.http.post(
             URL.PRODUCT_CREATE,
             {
                 product: {
-                    userId,
-                    name,
-                    price,
-                    description,
+                    sellerId,
+                    BrandName,
+                    Price,
+                    Description,
                 },
             },
             { headers },
@@ -48,17 +48,17 @@ export class ProductsService {
     public modifyProduct(
         token: string,
         productId: string,
-        name: string,
-        price: string,
-        description: string,
+        BrandName: string,
+        Price: string,
+        Description: string,
     ) {
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
         return this.http.put(
             URL.PRODUCT + productId,
             {
-                name,
-                price,
-                description,
+                BrandName,
+                Price,
+                Description,
             },
             { headers },
         );

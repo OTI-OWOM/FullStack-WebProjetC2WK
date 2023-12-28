@@ -15,20 +15,20 @@ import { UsersService } from '../../../services/users.service';
 export class MeComponent implements OnInit, OnDestroy {
     subscription: Subscription = new Subscription();
 
-    userID:string = '';
+    userID: string = '';
 
     data: Partial<User> = {} as User;
 
     message!: string;
 
-    products:Product[] = [];
+    products: Product[] = [];
 
     constructor(
         private usersService: UsersService,
         private productService: ProductsService,
         private route: ActivatedRoute,
         private router: Router,
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.userID = localStorage.getItem('userId') ?? '';
@@ -52,7 +52,7 @@ export class MeComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    public getProducts():Product[] {
+    public getProducts(): Product[] {
         return this.products;
     }
 
@@ -75,25 +75,22 @@ export class MeComponent implements OnInit, OnDestroy {
         );
     }
 
-    userModify(username: string, email: string, adresse: string, password: string) {
-        console.log(this.userID);
-        if (username && email && adresse) {
-            this.subscription.add(
-                this.usersService
-                    .modifyUser(
-                        localStorage.getItem('token') ?? '',
-                        this.userID,
-                        username,
-                        password,
-                        email,
-                        adresse,
-                    )
-                    .subscribe((res: any) => {
-                        if (res) {
-                            this.message = 'User modified!';
-                        }
-                    }),
-            );
-        }
+    userModify(Name: string, Email: string, Adresse: string, Password: string) {
+        this.subscription.add(
+            this.usersService
+                .modifyUser(
+                    localStorage.getItem('token') ?? '',
+                    this.userID,
+                    Name,
+                    Password,
+                    Email,
+                    Adresse,
+                )
+                .subscribe((res: any) => {
+                    if (res) {
+                        this.message = res.message;
+                    }
+                }),
+        );
     }
 }

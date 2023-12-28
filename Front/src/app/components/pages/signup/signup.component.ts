@@ -15,15 +15,15 @@ export class SignupComponent {
     constructor(private user_service: UsersService) {}
 
     addUser(
-        username: string,
-        password: string,
-        email: string,
-        adresse: string,
+        Name: string,
+        Password: string,
+        Email: string,
+        Adresse: string,
     ) {
-        if (username && password && email) {
+        if (Name && Password && Email) {
             this.subscription.add(
                 this.user_service
-                    .registerUser(username, password, email, adresse)
+                    .registerUser(Name, Password, Email, Adresse)
                     .subscribe({
                         next: (res: any) => {
                             if (res) {
@@ -35,12 +35,12 @@ export class SignupComponent {
                         },
                     }),
             );
-        } else if (!email) {
-            this.message = 'You have to put an email';
-        } else if (!password) {
-            this.message = 'You have to put a password';
+        } else if (!Email) {
+            this.message = 'You have to put an Email';
+        } else if (!Password) {
+            this.message = 'You have to put a Password';
         } else {
-            this.message = 'You have to put a username';
+            this.message = 'You have to put a Name';
         }
     }
 }

@@ -26,25 +26,25 @@ export class AuthService {
 
     createUser(
         username: string,
-        email: string,
-        password: string,
+        Email: string,
+        Password: string,
         adresse: string,
     ) {
         return this.http.post<{ message: string }>(URL.REGISTER, {
             username,
-            password,
-            email,
+            Password,
+            Email,
             adresse,
         });
     }
 
-    loginUser(email: string, password: string) {
+    loginUser(Email: string, Password: string) {
         return this.http
             .post<{
             userId: string;
             isAdmin: boolean;
             token: any;
-        }>(URL.LOGIN, { email, password })
+        }>(URL.LOGIN, { Email, Password })
             .subscribe((response) => {
                 const { userId, isAdmin, token } = response;
                 console.log(`userId: ${userId}`);

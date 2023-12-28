@@ -68,12 +68,13 @@ exports.login = (req, res) => {
                 })
                 // 500 : internal server error
                 .catch((error) => {
-                    console.log(error);
-                    res.status(502).json({ error })
+                    res.status(502).json({ error });
                 });
         })
         // 500 : internal server error
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            res.status(500).json({ error });
+        });
 };
 
 
@@ -113,23 +114,28 @@ exports.getAllUsers = (req, res) => {
  * @returns {Object}  The user object, or an error object if the user was not found
  * or the request was not authorized.
  */
+
 exports.modifyUser = async (req, res) => {
     try {
-        // const user = await User.findByPk(req.params.userId);
-        // if (!user) {
-        //     return res.status(404).send('User not found');
-        // }
-
-        // if (req.auth.userId !== user.id && !req.auth.isAdmin) {
-        //     return res.status(401).send('Unauthorized');
-        // }
-
-        if (req.body.Password) {
-            req.body.Password = await bcrypt.hash(req.body.Password, 10);
+        let updatedFields = req.body;
+        const user = await User.findByPk(req.params.userId);
+        // If password is present, hash it.
+        if (updatedFields.Password) {
+            updatedFields.Password = await bcrypt.hash(updatedFields.Password, 10);
         }
 
-        await User.update(req.body, { where: { id: req.params.userId } });
-        res.status(200).json({ message: 'User modified!' });
+        // Filter out keys with empty values.
+        updatedFields = Object.entries(updatedFields)
+            .filter(([key, value]) => value !== null && value !== undefined && value !== '' && value !== user[key])
+            .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+        console.log(updatedFields);
+        // Update the user if there are fields to update.
+        if (Object.keys(updatedFields).length > 0) {
+            await User.update(updatedFields, { where: { id: req.params.userId } });
+            res.status(200).json({ message: 'User modified!' });
+        } else {
+            res.status(200).json({ message: 'No valid fields provided for update!' });
+        }
     } catch (error) {
         res.status(400).json({ error });
     }
@@ -149,16 +155,7 @@ exports.getOneUser = (req, res) => {
     User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
-    .then(user => {
-        // if (!user) {
-        //     return res.status(404).json({ error: 'User not found' });
-        // }
-        // if (req.auth.userId === user.id || req.auth.isAdmin) {
-        res.status(200).json(user);
-        // } else {
-        //     res.status(403).json({ error: 'Access denied' });
-        // }
-    })
+    .then(user =>  res.status(200).json(user))
     .catch(error => res.status(500).json({ error }));
 };
 
@@ -171,20 +168,12 @@ exports.getOneUser = (req, res) => {
 exports.deleteUser = (req, res) => {
     User.findByPk(req.params.userId)
         .then(user => {
-            // if (!user) {
-            //     return res.status(404).json({ error: 'User not found' });
-            // }
-
-            // if (req.auth.userId === user.id || req.auth.isAdmin) {
                 return user.destroy()
                     .then(() => res.status(200).json({ message: 'User successfully deleted.' }))
                     .catch(error => {
                         // Handle error during deletion
                         res.status(500).json({ error });
                     });
-            // } else {
-            //     res.status(403).json({ error: 'Access denied' });
-            // }
         })
         .catch(error => res.status(500).json({ error }));
 };

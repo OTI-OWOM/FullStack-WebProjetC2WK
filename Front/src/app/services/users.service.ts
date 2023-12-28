@@ -8,7 +8,7 @@ import { User } from '../shared/interfaces/Users';
     providedIn: 'root',
 })
 export class UsersService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     public getAllUsers() {
         return this.http.get<User[]>(USERS_URL);
@@ -24,52 +24,46 @@ export class UsersService {
         return this.http.get<Partial<User>>(URL.USER + id, { headers });
     }
 
-    public loginUser(email: string, password: string) {
+    public loginUser(Email: string, Password: string) {
         return this.http.post<Identification[]>(URL.LOGIN, {
-            email,
-            password,
+            Email,
+            Password,
         });
     }
 
     public registerUser(
-        username: string,
-        password: string,
-        email: string,
-        adresse: string,
+        Name: string,
+        Password: string,
+        Email: string,
+        Adresse: string,
     ) {
         return this.http.post(URL.REGISTER, {
-            username,
-            password,
-            email,
-            adresse,
+            Name,
+            Password,
+            Email,
+            Adresse,
         });
     }
 
     public modifyUser(
         token: string,
         id: string,
-        username: string,
-        password: string,
-        email: string,
-        adresse: string,
+        Name: string,
+        Password: string,
+        Email: string,
+        Adresse: string,
     ) {
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-        if (password !== '') {
-            return this.http.put(URL.USER + id, {
-                username,
-                password,
-                email,
-                adresse,
-            }, { headers });
-        }
         return this.http.put(URL.USER + id, {
-            username,
-            email,
-            adresse,
+            Name,
+            Password,
+            Email,
+            Adresse,
         }, { headers });
+
     }
 
-    public deleteUser(token:string, id:string) {
+    public deleteUser(token: string, id: string) {
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
         return this.http.delete(URL.USER + id, { headers });
     }
