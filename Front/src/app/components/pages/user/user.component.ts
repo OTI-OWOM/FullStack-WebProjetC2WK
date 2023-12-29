@@ -36,7 +36,7 @@ export class UserComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subscription.add(
             this.usersService
-                .userSelect(sessionStorage.getItem('token') ?? '', this.paramID)
+                .userSelect( this.paramID)
                 .subscribe((res) => {
                     this.targetUser = res;
                     this.isVisitorAllowed = true;
@@ -55,7 +55,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.usersService
                 .deleteUser(
-                    sessionStorage.getItem('token') ?? '',
+                    
                     this.paramID,
                 )
                 .subscribe((res: any) => {
@@ -72,7 +72,7 @@ export class UserComponent implements OnInit, OnDestroy {
             this.subscription.add(
                 this.usersService
                     .modifyUser(
-                        sessionStorage.getItem('token') ?? '',
+                        
                         this.paramID,
                         username,
                         password,

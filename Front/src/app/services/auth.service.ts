@@ -44,20 +44,6 @@ export class AuthService {
         this.authStatus.next(this.hasToken());
     }
 
-    createUser(
-        username: string,
-        Email: string,
-        Password: string,
-        adresse: string,
-    ) {
-        return this.http.post<{ message: string }>(URL.REGISTER, {
-            username,
-            Password,
-            Email,
-            adresse,
-        });
-    }
-
     loginUser(Email: string, Password: string) {
         return this.http
             .post<{

@@ -11,7 +11,7 @@ const carController = require('../controllers/car');
 router.get('/car/:carId', authorize.JWTAthorization, authorize.carCheck, authorize.adminOrUserCheck, carController.getOnecar);
 
 // route to get all cars
-router.get('/cars/', carController.getAllcars);
+router.get('/cars/', authorize.JWTAthorization, carController.getAllcars);
 
 // route to get all cars of an user
 router.get('/cars/:userId', authorize.JWTAthorization, authorize.adminOrUserCheck, carController.getAllcarsFromUser);

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL, USERS_URL } from '../shared/constants/url';
 import { Identification } from '../shared/interfaces/Identification';
@@ -14,14 +14,12 @@ export class UsersService {
         return this.http.get<User[]>(USERS_URL);
     }
 
-    public me(token: string) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-        return this.http.get<Partial<User>>(URL.ME, { headers });
+    public me() {
+        return this.http.get<Partial<User>>(URL.ME);
     }
 
-    public userSelect(token: string, id: string) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-        return this.http.get<Partial<User>>(URL.USER + id, { headers });
+    public userSelect(id: string) {
+        return this.http.get<Partial<User>>(URL.USER + id);
     }
 
     public loginUser(Email: string, Password: string) {
@@ -46,25 +44,22 @@ export class UsersService {
     }
 
     public modifyUser(
-        token: string,
         id: string,
         Name: string,
         Password: string,
         Email: string,
         Adresse: string,
     ) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
         return this.http.put(URL.USER + id, {
             Name,
             Password,
             Email,
             Adresse,
-        }, { headers });
+        });
 
     }
 
-    public deleteUser(token: string, id: string) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-        return this.http.delete(URL.USER + id, { headers });
+    public deleteUser(id: string) {
+        return this.http.delete(URL.USER + id);
     }
 }

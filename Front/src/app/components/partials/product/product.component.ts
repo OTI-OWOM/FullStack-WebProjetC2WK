@@ -35,7 +35,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.paramID = params['id'];
         });
         this.productsService
-            .getProductById(this.paramID, sessionStorage.getItem('token') ?? '')
+            .getProductById(this.paramID )
             .subscribe((response: Product) => {
                 this.product = response;
                 this.isOwnProduct = this.product.SellerID === sessionStorage.getItem('userId') ?? '';
@@ -44,7 +44,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         this.subscription.add(
             this.usersService
-                .me(sessionStorage.getItem('token') ?? '')
+                .me()
                 .subscribe((res) => {
                     this.isAdmin = res.Role === 'admin';
                 }),

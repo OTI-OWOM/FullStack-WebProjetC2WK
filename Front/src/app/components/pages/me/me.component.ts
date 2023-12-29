@@ -26,7 +26,6 @@ export class MeComponent implements OnInit, OnDestroy {
     constructor(
         private usersService: UsersService,
         private productService: ProductsService,
-        private route: ActivatedRoute,
         private router: Router,
     ) { }
 
@@ -34,14 +33,14 @@ export class MeComponent implements OnInit, OnDestroy {
         this.userID = sessionStorage.getItem('userId') ?? '';
         this.subscription.add(
             this.productService
-                .getAllProductsFromUser(this.userID, sessionStorage.getItem('token') ?? '')
+                .getAllProductsFromUser(this.userID )
                 .subscribe((res) => {
                     this.products = res;
                 }),
         );
         this.subscription.add(
             this.usersService
-                .me(sessionStorage.getItem('token') ?? '')
+                .me()
                 .subscribe((res) => {
                     this.data = res;
                 }),
@@ -60,7 +59,6 @@ export class MeComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.usersService
                 .deleteUser(
-                    sessionStorage.getItem('token') ?? '',
                     this.userID,
                 )
                 .subscribe((res: any) => {
@@ -79,7 +77,6 @@ export class MeComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.usersService
                 .modifyUser(
-                    sessionStorage.getItem('token') ?? '',
                     this.userID,
                     Name,
                     Password,

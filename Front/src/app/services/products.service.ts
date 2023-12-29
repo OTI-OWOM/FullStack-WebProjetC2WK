@@ -13,24 +13,20 @@ export class ProductsService {
         return this.http.get<Product[]>(URL.PRODUCTS);
     }
 
-    public getProductById(id: string, token: string) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-        return this.http.get<Product>(`${URL.PRODUCT}${id}`, { headers });
+    public getProductById(id: string) {
+        return this.http.get<Product>(`${URL.PRODUCT}${id}`);
     }
 
-    public getAllProductsFromUser(id: string, token: string) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-        return this.http.get<Product[]>(`${URL.PRODUCTS}/${id}`, { headers });
+    public getAllProductsFromUser(id: string) {
+        return this.http.get<Product[]>(`${URL.PRODUCTS}/${id}`);
     }
 
     public createProduct(
-        token: string,
         sellerId: string,
         BrandName: string,
         Price: string,
         Description: string,
     ) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
         return this.http.post(
             URL.PRODUCT_CREATE,
             {
@@ -41,18 +37,15 @@ export class ProductsService {
                     Description,
                 },
             },
-            { headers },
         );
     }
 
     public modifyProduct(
-        token: string,
         productId: string,
         BrandName: string,
         Price: string,
         Description: string,
     ) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
         return this.http.put(
             URL.PRODUCT + productId,
             {
@@ -60,12 +53,10 @@ export class ProductsService {
                 Price,
                 Description,
             },
-            { headers },
         );
     }
 
-    public deleteProduct(id: string, token: string) {
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-        return this.http.delete(`${URL.PRODUCT}${id}`, { headers });
+    public deleteProduct(id: string ) {
+        return this.http.delete(`${URL.PRODUCT}${id}`);
     }
 }

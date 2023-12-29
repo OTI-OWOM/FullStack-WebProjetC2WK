@@ -33,7 +33,7 @@ export class CreateProductComponent implements OnInit {
             this.subscription.add(
                 this.productService
                     .createProduct(
-                        sessionStorage.getItem('token') ?? '',
+                        
                         userId,
                         name,
                         price,

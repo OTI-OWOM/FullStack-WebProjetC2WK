@@ -29,7 +29,7 @@ export class ModifyUserComponent implements OnInit, OnDestroy {
         try {
             this.subscription.add(
                 this.user_service
-                    .userSelect(sessionStorage.getItem('token') ?? '', this.paramID)
+                    .userSelect( this.paramID)
                     .subscribe((res) => {
                         this.currentUser = res;
                     }),
@@ -44,7 +44,7 @@ export class ModifyUserComponent implements OnInit, OnDestroy {
             this.subscription.add(
                 this.user_service
                     .modifyUser(
-                        sessionStorage.getItem('token') ?? '',
+                        
                         this.paramID,
                         username,
                         password,

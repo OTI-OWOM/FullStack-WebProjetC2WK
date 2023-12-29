@@ -44,7 +44,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
         this.product_service
             .getAllProductsFromUser(
                 this.paramID,
-                sessionStorage.getItem('token') ?? '',
+                
             )
             .subscribe((response: Product[]) => {
                 this.productList = response;
@@ -54,7 +54,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
 
         this.subscription.add(
             this.usersService
-                .userSelect(sessionStorage.getItem('token') ?? '', this.paramID)
+                .userSelect( this.paramID)
                 .subscribe((res: Partial<User>) => {
                     this.currentUser = res.Name ?? '';
                 }),

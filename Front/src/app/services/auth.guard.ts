@@ -20,16 +20,16 @@ export class AuthGuard implements CanActivate {
 
     canActivate(): Observable<boolean> {
         const token = this.authService.getToken();
-        // if (!token) {
-        //     this.router.navigate(['/login']);
-        //     return of(false);
-        // }
+        if (!token) {
+            this.router.navigate(['/login']);
+            return of(false);
+        }
 
-        const headers = new HttpHeaders({
-            Authorization: `Bearer ${token}`,
-        });
+        // const headers = new HttpHeaders({
+        //     Authorization: `Bearer ${token}`,
+        // });
 
-        return this.http.get(URL.ME, { headers }).pipe(
+        return this.http.get(URL.ME).pipe(
             map(() => true),
             catchError((err) => {
                 this.authService.logout();
