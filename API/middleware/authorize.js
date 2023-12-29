@@ -24,7 +24,6 @@ exports.JWTAthorization = async (req, res, next) => {
         next();
     } catch (error) {
         // 401 : unauthorized
-        console.log(error);
         res.status(401).json({ error });
     }
 };

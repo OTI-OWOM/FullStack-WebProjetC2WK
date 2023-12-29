@@ -20,16 +20,18 @@ export class ConnectionComponent {
         private router: Router,
     ) {}
 
-    validation(Email: string, assword: string): void {
-        if (Email && assword) {
+
+    validation(Email: string, Password: string): void {
+        if (Email && Password) {
             this.subscription.add(
                 this.user_service
-                    .loginUser(Email, assword)
+                    .loginUser(Email, Password)
                     .subscribe({
                         next: (res: any) => {
                             localStorage.setItem('token', `${res.token}`);
                             localStorage.setItem('userId', res.userId);
-                            this.router.navigateByUrl('/products').then(() => window.location.reload());
+                            this.auth.updateAuthStatus();
+                            this.router.navigateByUrl('/products');
                         },
                         error: (err: any) => {
                             this.message = err.error.message;

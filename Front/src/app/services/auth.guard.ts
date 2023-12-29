@@ -1,48 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-    ActivatedRouteSnapshot,
-    CanActivate,
-    RouterStateSnapshot,
-    Router,
-} from '@angular/router';
-import { Subscription } from 'rxjs';
-import { URL } from '../shared/constants/url';
+import { CanActivate, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-import { UsersService } from './users.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { URL } from '../shared/constants/url';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-    private isAuthenticated = true;
-
-    subscription: Subscription = new Subscription();
 
     constructor(
         private http: HttpClient,
         private authService: AuthService,
-        private router: Router,
-        private usersService: UsersService,
+        private router: Router
     ) {}
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot,
-    ): boolean | Promise<boolean> {
+    canActivate(): Observable<boolean> {
+        const token = this.authService.getToken();
+        if (!token) {
+            this.router.navigate(['/login']);
+            return of(false);
+        }
+
         const headers = new HttpHeaders({
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
         });
-        this.http.get(URL.ME, { headers }).subscribe({
-            error: (err: any) => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('userId');
-                this.isAuthenticated = false;
-                this.router.navigate(['/login']).then(() => window.location.reload());
-            },
-        });
-        this.isAuthenticated = this.authService.isAuthenticated();
-        return this.isAuthenticated;
+
+        return this.http.get(URL.ME, { headers }).pipe(
+            map(() => true),
+            catchError((err) => {
+                this.authService.logout();
+                this.router.navigate(['/login']);
+                return of(false);
+            })
+        );
     }
 }

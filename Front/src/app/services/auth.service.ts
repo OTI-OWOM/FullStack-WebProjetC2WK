@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { URL } from '../shared/constants/url';
+import { BehaviorSubject } from 'rxjs';
 
 function isExpired(token: any) {
     if (token) {
@@ -18,11 +19,30 @@ function isExpired(token: any) {
 export class AuthService {
     private authToken = localStorage.getItem('token') ?? '';
 
+    private authStatus = new BehaviorSubject<boolean>(this.hasToken());
+
     private userId = localStorage.getItem('id') ?? '';
 
     private isAdmin = false;
 
     constructor(private http: HttpClient, private router: Router) {}
+
+    get isLoggedIn() {
+        return this.authStatus.asObservable();
+    }
+
+    hasToken() {
+        console.log(!!localStorage.getItem('token') ?? '');
+        return !!localStorage.getItem('token') ?? '';
+    }
+
+    getToken() {
+        return localStorage.getItem('token') ?? '';
+    }
+
+    updateAuthStatus() {
+        this.authStatus.next(this.hasToken());
+    }
 
     createUser(
         username: string,
