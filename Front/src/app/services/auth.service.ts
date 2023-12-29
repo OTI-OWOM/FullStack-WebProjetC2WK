@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { URL } from '../shared/constants/url';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of  } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-function isExpired(token: any) {
-    if (token) {
-        const expiry = token.exp;
-        const now = new Date();
-        return now.getTime() > expiry * 1000;
-    }
-    return false;
-}
+// function isExpired(token: any) {
+//     if (token) {
+//         console.log(token.exp);
+//         const expiry = token.exp;
+//         const now = new Date();
+//         return expiry;
+//     }
+//     return false;
+// }
 
 @Injectable({
     providedIn: 'root',
@@ -32,12 +34,12 @@ export class AuthService {
     }
 
     hasToken() {
-        console.log(!!sessionStorage.getItem('token') ?? '');
-        return !!sessionStorage.getItem('token') ?? '';
+        console.log(!!this.authToken);
+        return !!this.authToken;
     }
 
     getToken() {
-        return sessionStorage.getItem('token') ?? '';
+        return this.authToken;
     }
 
     updateAuthStatus() {
@@ -63,8 +65,20 @@ export class AuthService {
             });
     }
 
-    isAuthenticated() {
-        return this.authToken.length > 0 && !isExpired(this.authToken);
+    isAuthenticated(): Observable<boolean>  {
+        if (!this.authToken) {
+            this.router.navigate(['/login']);
+            return of(false);
+        }
+
+        return this.http.get(URL.ME).pipe(
+            map(() => true),
+            catchError((err) => {
+                this.logout();
+                this.router.navigate(['/login']);
+                return of(false);
+            })
+        );
     }
 
     logout() {
