@@ -31,17 +31,17 @@ export class MeComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        this.userID = localStorage.getItem('userId') ?? '';
+        this.userID = sessionStorage.getItem('userId') ?? '';
         this.subscription.add(
             this.productService
-                .getAllProductsFromUser(this.userID, localStorage.getItem('token') ?? '')
+                .getAllProductsFromUser(this.userID, sessionStorage.getItem('token') ?? '')
                 .subscribe((res) => {
                     this.products = res;
                 }),
         );
         this.subscription.add(
             this.usersService
-                .me(localStorage.getItem('token') ?? '')
+                .me(sessionStorage.getItem('token') ?? '')
                 .subscribe((res) => {
                     this.data = res;
                 }),
@@ -60,13 +60,13 @@ export class MeComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.usersService
                 .deleteUser(
-                    localStorage.getItem('token') ?? '',
+                    sessionStorage.getItem('token') ?? '',
                     this.userID,
                 )
                 .subscribe((res: any) => {
                     if (res) {
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('userId');
+                        sessionStorage.removeItem('token');
+                        sessionStorage.removeItem('userId');
                         this.message = res.message;
                         delay(1000);
                         this.router.navigateByUrl('login');
@@ -79,7 +79,7 @@ export class MeComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.usersService
                 .modifyUser(
-                    localStorage.getItem('token') ?? '',
+                    sessionStorage.getItem('token') ?? '',
                     this.userID,
                     Name,
                     Password,

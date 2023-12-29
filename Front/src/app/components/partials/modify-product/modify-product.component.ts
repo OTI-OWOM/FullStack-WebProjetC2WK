@@ -42,7 +42,7 @@ export class ModifyProductComponent implements OnInit {
         });
 
         this.route.params.subscribe((params) => { this.paramID = params['id']; });
-        this.product_service.getProductById(this.paramID, localStorage.getItem('token') ?? '')
+        this.product_service.getProductById(this.paramID, sessionStorage.getItem('token') ?? '')
             .subscribe((response:Product) => {
                 this.product = response;
                 this.setImage();
@@ -54,7 +54,7 @@ export class ModifyProductComponent implements OnInit {
             this.subscription.add(
                 this.product_service
                     // eslint-disable-next-line no-underscore-dangle
-                    .modifyProduct(localStorage.getItem('token') ?? '', this.product.id, name, price, description)
+                    .modifyProduct(sessionStorage.getItem('token') ?? '', this.product.id, name, price, description)
                     .subscribe((res: any) => {
                         if (res) {
                             this.message = res.message;

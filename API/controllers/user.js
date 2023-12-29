@@ -26,7 +26,7 @@ exports.register = (req, res) => {
                 // 400 : bad request
                 .catch((error) => {
                     console.log(error);
-                    res.status(400).json({message : error.errors[0].message});
+                    res.status(400).json({ message : error.errors[0].message });
                 });
         })
         // 500 : internal server error
@@ -65,6 +65,17 @@ exports.login = (req, res) => {
                             { expiresIn: '24h' },
                         ),
                     });
+                    // const token = jwt.sign({ userId: user.id },
+                    //     process.env.TOKEN_SECRET,
+                    //     { expiresIn: '24h' },);
+                    // res.cookie('token', token, {
+                    //     httpOnly: false, // makes the cookie inaccessible to JavaScript
+                    //     secure: false, // ensures cookie is only sent over HTTPS
+                    //     sameSite: 'None', // prevents CSRF attacks
+                    // });
+                    // return res.status(200).json({
+                    //         userId: user.id
+                    //     });
                 })
                 // 500 : internal server error
                 .catch((error) => {
@@ -87,8 +98,8 @@ exports.getCurrentUser = (req, res) => {
     User.findByPk(req.auth.userId, {
         attributes: { exclude: ['Password'] }
     })
-    .then(user => res.status(200).json(user))
-    .catch(error => res.status(500).json({ error }));
+        .then(user => res.status(200).json(user))
+        .catch(error => res.status(500).json({ error }));
 };
 
 
@@ -100,8 +111,8 @@ exports.getAllUsers = (req, res) => {
     User.findAll({
         attributes: { exclude: ['Password'] }
     })
-    .then(users => res.status(200).json(users))
-    .catch(error => res.status(500).json({ error }));
+        .then(users => res.status(200).json(users))
+        .catch(error => res.status(500).json({ error }));
 };
 
 
@@ -155,8 +166,8 @@ exports.getOneUser = (req, res) => {
     User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
-    .then(user =>  res.status(200).json(user))
-    .catch(error => res.status(500).json({ error }));
+        .then(user => res.status(200).json(user))
+        .catch(error => res.status(500).json({ error }));
 };
 
 
@@ -168,12 +179,12 @@ exports.getOneUser = (req, res) => {
 exports.deleteUser = (req, res) => {
     User.findByPk(req.params.userId)
         .then(user => {
-                return user.destroy()
-                    .then(() => res.status(200).json({ message: 'User successfully deleted.' }))
-                    .catch(error => {
-                        // Handle error during deletion
-                        res.status(500).json({ error });
-                    });
+            return user.destroy()
+                .then(() => res.status(200).json({ message: 'User successfully deleted.' }))
+                .catch(error => {
+                    // Handle error during deletion
+                    res.status(500).json({ error });
+                });
         })
         .catch(error => res.status(500).json({ error }));
 };

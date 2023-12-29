@@ -26,7 +26,7 @@ export class DeleteUserComponent {
         this.subscription.add(
             this.user_service
                 .deleteUser(
-                    localStorage.getItem('token') ?? '',
+                    sessionStorage.getItem('token') ?? '',
                     this.paramID,
                 )
                 .subscribe((res: any) => {

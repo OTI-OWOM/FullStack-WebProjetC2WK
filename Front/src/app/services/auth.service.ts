@@ -17,11 +17,11 @@ function isExpired(token: any) {
     providedIn: 'root',
 })
 export class AuthService {
-    private authToken = localStorage.getItem('token') ?? '';
+    private authToken = sessionStorage.getItem('token') ?? '';
 
     private authStatus = new BehaviorSubject<boolean>(this.hasToken());
 
-    private userId = localStorage.getItem('id') ?? '';
+    private userId = sessionStorage.getItem('id') ?? '';
 
     private isAdmin = false;
 
@@ -32,12 +32,12 @@ export class AuthService {
     }
 
     hasToken() {
-        console.log(!!localStorage.getItem('token') ?? '');
-        return !!localStorage.getItem('token') ?? '';
+        console.log(!!sessionStorage.getItem('token') ?? '');
+        return !!sessionStorage.getItem('token') ?? '';
     }
 
     getToken() {
-        return localStorage.getItem('token') ?? '';
+        return sessionStorage.getItem('token') ?? '';
     }
 
     updateAuthStatus() {
@@ -82,8 +82,8 @@ export class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('id');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('id');
     
         this.authToken = '';
         this.userId = '';

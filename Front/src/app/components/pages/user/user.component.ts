@@ -36,7 +36,7 @@ export class UserComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subscription.add(
             this.usersService
-                .userSelect(localStorage.getItem('token') ?? '', this.paramID)
+                .userSelect(sessionStorage.getItem('token') ?? '', this.paramID)
                 .subscribe((res) => {
                     this.targetUser = res;
                     this.isVisitorAllowed = true;
@@ -45,9 +45,9 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     getProducts(): void {
-        localStorage.setItem('user', this.targetUser.Name ?? '');
+        sessionStorage.setItem('user', this.targetUser.Name ?? '');
         // eslint-disable-next-line no-underscore-dangle
-        localStorage.setItem('userId', this.targetUser._id ?? '');
+        sessionStorage.setItem('userId', this.targetUser._id ?? '');
         this.router.navigateByUrl(`products/${this.paramID}`);
     }
 
@@ -55,7 +55,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.usersService
                 .deleteUser(
-                    localStorage.getItem('token') ?? '',
+                    sessionStorage.getItem('token') ?? '',
                     this.paramID,
                 )
                 .subscribe((res: any) => {
@@ -72,7 +72,7 @@ export class UserComponent implements OnInit, OnDestroy {
             this.subscription.add(
                 this.usersService
                     .modifyUser(
-                        localStorage.getItem('token') ?? '',
+                        sessionStorage.getItem('token') ?? '',
                         this.paramID,
                         username,
                         password,

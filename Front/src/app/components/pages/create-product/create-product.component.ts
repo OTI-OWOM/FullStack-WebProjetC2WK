@@ -19,7 +19,7 @@ export class CreateProductComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.userID = localStorage.getItem('userId') ?? '';
+        this.userID = sessionStorage.getItem('userId') ?? '';
     }
 
     addProduct(
@@ -33,7 +33,7 @@ export class CreateProductComponent implements OnInit {
             this.subscription.add(
                 this.productService
                     .createProduct(
-                        localStorage.getItem('token') ?? '',
+                        sessionStorage.getItem('token') ?? '',
                         userId,
                         name,
                         price,

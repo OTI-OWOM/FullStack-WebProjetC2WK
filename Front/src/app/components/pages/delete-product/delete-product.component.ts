@@ -25,7 +25,7 @@ export class DeleteProductComponent {
     productDelete(): void {
         this.subscription.add(
             this.product_service
-                .deleteProduct(this.paramID, localStorage.getItem('token') ?? '')
+                .deleteProduct(this.paramID, sessionStorage.getItem('token') ?? '')
                 .subscribe((res: any) => {
                     if (res) {
                         this.message = res.message;

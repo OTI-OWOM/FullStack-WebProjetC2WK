@@ -35,16 +35,16 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.paramID = params['id'];
         });
         this.productsService
-            .getProductById(this.paramID, localStorage.getItem('token') ?? '')
+            .getProductById(this.paramID, sessionStorage.getItem('token') ?? '')
             .subscribe((response: Product) => {
                 this.product = response;
-                this.isOwnProduct = this.product.SellerID === localStorage.getItem('userId') ?? '';
+                this.isOwnProduct = this.product.SellerID === sessionStorage.getItem('userId') ?? '';
                 this.setImage();
             });
 
         this.subscription.add(
             this.usersService
-                .me(localStorage.getItem('token') ?? '')
+                .me(sessionStorage.getItem('token') ?? '')
                 .subscribe((res) => {
                     this.isAdmin = res.Role === 'admin';
                 }),

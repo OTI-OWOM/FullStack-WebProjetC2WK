@@ -28,8 +28,8 @@ export class ConnectionComponent {
                     .loginUser(Email, Password)
                     .subscribe({
                         next: (res: any) => {
-                            localStorage.setItem('token', `${res.token}`);
-                            localStorage.setItem('userId', res.userId);
+                            sessionStorage.setItem('token', `${res.token}`);
+                            sessionStorage.setItem('userId', res.userId);
                             this.auth.updateAuthStatus();
                             this.router.navigateByUrl('/products');
                         },

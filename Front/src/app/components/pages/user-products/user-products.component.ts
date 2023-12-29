@@ -37,14 +37,14 @@ export class UserProductsComponent implements OnInit, OnDestroy {
             }
         });
         this.currentUser = this.paramID;
-        this.currentUserID = localStorage.getItem('userId') ?? '';
+        this.currentUserID = sessionStorage.getItem('userId') ?? '';
     }
 
     ngOnInit(): void {
         this.product_service
             .getAllProductsFromUser(
                 this.paramID,
-                localStorage.getItem('token') ?? '',
+                sessionStorage.getItem('token') ?? '',
             )
             .subscribe((response: Product[]) => {
                 this.productList = response;
@@ -54,7 +54,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
 
         this.subscription.add(
             this.usersService
-                .userSelect(localStorage.getItem('token') ?? '', this.paramID)
+                .userSelect(sessionStorage.getItem('token') ?? '', this.paramID)
                 .subscribe((res: Partial<User>) => {
                     this.currentUser = res.Name ?? '';
                 }),
@@ -62,7 +62,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
     }
 
     back(): void {
-        ['user', 'userID'].forEach((value) => localStorage.removeItem(value));
+        ['user', 'userID'].forEach((value) => sessionStorage.removeItem(value));
         this.router.navigateByUrl(`user/${this.currentUserID}`);
     }
 

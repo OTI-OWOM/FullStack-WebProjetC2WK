@@ -12,8 +12,8 @@ async function isUserAdmin(userId) {
 
 exports.JWTAthorization = async (req, res, next) => {
     try {
+        // const token = req.cookies['token'];
         const token = req.headers.authorization.split(' ')[1];
-        // check token validity
         const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
         const { userId } = decodedToken;
         const isAdmin = await isUserAdmin(userId);

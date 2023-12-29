@@ -20,10 +20,10 @@ export class AuthGuard implements CanActivate {
 
     canActivate(): Observable<boolean> {
         const token = this.authService.getToken();
-        if (!token) {
-            this.router.navigate(['/login']);
-            return of(false);
-        }
+        // if (!token) {
+        //     this.router.navigate(['/login']);
+        //     return of(false);
+        // }
 
         const headers = new HttpHeaders({
             Authorization: `Bearer ${token}`,
