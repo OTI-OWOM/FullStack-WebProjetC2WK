@@ -17,22 +17,15 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
     
-      console.log("interceptor: " + req.url);
+      // console.log("interceptor: " + req.url);
       const token = sessionStorage.getItem('token') ?? '';
       const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-      
+
       req = req.clone({
         headers,
         withCredentials: true
       });
       
-      return next.handle(req)
-    //   .pipe(catchError(err => {
-    //     if (err.status === 401) {
-    //         this.router.navigate(['./login']);
-    //     }
-    //     const error = err.error.message || err.statusText;
-    //         return throwError(error);
-    // }));
+      return next.handle(req);
   }
 }
