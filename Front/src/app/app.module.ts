@@ -27,8 +27,7 @@ import { HomeFooterComponent } from './components/partials/home-footer/home-foot
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { LegalComponent } from './components/pages/legal/legal.component';
 import { LogoutComponent } from './components/pages/logout/logout.component';
-import { HttpRequestInterceptor } from './interceptors/http-request.interceptor'
-import { AuthInterceptor } from './interceptors/auth-interceptor'
+import { HttpRequestInterceptor } from './interceptors/http-request.interceptor';
 
 @NgModule({
     declarations: [
@@ -65,10 +64,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor'
     providers: [
         [
             { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
-        ],
-        [
-            { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-        ],
+        ]
     ],
     bootstrap: [AppComponent],
 })

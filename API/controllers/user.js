@@ -42,13 +42,12 @@ exports.register = (req, res) => {
 * @param {object} res - response
 */
 exports.login = (req, res) => {
-    User.findOne({ where: { Email: req.body.Email } })
+    return User.findOne({ where: { Email: req.body.Email } })
         .then(user => {
             if (!user) {
                 // 401 : unauthorized
                 return res.status(401).json({ message: 'Login or password incorrect.' });
             }
-
             // compare password with hash
             return bcrypt.compare(req.body.Password, user.Password)
                 .then((valid) => {
@@ -95,7 +94,7 @@ exports.login = (req, res) => {
 * @param {object} res - response
 */
 exports.getCurrentUser = (req, res) => {
-    User.findByPk(req.auth.userId, {
+    return User.findByPk(req.auth.userId, {
         attributes: { exclude: ['Password'] }
     })
         .then(user => res.status(200).json(user))
@@ -108,7 +107,7 @@ exports.getCurrentUser = (req, res) => {
 * @param {object} res - response
 */
 exports.getAllUsers = (req, res) => {
-    User.findAll({
+    return User.findAll({
         attributes: { exclude: ['Password'] }
     })
         .then(users => res.status(200).json(users))
@@ -163,7 +162,7 @@ exports.modifyUser = async (req, res) => {
  *                    or the request was not authorized.
  */
 exports.getOneUser = (req, res) => {
-    User.findByPk(req.params.userId, {
+    return User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
         .then(user => res.status(200).json(user))
@@ -177,7 +176,7 @@ exports.getOneUser = (req, res) => {
 * @param {object} res - response
 */
 exports.deleteUser = (req, res) => {
-    User.findByPk(req.params.userId)
+    return User.findByPk(req.params.userId)
         .then(user => {
             return user.destroy()
                 .then(() => res.status(200).json({ message: 'User successfully deleted.' }))
