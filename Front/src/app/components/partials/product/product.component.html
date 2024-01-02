@@ -6,11 +6,11 @@
             <hr />
         </div>
         <div class="image-information-container">
-            <div class="image-container" *ngIf="images.length > 0">
-                <img [src]="images[currentImageIndex]" alt="{{ product.BrandName }}" [@fadeInOut]>
+            <div class="image-container">
+                <img [src]="images[currentImageIndex]" onerror="this.src='../../../../assets/images/voiture.png'" alt="{{ product.BrandName }}" [@fadeInOut]>
                 <div class="button-image">
-                    <button class="arrow left-arrow" (click)="previousImage()" [disabled]="currentImageIndex === 0">&#8592;</button>
-                    <button class="arrow right-arrow" (click)="nextImage()" [disabled]="currentImageIndex === images.length - 1">&#8594;</button>
+                    <button class="arrow left-arrow" (click)="previousImage()" [disabled]="currentImageIndex === 0 || images.length === 0">&#8592;</button>
+                    <button class="arrow right-arrow" (click)="nextImage()" [disabled]="currentImageIndex === images.length - 1 || images.length === 0">&#8594;</button>
                 </div>
             </div>
             <div class="informations-container">

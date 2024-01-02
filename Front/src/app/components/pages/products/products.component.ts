@@ -5,6 +5,8 @@ import {
 import { Subscription } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 import { Product } from '../../../shared/interfaces/Product';
+import { CarImage } from 'src/app/shared/interfaces/Images';
+import { URL } from '../../../shared/constants/url';
 
 @Component({
     selector: 'app-products',
@@ -29,12 +31,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     images: any = {};
 
     constructor(
-        private product_service: ProductsService,
+        private productsService: ProductsService,
     ) { }
 
     ngOnInit(): void {
         this.setRandomCatchPhrase();
-        this.product_service.getAllProducts()
+        this.productsService.getAllProducts()
             .subscribe((response:Product[]) => {
                 this.productList = response;
                 this.resultList = this.productList;
@@ -58,9 +60,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     setImages() {
         for (const product of this.productList) {
-            const index = (parseInt(product.id, 16) % 25) + 1;
-            const image = `voiture (${index}).jpg`;
-            this.images[product.id] = image;
+            this.productsService.getAllImages(product.id)
+            .subscribe((response: CarImage[]) => {
+                this.images[product.id] = response.map(image => `${URL.IMAGE}${image.id}`)[0];
+            });
         }
     }
 
