@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { URL } from '../shared/constants/url';
-import { BehaviorSubject, Observable, of  } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError  } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 // function isExpired(token: any) {
@@ -34,7 +34,6 @@ export class AuthService {
     }
 
     hasToken() {
-        console.log(!!this.authToken);
         return !!this.authToken;
     }
 
@@ -53,16 +52,22 @@ export class AuthService {
             isAdmin: boolean;
             token: any;
         }>(URL.LOGIN, { Email, Password })
-            .subscribe((response) => {
+            .pipe(map(response => {
                 const { userId, isAdmin, token } = response;
-                console.log(`userId: ${userId}`);
-                console.log(`authToken: ${token}`);
-                console.log(`isAdmin: ${isAdmin}`);
+                sessionStorage.setItem('token', token);
+                sessionStorage.setItem('userId', userId); 
 
                 this.userId = userId;
                 this.authToken = token;
                 this.isAdmin = isAdmin;
-            });
+
+                this.updateAuthStatus();
+                return response;
+            }),
+            catchError(error => {
+                // Handle error
+                return throwError(error);
+            }));
     }
 
     isAuthenticated(): Observable<boolean>  {
@@ -83,12 +88,13 @@ export class AuthService {
 
     logout() {
         sessionStorage.removeItem('token');
-        sessionStorage.removeItem('id');
+        sessionStorage.removeItem('userId');
     
         this.authToken = '';
         this.userId = '';
         this.isAdmin = false;
-    
-        this.router.navigate(['login']);
+
+        this.updateAuthStatus();
+        this.router.navigate(['/login']);
     }
 }

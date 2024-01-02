@@ -22,13 +22,6 @@ export class UsersService {
         return this.http.get<Partial<User>>(URL.USER + id);
     }
 
-    public loginUser(Email: string, Password: string) {
-        return this.http.post<Identification[]>(URL.LOGIN, {
-            Email,
-            Password,
-        });
-    }
-
     public registerUser(
         Name: string,
         Password: string,

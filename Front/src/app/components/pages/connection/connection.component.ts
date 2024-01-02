@@ -23,21 +23,21 @@ export class ConnectionComponent {
 
     validation(Email: string, Password: string): void {
         if (Email && Password) {
-            this.subscription.add(
-                this.user_service
-                    .loginUser(Email, Password)
-                    .subscribe({
+            const loginSubscription = this.auth.loginUser(Email, Password).subscribe({
                         next: (res: any) => {
-                            sessionStorage.setItem('token', `${res.token}`);
-                            sessionStorage.setItem('userId', res.userId);
-                            this.auth.updateAuthStatus();
+                            // sessionStorage.setItem('token', `${res.token}`);
+                            // sessionStorage.setItem('userId', res.userId);
+                            // this.auth.updateAuthStatus();
                             this.router.navigateByUrl('/products');
                         },
                         error: (err: any) => {
                             this.message = err.error.message;
                         },
-                    }),
-            );
+                    });
+            
+            this.subscription.add(loginSubscription);         
+        } else {
+            this.message = Email ? "You need to provide a password!" : "You need to provide an Email!"
         }
     }
 }
