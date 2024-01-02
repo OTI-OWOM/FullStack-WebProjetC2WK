@@ -17,7 +17,7 @@ router.get('/car/images/:carId', authorize.JWTAthorization, imagesController.get
 router.post('/car/image/:carId', authorize.JWTAthorization, authorize.carCheck, authorize.adminOrUserCheck, upload.array('images', 5), imagesController.uploadCarImages);
 
 // route to get an Image
-router.get('/car/image/:imageId', authorize.JWTAthorization, authorize.imageCheck, imagesController.getImage);
+router.get('/car/image/:imageId', imagesController.getImage);
 
 // route to delete an Image
 router.delete('/car/image/:imageId', authorize.JWTAthorization, authorize.imageCheck, authorize.carCheck, authorize.adminOrUserCheck, imagesController.deleteImage);

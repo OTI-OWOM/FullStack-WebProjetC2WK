@@ -55,7 +55,12 @@ exports.getImageURLs = async (req, res) => {
 */
 exports.getImage = async (req, res) => {
     const image = await CarImage.findByPk(req.params.imageId);
-    const imagePath = path.join(__dirname, '..', image.ImageURL);
+    let imagePath;
+    try{
+        imagePath = path.join(__dirname, '..', image.ImageURL);
+    } catch(err) {
+        res.status(500).send(err)
+    }
     
     if (fs.existsSync(imagePath)) {
         res.sendFile(imagePath);
