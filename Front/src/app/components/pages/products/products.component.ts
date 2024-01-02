@@ -41,7 +41,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 this.productList = response;
                 this.resultList = this.productList;
                 this.sortByAscendingPrice();
-                this.maxPriceRange = Number(this.getMaxPrice().toPrecision(1));
+                this.maxPriceRange = Number(this.getMaxPrice().toPrecision(10));
                 this.priceRange = this.maxPriceRange;
                 this.setImages();
             });
