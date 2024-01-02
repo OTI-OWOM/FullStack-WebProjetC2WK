@@ -1,28 +1,42 @@
 <div class="wrapper">
     <div class="product-container">
         <div class="title">
-            <h1>Product</h1>
+            <h1>{{product.BrandName}}</h1>
+            <p class="model-showcase">{{product.ModelBrandName}}</p>
             <hr />
         </div>
-        <div class="image-container">
-            <img src="../../../../assets/images/{{ image }}" alt="{{ product.BrandName }}" class="product-image">
-        </div>
-        <div class="informations-container">
-            <h1>{{product.BrandName}}</h1>
-            <hr class="hr-title" />
-            <p class="showcase">Product Description :</p>
-            <p class="text">{{product.Description}}</p>
-            <hr class="hr-info" />
-            <p class="showcase">Product price :</p>
-            <p class="text">{{product.Price/100}} €</p>
-            <hr class="hr-info" />
-            <div class="controls">
-                <a routerLink="../../products" class="back-btn">Back</a>
-                <a *ngIf="isOwnProduct || isAdmin" routerLink="../../product/modify/{{ product.id }}"
-                    class="modify-btn">Modify</a>
-                <a *ngIf="isOwnProduct || isAdmin" routerLink="../../product/delete/{{ product.id }}"
-                    class="delete-btn">Delete</a>
+        <div class="image-information-container">
+            <div class="image-container" *ngIf="images.length > 0">
+                <img [src]="images[currentImageIndex]" alt="{{ product.BrandName }}" [@fadeInOut]>
+                <div class="button-image">
+                    <button class="arrow left-arrow" (click)="previousImage()" [disabled]="currentImageIndex === 0">&#8592;</button>
+                    <button class="arrow right-arrow" (click)="nextImage()" [disabled]="currentImageIndex === images.length - 1">&#8594;</button>
+                </div>
             </div>
+            <div class="informations-container">
+                <h3 class="showcase">Description :</h3>
+                <p class="text">{{product.Description}}</p>
+                <hr class="hr-info" />
+                <h3 class="showcase">Year :</h3>
+                <p class="text">{{product.Year}}</p>
+                <hr class="hr-info" />
+                <h3 class="showcase">Car Details : </h3>
+                <div *ngFor="let detail of product.CarDetails">
+                    <p class="detail" style="display:inline">{{detail.DetailName}} : </p>
+                    <p class="text" style="display:inline">{{detail.DetailValue}}</p>
+                </div>
+                <hr class="hr-info" />
+                <h3 class="showcase">Price :</h3>
+                <p class="text">{{product.Price/100}} €</p>
+                <hr class="hr-info" />
+            </div>
+        </div>
+        <div class="controls">
+            <a routerLink="../../products" class="back-btn">Back</a>
+            <a *ngIf="isOwnProduct || isAdmin" routerLink="../../product/modify/{{ product.id }}"
+                class="modify-btn">Modify</a>
+            <a *ngIf="isOwnProduct || isAdmin" routerLink="../../product/delete/{{ product.id }}"
+                class="delete-btn">Delete</a>
         </div>
     </div>
 </div>

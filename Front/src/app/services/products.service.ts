@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Product } from '../shared/interfaces/Product';
 import { URL } from '../shared/constants/url';
+import { CarImage } from '../shared/interfaces/Images';
 
 @Injectable({
     providedIn: 'root',
@@ -11,6 +12,10 @@ export class ProductsService {
 
     public getAllProducts() {
         return this.http.get<Product[]>(URL.PRODUCTS);
+    }
+
+    public getAllImages(id: string) {
+        return this.http.get<CarImage[]>(`${URL.IMAGES}${id}`);
     }
 
     public getProductById(id: string) {

@@ -23,7 +23,7 @@ export class AuthService {
 
     private authStatus = new BehaviorSubject<boolean>(this.hasToken());
 
-    private userId = sessionStorage.getItem('id') ?? '';
+    private userId = sessionStorage.getItem('userId') ?? '';
 
     private isAdmin = false;
 
@@ -45,31 +45,6 @@ export class AuthService {
         this.authStatus.next(this.hasToken());
     }
 
-    loginUser(Email: string, Password: string) {
-        return this.http
-            .post<{
-            userId: string;
-            isAdmin: boolean;
-            token: any;
-        }>(URL.LOGIN, { Email, Password })
-            .pipe(map(response => {
-                const { userId, isAdmin, token } = response;
-                sessionStorage.setItem('token', token);
-                sessionStorage.setItem('userId', userId); 
-
-                this.userId = userId;
-                this.authToken = token;
-                this.isAdmin = isAdmin;
-
-                this.updateAuthStatus();
-                return response;
-            }),
-            catchError(error => {
-                // Handle error
-                return throwError(error);
-            }));
-    }
-
     isAuthenticated(): Observable<boolean>  {
         if (!this.authToken) {
             this.router.navigate(['/login']);
@@ -84,6 +59,31 @@ export class AuthService {
                 return of(false);
             })
         );
+    }
+
+    loginUser(Email: string, Password: string) {
+        return this.http
+            .post<{
+            userId: string;
+            isAdmin: boolean;
+            token: any;
+        }>(URL.LOGIN, { Email, Password })
+            .pipe(map(response => {
+                const { userId, isAdmin, token } = response;
+                sessionStorage.setItem('token', token);
+                sessionStorage.setItem('userId', userId); // DELETE ME When UserId becomes obselete
+
+                this.userId = userId;
+                this.authToken = token;
+                this.isAdmin = isAdmin;
+
+                this.updateAuthStatus();
+                return response;
+            }),
+            catchError(error => {
+                // Handle error
+                return throwError(() => new Error(error));
+            }));
     }
 
     logout() {

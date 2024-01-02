@@ -10,8 +10,8 @@ export class AppComponent {
     id!: string;
 
     constructor(public router: Router, private route: ActivatedRoute) {
-        if (sessionStorage.getItem('id')) {
-            this.id = sessionStorage.getItem('id') ?? '';
+        if (sessionStorage.getItem('userId')) {
+            this.id = sessionStorage.getItem('userId') ?? '';
         }
     }
 }
