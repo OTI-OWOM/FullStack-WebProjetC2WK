@@ -13,18 +13,17 @@ import { CreateProductResponse } from '../../../shared/interfaces/CreateProductR
 export class CreateProductComponent implements OnInit {
     subscription: Subscription = new Subscription();
 
+    carDetailName: string = '';
+    carDetailValue: string = '';
+
     selectedImages: File[] = [];
-
     selectedModelId: number | null = null; 
-    
     selectedCarId: number | null = null; 
-    
+
     brands: CarBrands[] = [];
-
     models: CarModelBrands[] = [];
-
+    
     userID!: string;
-
     message!: string;
 
     constructor(
@@ -72,6 +71,27 @@ export class CreateProductComponent implements OnInit {
         }
     }
 
+    async addCarDetail() {
+        if (this.selectedCarId && this.carDetailName && this.carDetailValue) {
+            try {
+                await this.productService.createCarDetail(
+                    this.selectedCarId,
+                    this.carDetailName,
+                    this.carDetailValue
+                ).toPromise();
+
+                this.message = 'Car detail added successfully!';
+                // Reset fields after successful addition
+                this.carDetailName = '';
+                this.carDetailValue = '';
+            } catch (err: any) {
+                this.message = err.error.message;
+            }
+        } else {
+            this.message = 'Please fill in all car detail fields.';
+        }
+    }
+
     async addProduct(
         Year: string,
         Price: string,
@@ -95,10 +115,15 @@ export class CreateProductComponent implements OnInit {
                 this.selectedCarId = parseInt(productRes.carId);
     
                 // If there's an image selected, upload it after the product is created
-                if (this.selectedImages && this.selectedCarId) {
+                console.log(this.selectedImages.length !== 0);
+                
+                if (this.selectedImages.length !== 0 && this.selectedCarId) {
                     await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages).toPromise();
-                    this.message = 'Product and image added successfully!';
+                    
+                    console.log(this.message );
                 }
+                await this.addCarDetail();
+                this.message = 'Product and image added successfully!';
             } catch (err: any) {
                 this.message = err.error.message;
             }

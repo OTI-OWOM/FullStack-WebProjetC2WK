@@ -32,7 +32,12 @@
         <div class="line">
             <input type="file" (change)="onImagesSelected($event)" multiple />
         </div>
-        
+        <div class="line">
+            <input [(ngModel)]="carDetailName" placeholder="Car Detail Name" class="input-form" type="text" />
+        </div>
+        <div class="line">
+            <input [(ngModel)]="carDetailValue" placeholder="Car Detail Value" class="input-form" type="text" />
+        </div>
         <button class="button" (click)="addProduct(year.value, price.value, description.value, selectedModelId)" type="button">
             Create Product!</button
         ><br />

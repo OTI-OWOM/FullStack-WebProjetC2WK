@@ -5,6 +5,7 @@ import { URL } from '../shared/constants/url';
 import { CarImage } from '../shared/interfaces/Images';
 import { CarBrands } from '../shared/interfaces/Brands';
 import { CarModelBrands } from '../shared/interfaces/ModelBrands';
+import { CarDetail } from '../shared/interfaces/Details';
 
 @Injectable({
     providedIn: 'root',
@@ -34,6 +35,13 @@ export class ProductsService {
 
     public getAllProductsFromUser(id: string) {
         return this.http.get<Product[]>(`${URL.PRODUCTS}/${id}`);
+    }
+
+    public createCarDetail(carId: number, DetailName: string, DetailValue: string) {
+        return this.http.post(`${URL.DETAIL}${carId}`, {
+            DetailName,
+            DetailValue,
+        });
     }
 
     public uploadCarImage(carId: number | null, imageFiles: File[]) {
