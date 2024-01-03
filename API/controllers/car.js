@@ -54,7 +54,7 @@ exports.getOnecar = (req, res) => {
     return Car.findByPk(req.params.carId)
         .then(async car => {
             if (!car) {
-                return res.status(404).json({ error: 'car not found' });
+                return res.status(404).json({ error: 'Car not found!' });
             }
             res.status(200).json(await formatHelper.carFormat(car));
         })
@@ -72,7 +72,7 @@ exports.createCar = (req, res) => {
     carObject.SellerID = req.auth.userId;
 
     return Car.create(carObject)
-        .then(() => res.status(201).json({ message: 'car added!' }))
+        .then(() => res.status(201).json({ message: 'Car added!' }))
         .catch(error => res.status(400).json({ error }));
 };
 
@@ -85,10 +85,10 @@ exports.modifyCar = (req, res) => {
     return Car.findByPk(req.params.carId)
         .then(car => {
             if (!car) {
-                return res.status(404).json({ error: 'car not found' });
+                return res.status(404).json({ error: 'Car not found' });
             }
             return car.update(req.body)
-                .then(() => res.status(200).json({ message: 'car modified!' }))
+                .then(() => res.status(200).json({ message: 'Car modified!' }))
                 .catch(error => res.status(400).json({ error }));
         })
         .catch(error => {
@@ -122,7 +122,7 @@ exports.deleteCar = async (req, res) => {
     }});
 
     return car.destroy()
-        .then(() => res.status(200).json({ message: 'car deleted!' }))
+        .then(() => res.status(200).json({ message: 'Car deleted!' }))
         .catch(error => res.status(400).json({ error }));
 };
 

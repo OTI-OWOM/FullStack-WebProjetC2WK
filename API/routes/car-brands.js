@@ -10,9 +10,9 @@ const brandController = require('../controllers/car-brands');
 
 
 // route to get all brands
-router.get('/brands/', authorize.JWTAthorization, brandController.getAllBrands);
+router.get('/brands', authorize.JWTAthorization, brandController.getAllBrands);
 
 // route to get all models
-router.get('/models/', authorize.JWTAthorization, brandController.getAllModelbrand);
+router.get('/models/:brandId', authorize.JWTAthorization, brandController.getAllModelbrand);
 
 module.exports = router;

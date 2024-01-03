@@ -23,7 +23,7 @@ exports.getAllBrands = (req, res) => {
 */
 exports.getAllModelbrand = async (req, res) => {
     try {
-        const modelbrands = await ModelBrand.findAll();
+        const modelbrands = await ModelBrand.findAll({ where: { BrandID: req.params.brandId } })
 
         const modelDetails = await Promise.all(modelbrands.map(async (model) => {
             const brand = await Brand.findByPk(model.BrandID);
