@@ -4,8 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
 import { User } from 'src/app/shared/interfaces/Users';
+import { URL } from '../../../shared/constants/url';
 import { ProductsService } from '../../../services/products.service';
 import { Product } from '../../../shared/interfaces/Product';
+import { CarImage } from 'src/app/shared/interfaces/Images';
 
 @Component({
     selector: 'app-user-products',
@@ -14,6 +16,8 @@ import { Product } from '../../../shared/interfaces/Product';
 })
 export class UserProductsComponent implements OnInit, OnDestroy {
     productList: Product[] = [];
+    
+    resultList:Product[] = [];
 
     paramID: string = '';
 
@@ -26,7 +30,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
     images: any = {};
 
     constructor(
-        private product_service: ProductsService,
+        private productsService: ProductsService,
         private route: ActivatedRoute,
         private usersService: UsersService,
         private router: Router,
@@ -41,14 +45,13 @@ export class UserProductsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.product_service
+        this.productsService
             .getAllProductsFromUser(
                 this.paramID,
                 
             )
             .subscribe((response: Product[]) => {
                 this.productList = response;
-                this.sortByAscendingPrice();
                 this.setImages();
             });
 
@@ -70,15 +73,12 @@ export class UserProductsComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    sortByAscendingPrice(): void {
-        this.productList.sort((a, b) => a.Price - b.Price);
-    }
-
     setImages() {
         for (const product of this.productList) {
-            const index = (parseInt(product.id, 16) % 25) + 1;
-            const image = `voiture (${index}).jpg`;
-            this.images[product.id] = image;
+            this.productsService.getAllImages(product.id)
+            .subscribe((response: CarImage[]) => {
+                this.images[product.id] = response.map(image => `${URL.IMAGE}${image.id}`)[0];
+            });
         }
     }
 }
