@@ -14,6 +14,8 @@ export const URL:any = {
     PRODUCT: `${BASE_URL}/car/`,
     IMAGES: `${BASE_URL}/car/images/`,
     IMAGE: `${BASE_URL}/car/image/`,
+    BRANDS: `${BASE_URL}/brands/`,
+    MODELS: `${BASE_URL}/models/`,
     PRODUCT_CREATE: `${BASE_URL}/car/create`,
     REGISTER: `${BASE_URL}/register`,
     LOGIN: `${BASE_URL}/login`,

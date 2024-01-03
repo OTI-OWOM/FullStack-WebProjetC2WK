@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
+import { CarBrands } from '../../../shared/interfaces/Brands';
+import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
 
 @Component({
     selector: 'app-create-product',
@@ -9,6 +11,12 @@ import { ProductsService } from '../../../services/products.service';
 })
 export class CreateProductComponent implements OnInit {
     subscription: Subscription = new Subscription();
+
+    selectedModelId: number | null = null; 
+    
+    brands: CarBrands[] = [];
+
+    models: CarModelBrands[] = [];
 
     userID!: string;
 
@@ -20,24 +28,53 @@ export class CreateProductComponent implements OnInit {
 
     ngOnInit(): void {
         this.userID = sessionStorage.getItem('userId') ?? '';
+
+        this.subscription.add(this.productService.getAllBrands()
+        .subscribe({
+            next: (res: CarBrands[]) => {
+                this.brands = res;
+            },
+            error: (err: any) => {
+                this.message = err.error.message;
+            },
+        }))
+    }
+
+    onBrandChange(brandId: string): void {
+        this.subscription.add(this.productService.getAllModels(brandId)
+            .subscribe({
+                next: (res: CarModelBrands[]) => {
+                    this.models = res;
+                    if (this.models.length > 0) {
+                        // Preselect the first model
+                        this.selectedModelId = this.models[0].id;
+                    } else {
+                        this.selectedModelId = null;
+                    }
+                },
+                error: (err: any) => {
+                    this.message = err.error.message;
+                },
+            }));
     }
 
     addProduct(
-        userId: string,
-        name: string,
-        price: string,
-        description: string,
+        Year: string,
+        Price: string,
+        Description: string,
+        ModelBrandID: number | null,
     ) {
-        price = `${parseInt(price, 10) * 100}`;
-        if (name && price && description) {
-            this.subscription.add(
-                this.productService
-                    .createProduct(
-                        
-                        userId,
-                        name,
-                        price,
-                        description,
+
+        Price = `${parseInt(Price, 10) * 100}`;
+        
+        if (Year && Price && Description) {
+            this.subscription.add(this.productService
+                .createProduct(
+                        parseInt(Year),
+                        parseInt(Price),
+                        Description,
+                        1,
+                        ModelBrandID,
                     )
                     .subscribe({
                         next: (res: any) => {

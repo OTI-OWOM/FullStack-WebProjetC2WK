@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Product } from '../shared/interfaces/Product';
 import { URL } from '../shared/constants/url';
 import { CarImage } from '../shared/interfaces/Images';
+import { CarBrands } from '../shared/interfaces/Brands';
+import { CarModelBrands } from '../shared/interfaces/ModelBrands';
 
 @Injectable({
     providedIn: 'root',
@@ -12,6 +14,14 @@ export class ProductsService {
 
     public getAllProducts() {
         return this.http.get<Product[]>(URL.PRODUCTS);
+    }
+
+    public getAllModels(id: string) {
+        return this.http.get<CarModelBrands[]>(`${URL.MODELS}${id}`);
+    }
+
+    public getAllBrands() {
+        return this.http.get<CarBrands[]>(URL.BRANDS);
     }
 
     public getAllImages(id: string) {
@@ -27,20 +37,20 @@ export class ProductsService {
     }
 
     public createProduct(
-        sellerId: string,
-        BrandName: string,
-        Price: string,
+        Year: number,
+        Price: number,
         Description: string,
+        Available: number,
+        ModelBrandID: number | null,
     ) {
         return this.http.post(
             URL.PRODUCT_CREATE,
             {
-                product: {
-                    sellerId,
-                    BrandName,
-                    Price,
-                    Description,
-                },
+                Year,
+                Price,
+                Description,
+                Available,
+                ModelBrandID,
             },
         );
     }

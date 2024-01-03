@@ -3,11 +3,11 @@
         <h1 class="title">Create a new product</h1>
         <div class="line">
             <i class="fa-solid fa-car"></i>
-            <input #name placeholder="Name of the product" class="input-form" type="text" id="name" name="name" />
+            <input #name placeholder="Year of the product" class="input-form" type="number" id="name" name="name" />
         </div>
 
         <div class="line">
-            <i class="fa-solid fa-usd" style="padding: 0 4px 0 3px;"></i>
+            <i class="fa-solid fa-eur" style="padding: 0 4px 0 3px;"></i>
             <input #price placeholder="Price of the product in €" class="input-form" type="number" id="price" name="price" />
         </div>
 
@@ -15,8 +15,22 @@
             <i class="fa-solid fa-commenting"></i>
             <input #description placeholder="Description of the product" class="input-form" type="text" id="desc" name="desc" />
         </div>
-
-        <button class="button" (click)="addProduct(userID, name.value, price.value, description.value)" type="button">
+        
+        <div class="line">
+            <select #brand class="input-form" (change)="onBrandChange(brand.value)">
+                <option value="" disabled selected>Choose a brand</option>
+                <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
+            </select>
+        </div>
+        
+        <div class="line" *ngIf="models.length > 0">
+            <select #model class="input-form" [(ngModel)]="selectedModelId">
+                <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
+            </select>
+        </div>
+        
+        
+        <button class="button" (click)="addProduct(name.value, price.value, description.value, selectedModelId)" type="button">
             Create Product!</button
         ><br />
     <p class="message">{{message}}</p>
