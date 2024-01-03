@@ -72,7 +72,7 @@ exports.createCar = (req, res) => {
     carObject.SellerID = req.auth.userId;
 
     return Car.create(carObject)
-        .then(() => res.status(201).json({ message: 'Car added!' }))
+        .then(car => res.status(201).json({ message: 'Car added!',  carId: car.id}))
         .catch(error => res.status(400).json({ error }));
 };
 

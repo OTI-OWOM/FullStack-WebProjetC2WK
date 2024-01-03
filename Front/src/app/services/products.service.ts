@@ -36,6 +36,19 @@ export class ProductsService {
         return this.http.get<Product[]>(`${URL.PRODUCTS}/${id}`);
     }
 
+    public uploadCarImage(carId: number | null, imageFiles: File[]) {
+        const formData = new FormData();
+        imageFiles.forEach((file, index) => {
+            formData.append(`images`, file);
+        });
+
+        return this.http.post(`${URL.IMAGE}${carId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        });
+    }
+
     public createProduct(
         Year: number,
         Price: number,

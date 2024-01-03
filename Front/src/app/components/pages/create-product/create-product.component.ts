@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 import { CarBrands } from '../../../shared/interfaces/Brands';
 import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
+import { CreateProductResponse } from '../../../shared/interfaces/CreateProductRes';
 
 @Component({
     selector: 'app-create-product',
@@ -12,7 +13,11 @@ import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
 export class CreateProductComponent implements OnInit {
     subscription: Subscription = new Subscription();
 
+    selectedImages: File[] = [];
+
     selectedModelId: number | null = null; 
+    
+    selectedCarId: number | null = null; 
     
     brands: CarBrands[] = [];
 
@@ -58,35 +63,45 @@ export class CreateProductComponent implements OnInit {
             }));
     }
 
-    addProduct(
+    onImagesSelected(event: Event) {
+        const files = (event.target as HTMLInputElement).files;
+        if (files && files.length <= 10) {
+            this.selectedImages = Array.from(files);
+        } else {
+            // Handle error: more than 10 files
+        }
+    }
+
+    async addProduct(
         Year: string,
         Price: string,
         Description: string,
-        ModelBrandID: number | null,
+        ModelBrandID: number | null
     ) {
 
         Price = `${parseInt(Price, 10) * 100}`;
         
         if (Year && Price && Description) {
-            this.subscription.add(this.productService
-                .createProduct(
-                        parseInt(Year),
-                        parseInt(Price),
-                        Description,
-                        1,
-                        ModelBrandID,
-                    )
-                    .subscribe({
-                        next: (res: any) => {
-                            if (res) {
-                                this.message = res.message;
-                            }
-                        },
-                        error: (err: any) => {
-                            this.message = err.error.message;
-                        },
-                    }),
-            );
+            try {
+                const productRes = await this.productService.createProduct(
+                    parseInt(Year),
+                    parseInt(Price),
+                    Description,
+                    1, // Assuming 1 represents 'Available'
+                    ModelBrandID,
+                ).toPromise() as CreateProductResponse;
+    
+                this.message = productRes.message;
+                this.selectedCarId = parseInt(productRes.carId);
+    
+                // If there's an image selected, upload it after the product is created
+                if (this.selectedImages && this.selectedCarId) {
+                    await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages).toPromise();
+                    this.message = 'Product and image added successfully!';
+                }
+            } catch (err: any) {
+                this.message = err.error.message;
+            }
         }
     }
 }

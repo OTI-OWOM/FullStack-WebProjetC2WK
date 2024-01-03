@@ -14,7 +14,7 @@ const imagesController = require('../controllers/car-images');
 router.get('/car/images/:carId', authorize.JWTAthorization, imagesController.getImageURLs);
 
 // route to add a new car image
-router.post('/car/image/:carId', authorize.JWTAthorization, authorize.carCheck, authorize.adminOrUserCheck, upload.array('images', 5), imagesController.uploadCarImages);
+router.post('/car/image/:carId', authorize.JWTAthorization, authorize.carCheck, authorize.adminOrUserCheck, upload.array('images', 10), imagesController.uploadCarImages);
 
 // route to get an Image
 router.get('/car/image/:imageId', imagesController.getImage);

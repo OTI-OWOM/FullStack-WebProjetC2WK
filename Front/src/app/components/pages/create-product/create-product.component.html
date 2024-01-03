@@ -2,8 +2,8 @@
     <div class="new-product">
         <h1 class="title">Create a new product</h1>
         <div class="line">
-            <i class="fa-solid fa-car"></i>
-            <input #name placeholder="Year of the product" class="input-form" type="number" id="name" name="name" />
+            <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
+            <input #year placeholder="Year of the product" class="input-form" type="number" id="year" name="year" />
         </div>
 
         <div class="line">
@@ -29,8 +29,11 @@
             </select>
         </div>
         
+        <div class="line">
+            <input type="file" (change)="onImagesSelected($event)" multiple />
+        </div>
         
-        <button class="button" (click)="addProduct(name.value, price.value, description.value, selectedModelId)" type="button">
+        <button class="button" (click)="addProduct(year.value, price.value, description.value, selectedModelId)" type="button">
             Create Product!</button
         ><br />
     <p class="message">{{message}}</p>
