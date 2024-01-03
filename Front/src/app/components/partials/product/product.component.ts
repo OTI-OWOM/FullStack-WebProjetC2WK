@@ -67,7 +67,8 @@ export class ProductComponent implements OnInit, OnDestroy {
         .getProductById(this.paramID )
         .subscribe((response: Product) => {
             this.product = response;
-            this.isOwnProduct = this.product.SellerID === sessionStorage.getItem('userId') ?? '';
+            this.isOwnProduct = this.product.SellerID.toString() === sessionStorage.getItem('userId') ?? '';
+            
             this.setImage();
 
             this.productsService.getAllImages(this.product.id)
