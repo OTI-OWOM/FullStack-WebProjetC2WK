@@ -4,6 +4,7 @@ import { ProductsService } from '../../../services/products.service';
 import { CarBrands } from '../../../shared/interfaces/Brands';
 import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
 import { CreateProductResponse } from '../../../shared/interfaces/CreateProductRes';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-create-product',
@@ -28,6 +29,7 @@ export class CreateProductComponent implements OnInit {
 
     constructor(
         private productService: ProductsService,
+        private router: Router,
     ) {}
 
     ngOnInit(): void {
@@ -119,13 +121,14 @@ export class CreateProductComponent implements OnInit {
                 
                 if (this.selectedImages.length !== 0 && this.selectedCarId) {
                     await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages).toPromise();
-                    
-                    console.log(this.message );
                 }
                 await this.addCarDetail();
                 this.message = 'Product and image added successfully!';
+                this.router.navigate([`product/${this.selectedCarId}`])
             } catch (err: any) {
                 this.message = err.error.message;
+                console.log(err);
+                
             }
         }
     }

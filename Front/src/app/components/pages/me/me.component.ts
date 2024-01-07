@@ -59,19 +59,7 @@ export class MeComponent implements OnInit, OnDestroy {
     }
 
     userDelete(): void {
-        this.subscription.add(
-            this.usersService
-                .deleteUser(
-                    this.userID,
-                )
-                .subscribe((res: any) => {
-                    if (res) {
-                        this.message = res.message;
-                        delay(1000);
-                        this.router.navigateByUrl('logout');
-                    }
-                }),
-        );
+        this.router.navigateByUrl(`user/delete/${this.userID}`);
     }
 
     toggleEditMode(): void {

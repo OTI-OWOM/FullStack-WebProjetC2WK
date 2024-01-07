@@ -10,7 +10,7 @@ const CarImage = db.CarImage;
 */
 exports.uploadCarImages = (req, res) => {
     if (!req.files || req.files.length === 0) {
-        return res.status(400).send('No files were uploaded.');
+        return res.status(400).json({ error: 'No files were uploaded.' });
     }
 
     const imagePaths = req.files.map(file => ({
@@ -19,8 +19,8 @@ exports.uploadCarImages = (req, res) => {
     }));
 
     return CarImage.bulkCreate(imagePaths)
-        .then(() => res.status(201).send('Images successfully uploaded.'))
-        .catch(error => res.status(500).send(error.message));
+        .then(() => res.status(201).json({ message: 'Images successfully uploaded.' }))
+        .catch(error => res.status(500).json({ error: error.message }));
 };
 
 /**
@@ -44,7 +44,7 @@ exports.getImageURLs = async (req, res) => {
         res.json(images);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error!' });
     }
 };
 
@@ -65,7 +65,7 @@ exports.getImage = async (req, res) => {
     if (fs.existsSync(imagePath)) {
         res.sendFile(imagePath);
     } else {
-        res.status(404).send('Image not found');
+        res.status(404).json({ error: 'Image not found!' });
     }
 };
 

@@ -111,15 +111,17 @@ exports.deleteCar = async (req, res) => {
     details.forEach(detail => {
         detail.destroy();
     });
-
+    
     images.forEach(image => {
         const imagePath = path.join(__dirname, '..', image.ImageURL);
-        try {
-            fs.unlink(imagePath);
-            image.destroy();
-        } catch (err) {
-            console.error('Error deleting the file:', err);
-    }});
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error('Error deleting the file:', err);
+            } else {
+                image.destroy();
+            }
+        });
+    });
 
     return car.destroy()
         .then(() => res.status(200).json({ message: 'Car deleted!' }))

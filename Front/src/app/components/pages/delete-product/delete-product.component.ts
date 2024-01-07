@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, delay } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class DeleteProductComponent {
     constructor(
         private product_service: ProductsService,
         private route: ActivatedRoute,
+        private router: Router,
     ) {
         this.paramID = this.route.snapshot.paramMap.get('id') ?? '';
     }
@@ -29,6 +30,8 @@ export class DeleteProductComponent {
                 .subscribe((res: any) => {
                     if (res) {
                         this.message = res.message;
+                        delay(2000);
+                        this.router.navigate(['products']);
                     }
                 }),
         );
