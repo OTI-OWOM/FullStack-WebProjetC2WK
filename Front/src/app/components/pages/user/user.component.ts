@@ -11,7 +11,9 @@ import { User } from '../../../shared/interfaces/Users';
     styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit, OnDestroy {
+    isEditMode: boolean = false;
     subscription: Subscription = new Subscription();
+    password: string = '';
 
     targetUser = {} as Partial<User>;
 
@@ -47,7 +49,7 @@ export class UserComponent implements OnInit, OnDestroy {
     getProducts(): void {
         sessionStorage.setItem('user', this.targetUser.Name ?? '');
         // eslint-disable-next-line no-underscore-dangle
-        sessionStorage.setItem('userId', this.targetUser._id ?? '');
+        sessionStorage.setItem('userId', this.targetUser.id ?? '');
         this.router.navigateByUrl(`products/${this.paramID}`);
     }
 
@@ -64,6 +66,17 @@ export class UserComponent implements OnInit, OnDestroy {
                     }
                 }),
         );
+    }
+
+    toggleEditMode(): void {
+        this.isEditMode = !this.isEditMode;
+    }
+
+    saveChanges(): void {
+        if (this.isEditMode) {
+            this.userModify(this.targetUser.Name!, this.targetUser.Email!, this.targetUser.Address!, this.password!);
+            this.toggleEditMode();
+        }
     }
 
     userModify(username: string, email: string, Address: string, password: string) {

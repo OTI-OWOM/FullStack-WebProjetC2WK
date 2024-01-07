@@ -76,8 +76,8 @@ export class MeComponent implements OnInit, OnDestroy {
 
     toggleEditMode(): void {
         this.isEditMode = !this.isEditMode;
-
     }
+    
     createProduct(): void {
         this.router.navigateByUrl('newproduct/create');
     }

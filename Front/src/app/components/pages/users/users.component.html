@@ -7,15 +7,12 @@
     <hr class="solid">
 
     <div class="users-container">
-        <div routerLink="../user/{{ user._id }}" class="user-card" *ngFor="let user of user_list">
+        <div routerLink="../user/{{ user.id }}" class="user-card" *ngFor="let user of userList">
             <div class="user-image">
                 <img src="../../../../assets/images/user2.png" alt="{{ user.Name }}">
             </div>
             <div class="user-text">
-                <h2 class="user-name">{{ user.Name }}</h2>
-                <p class="user-description">{{ user.Role }}</p>
-                <p class="user-description">{{ user.Email }}</p>
-                <p class="user-description">{{ user.Address }}</p>
+                <h2 class="user-name">{{ user.LastName }} {{ user.Name }}</h2>
             </div>
         </div>
     </div>

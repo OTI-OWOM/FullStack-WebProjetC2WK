@@ -11,13 +11,13 @@ import { User } from '../../../shared/interfaces/Users';
 export class UsersComponent implements OnInit, OnDestroy {
     subscription: Subscription = new Subscription();
 
-    user_list!: User[];
+    userList!: User[];
 
     constructor(private user_service: UsersService) { }
 
     ngOnInit(): void {
         this.user_service.getAllUsers().subscribe((response: User[]) => {
-            this.user_list = response;
+            this.userList = response;
         });
     }
 
