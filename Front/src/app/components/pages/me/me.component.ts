@@ -30,7 +30,7 @@ export class MeComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private productService: ProductsService,
         private router: Router,
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.userID = sessionStorage.getItem('userId') ?? '';
