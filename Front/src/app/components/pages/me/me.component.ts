@@ -13,6 +13,9 @@ import { UsersService } from '../../../services/users.service';
     styleUrls: ['./me.component.scss'],
 })
 export class MeComponent implements OnInit, OnDestroy {
+    isEditMode: boolean = false;
+    password: string = '';
+    
     subscription: Subscription = new Subscription();
 
     userID: string = '';
@@ -69,6 +72,21 @@ export class MeComponent implements OnInit, OnDestroy {
                     }
                 }),
         );
+    }
+
+    toggleEditMode(): void {
+        this.isEditMode = !this.isEditMode;
+
+    }
+    createProduct(): void {
+        this.router.navigateByUrl('newproduct/create');
+    }
+
+    saveChanges(): void {
+        if (this.isEditMode) {
+            this.userModify(this.data.Name!, this.data.Email!, this.data.Address!, this.password!);
+            this.toggleEditMode();
+        }
     }
 
     userModify(Name: string, Email: string, Address: string, Password: string) {

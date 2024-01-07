@@ -24,15 +24,21 @@ export class UsersService {
 
     public registerUser(
         Name: string,
+        LastName: string,
         Password: string,
         Email: string,
-        Adresse: string,
+        Address: string,
+        City: string,
+        PostalCode: string,
     ) {
         return this.http.post(URL.REGISTER, {
             Name,
+            LastName,
             Password,
             Email,
-            Adresse,
+            Address,
+            City,
+            PostalCode,
         });
     }
 
@@ -41,13 +47,13 @@ export class UsersService {
         Name: string,
         Password: string,
         Email: string,
-        Adresse: string,
+        Address: string,
     ) {
         return this.http.put(URL.USER + id, {
             Name,
             Password,
             Email,
-            Adresse,
+            Address,
         });
 
     }

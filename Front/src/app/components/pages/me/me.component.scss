@@ -87,6 +87,17 @@
                 border-left-width: 3rem;
             }
         }
+
+        .display-form {
+            width: 100%;
+            padding: 15px 1rem;
+            margin: 1rem 0;
+
+            font-size: large;
+
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
     }
 
     .products-text {
@@ -101,6 +112,12 @@
             text-decoration: none;
             text-align: center;
         }
+    }
+
+    .modify-buttons {
+        display: flex; 
+        flex-direction: row; 
+        margin-top: 3rem;
     }
 
     .button {
