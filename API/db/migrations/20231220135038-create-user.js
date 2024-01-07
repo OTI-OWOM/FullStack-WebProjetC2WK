@@ -12,6 +12,9 @@ module.exports = {
       Name: {
         type: Sequelize.STRING
       },
+      LastName: {
+        type: Sequelize.STRING
+      },
       Email: {
         type: Sequelize.STRING,
         unique: true
@@ -24,6 +27,15 @@ module.exports = {
       },
       Role: {
         type: Sequelize.BOOLEAN
+      },
+      Address: {
+        type: Sequelize.STRING
+      },
+      City: {
+        type: Sequelize.STRING
+      },
+      PostalCode: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

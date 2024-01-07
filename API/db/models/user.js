@@ -16,13 +16,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     Name: DataTypes.STRING,
+    LastName: DataTypes.STRING,
     Email: {
       type: DataTypes.STRING,
-      unique: true, // Enforce uniqueness on the email field
+      unique: true,
     },
     Password: DataTypes.STRING,
     IsSeller: DataTypes.BOOLEAN,
     Role: DataTypes.BOOLEAN,
+    Address: DataTypes.STRING,
+    City: DataTypes.STRING,
+    PostalCode: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',

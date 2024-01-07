@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../db/models');
+const formatHelper = require('../helpers/formatHelper');
 const User = db.User;
 
 /**
@@ -16,10 +17,14 @@ exports.register = (req, res) => {
         .then((hash) => {
             User.create({
                 Name: req.body.Name,
+                LastName: req.body.LastName,
                 Password: hash,
                 Email: req.body.Email,
                 IsSeller: req.body.IsSeller,
                 Role: req.body.Role,
+                Address: req.body.Address,
+                City: req.body.City,
+                PostalCode: req.body.PostalCode,
             })
                 // 201 : successfully created a user (Created)
                 .then(() => res.status(201).json({ message: 'User created !' }))
@@ -97,7 +102,7 @@ exports.getCurrentUser = (req, res) => {
     return User.findByPk(req.auth.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(user => res.status(200).json(user))
+        .then(async user => res.status(200).json(await formatHelper.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -110,7 +115,10 @@ exports.getAllUsers = (req, res) => {
     return User.findAll({
         attributes: { exclude: ['Password'] }
     })
-        .then(users => res.status(200).json(users))
+        .then(async users => {
+            const formattedUsers = await Promise.all(users.map(user => formatHelper.userFormat(user)));
+            res.status(200).json(formattedUsers);
+        })
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -165,7 +173,7 @@ exports.getOneUser = (req, res) => {
     return User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(user => res.status(200).json(user))
+        .then(async user => res.status(200).json(await formatHelper.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
 };
 

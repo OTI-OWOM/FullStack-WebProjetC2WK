@@ -1,5 +1,6 @@
 const db = require('../db/models');
 const Brand = db.Brand;
+const User = db.User;
 const ModelBrand = db.ModelBrand;
 const CarDetail = db.CarDetail;
 
@@ -21,5 +22,17 @@ exports.carFormat = async (car) => {
         ModelBrandName,
         BrandName,
         CarDetails
+    }
+}
+
+exports.userFormat = async (user) => {
+    return {
+        id: user.id,
+        FullName: `${user.LastName} ${user.Name}`,
+        Name: user.Name,
+        LastName: user.LastName,
+        FullName: `${user.LastName} ${user.Name}`,
+        Email: user.Email,
+        Address: `${user.Address}, ${user.PostalCode} ${user.City} `,
     }
 }
