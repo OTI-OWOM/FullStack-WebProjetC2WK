@@ -24,15 +24,3 @@ exports.carFormat = async (car) => {
         CarDetails
     }
 }
-
-exports.userFormat = async (user) => {
-    return {
-        id: user.id,
-        FullName: `${user.LastName} ${user.Name}`,
-        Name: user.Name,
-        LastName: user.LastName,
-        FullName: `${user.LastName} ${user.Name}`,
-        Email: user.Email,
-        Address: `${user.Address}, ${user.PostalCode} ${user.City} `,
-    }
-}

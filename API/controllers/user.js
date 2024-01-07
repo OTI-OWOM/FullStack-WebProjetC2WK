@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../db/models');
-const formatHelper = require('../helpers/formatHelper');
 const User = db.User;
 
 /**
@@ -102,7 +101,7 @@ exports.getCurrentUser = (req, res) => {
     return User.findByPk(req.auth.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(async user => res.status(200).json(await formatHelper.userFormat(user)))
+        .then(user => res.status(200).json(user))
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -115,10 +114,7 @@ exports.getAllUsers = (req, res) => {
     return User.findAll({
         attributes: { exclude: ['Password'] }
     })
-        .then(async users => {
-            const formattedUsers = await Promise.all(users.map(user => formatHelper.userFormat(user)));
-            res.status(200).json(formattedUsers);
-        })
+        .then(users => res.status(200).json(users))
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -173,7 +169,7 @@ exports.getOneUser = (req, res) => {
     return User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(async user => res.status(200).json(await formatHelper.userFormat(user)))
+        .then(user => res.status(200).json(user))
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -195,5 +191,3 @@ exports.deleteUser = (req, res) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
-
-
