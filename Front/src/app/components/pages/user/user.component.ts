@@ -66,9 +66,9 @@ export class UserComponent implements OnInit, OnDestroy {
         );
     }
 
-    userModify(username: string, email: string, adresse: string, password: string) {
+    userModify(username: string, email: string, Address: string, password: string) {
         console.log(this.paramID);
-        if (username && email && adresse) {
+        if (username && email && Address) {
             this.subscription.add(
                 this.usersService
                     .modifyUser(
@@ -77,7 +77,7 @@ export class UserComponent implements OnInit, OnDestroy {
                         username,
                         password,
                         email,
-                        adresse,
+                        Address,
                     )
                     .subscribe((res: any) => {
                         if (res) {

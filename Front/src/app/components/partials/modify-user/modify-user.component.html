@@ -8,7 +8,7 @@
         id="Username"
         name="Username"
         value={{currentUser.Name}}
-        (keyup.enter)="userModify(username.value, email.value, adresse.value, password.value)"
+        (keyup.enter)="userModify(username.value, email.value, Address.value, password.value)"
     /><br />
     <label for="password">Password:</label>
     <input
@@ -17,7 +17,7 @@
         type="text"
         id="password"
         name="password"
-        (keyup.enter)="userModify(username.value, email.value, adresse.value, password.value)"
+        (keyup.enter)="userModify(username.value, email.value, Address.value, password.value)"
     /><br />
     <label for="email">Email:</label>
     <input
@@ -29,19 +29,19 @@
         id="email"
         name="email"
         value={{currentUser.Email}}
-        (keyup.enter)="userModify(username.value, email.value, adresse.value, password.value)"
+        (keyup.enter)="userModify(username.value, email.value, Address.value, password.value)"
     /><br />
-    <label for="adresses">Adresse:</label>
+    <label for="Addresss">Address:</label>
     <input
-        #adresse
+        #Address
         class="input-font"
         type="text"
-        id="adresses"
-        name="adresses"
-        value={{currentUser.Adresse}}
-        (keyup.enter)="userModify(username.value, email.value, adresse.value, password.value)"
+        id="Addresss"
+        name="Addresss"
+        value={{currentUser.Address}}
+        (keyup.enter)="userModify(username.value, email.value, Address.value, password.value)"
     /><br />
-    <button (click)="userModify(username.value, email.value, adresse.value, password.value)" type="button">
+    <button (click)="userModify(username.value, email.value, Address.value, password.value)" type="button">
         Modify!</button
     ><br />
     <a routerLink="/home">Log in</a><br />

@@ -28,7 +28,7 @@
 </div>
 <hr style="width: 80%; margin-bottom: 5rem;" />
 <div class="products-container">
-    <div *ngIf="resultList.length == 0" style="color: white;">
+    <div *ngIf="resultList.length == 0" style="color: black;">
         It looks like none of our products corresponds to your search.
     </div>
     <div routerLink="../product/{{ product.id }}" class="product-card" *ngFor="let product of resultList">

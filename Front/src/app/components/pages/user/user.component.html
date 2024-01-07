@@ -21,8 +21,8 @@
 
             <div class="line">
                 <i class="fa-solid fa-location-dot"></i>
-                <input #adresse value="{{ targetUser.Adresse }}" class="input-form" type="text" id="adresses"
-                    name="adresses" />
+                <input #Address value="{{ targetUser.Address }}" class="input-form" type="text" id="Addresss"
+                    name="Addresss" />
             </div>
 
             <div class="line">
@@ -31,7 +31,7 @@
                     name="password" />
             </div>
             <div style="display: flex; flex-direction: row; margin-top: 3rem;">
-                <button class="button" (click)="userModify(username.value, email.value, adresse.value, '')">Modify
+                <button class="button" (click)="userModify(username.value, email.value, Address.value, '')">Modify
                     account</button>
                 <div style="display: flex; align-items: center; flex-direction: column;">
                     <a routerLink="../newproduct/create" class="create">Create Product</a>

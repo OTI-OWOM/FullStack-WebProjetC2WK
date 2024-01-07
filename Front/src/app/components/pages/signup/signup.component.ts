@@ -16,14 +16,17 @@ export class SignupComponent {
 
     addUser(
         Name: string,
+        LastName: string,
         Password: string,
         Email: string,
-        Adresse: string,
+        Address: string,
+        City: string,
+        PostalCode: string
     ) {
         if (Name && Password && Email) {
             this.subscription.add(
                 this.user_service
-                    .registerUser(Name, Password, Email, Adresse)
+                    .registerUser(Name, LastName, Password, Email, Address, City, PostalCode)
                     .subscribe({
                         next: (res: any) => {
                             if (res) {

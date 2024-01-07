@@ -2,26 +2,41 @@
     <form class="register">
         <h1 class="title">Sign up</h1>
         <div class="line">
+            <i class="fa fa-user"></i>
+            <input #name autofocus placeholder="Name" class="input-form" type="text" id="name"
+                name="name" (keyup.enter)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)" />
+        </div>
+        <div class="line">
+            <i class="fa fa-user"></i>
+            <input #lastName autofocus placeholder="Last Name" class="input-form" type="text" id="name"
+                name="name" (keyup.enter)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)" />
+        </div>
+        <div class="line">
             <i class="fa-solid fa-at"></i>
             <input #email placeholder="Email" class="input-form" type="text" id="email" name="email"
-                (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
+                (keyup.enter)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)" />
         </div>
         <div class="line">
             <i class="fa-solid fa-lock"></i>
             <input #password placeholder="Password" class="input-form" type="password" id="password" name="password"
-                (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
-        </div>
-        <div class="line">
-            <i class="fa fa-user"></i>
-            <input #username autofocus placeholder="Username" class="input-form" type="text" id="username"
-                name="username" (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
+                (keyup.enter)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)" />
         </div>
         <div class="line">
             <i class="fa-solid fa-location-dot"></i>
-            <input #adresse placeholder="Adress" class="input-form" type="text" id="adresses" name="adresses"
-                (keyup.enter)="addUser(username.value, password.value, email.value, adresse.value)" />
+            <input #address placeholder="Address" class="input-form" type="text" id="addresss" name="addresss"
+                (keyup.enter)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)" />
         </div>
-        <button class="button" (click)="addUser(username.value, password.value, email.value, adresse.value)"
+        <div class="line">
+            <i class="fa-solid fa-city"></i>
+            <input #city placeholder="City" class="input-form" type="text" id="city" name="city" style="padding-right: -20px;"
+                (keyup.enter)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)" />
+        </div>
+        <div class="line">
+            <i class="fa-regular fa-envelope"></i>
+            <input #postalCode placeholder="Postal Code" class="input-form" type="text" id="postalCode" name="postalCode"
+                (keyup.enter)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)" />
+        </div>
+        <button class="button" (click)="addUser(name.value, lastName.value, password.value, email.value, address.value, city.value, postalCode.value)"
             type="button">Sign up!</button>
         <div class="login-text">
             <p routerLink="/login" class="login-link">

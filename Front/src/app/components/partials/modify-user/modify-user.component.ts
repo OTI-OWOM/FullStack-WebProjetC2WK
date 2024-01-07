@@ -39,8 +39,8 @@ export class ModifyUserComponent implements OnInit, OnDestroy {
         }
     }
 
-    userModify(username: string, email: string, adresse: string, password: string) {
-        if (username && email && adresse) {
+    userModify(username: string, email: string, Address: string, password: string) {
+        if (username && email && Address) {
             this.subscription.add(
                 this.user_service
                     .modifyUser(
@@ -49,7 +49,7 @@ export class ModifyUserComponent implements OnInit, OnDestroy {
                         username,
                         password,
                         email,
-                        adresse,
+                        Address,
                     )
                     .subscribe((res: any) => {
                         if (res) {
