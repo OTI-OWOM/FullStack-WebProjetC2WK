@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL, USERS_URL } from '../shared/constants/url';
-import { Identification } from '../shared/interfaces/Identification';
 import { User } from '../shared/interfaces/Users';
 
 @Injectable({
@@ -42,20 +41,8 @@ export class UsersService {
         });
     }
 
-    public modifyUser(
-        id: string,
-        Name: string,
-        Password: string,
-        Email: string,
-        Address: string,
-    ) {
-        return this.http.put(URL.USER + id, {
-            Name,
-            Password,
-            Email,
-            Address,
-        });
-
+    public modifyUser(id: string, user: Partial<User>) {
+        return this.http.put(URL.USER + id, user);
     }
 
     public deleteUser(id: string) {

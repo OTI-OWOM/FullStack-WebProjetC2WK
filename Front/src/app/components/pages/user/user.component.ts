@@ -38,7 +38,7 @@ export class UserComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subscription.add(
             this.usersService
-                .userSelect( this.paramID)
+                .userSelect(this.paramID)
                 .subscribe((res) => {
                     this.targetUser = res;
                     this.isVisitorAllowed = true;
@@ -57,7 +57,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.usersService
                 .deleteUser(
-                    
+
                     this.paramID,
                 )
                 .subscribe((res: any) => {
@@ -72,25 +72,15 @@ export class UserComponent implements OnInit, OnDestroy {
         this.isEditMode = !this.isEditMode;
     }
 
-    saveChanges(): void {
+    userModify() {
         if (this.isEditMode) {
-            this.userModify(this.targetUser.Name!, this.targetUser.Email!, this.targetUser.Address!, this.password!);
-            this.toggleEditMode();
-        }
-    }
-
-    userModify(username: string, email: string, Address: string, password: string) {
-        console.log(this.paramID);
-        if (username && email && Address) {
+            console.log(this.targetUser);
+            
             this.subscription.add(
                 this.usersService
                     .modifyUser(
-                        
                         this.paramID,
-                        username,
-                        password,
-                        email,
-                        Address,
+                        this.targetUser
                     )
                     .subscribe((res: any) => {
                         if (res) {
@@ -98,6 +88,7 @@ export class UserComponent implements OnInit, OnDestroy {
                         }
                     }),
             );
+            this.toggleEditMode();
         }
     }
 

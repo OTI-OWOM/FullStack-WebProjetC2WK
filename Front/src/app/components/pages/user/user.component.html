@@ -37,11 +37,11 @@
             <div *ngIf="isEditMode">
                 <div class="line">
                     <i class="fa fa-user"></i>
-                    <input [(ngModel)]="targetUser.Name" placeholder="{{ targetUser.Name }}" class="input-form" type="text" id="username" name="username" />
+                    <input [(ngModel)]="targetUser.Name" placeholder="{{ targetUser.Name }}" class="input-form" type="text" id="name" name="name" />
                 </div>
                 <div class="line">
                     <i class="fa fa-user"></i>
-                    <input [(ngModel)]="targetUser.LastName" placeholder="{{ targetUser.LastName }}" class="input-form" type="text" id="username" name="username" />
+                    <input [(ngModel)]="targetUser.LastName" placeholder="{{ targetUser.LastName }}" class="input-form" type="text" id="lastName" name="lastName" />
                 </div>    
                 <div class="line">
                     <i class="fa-solid fa-at"></i>
@@ -65,7 +65,7 @@
                     <input [(ngModel)]="targetUser.Password" placeholder="Password" class="input-form" type="password" id="password" name="password" />
                 </div>
                 <div class="modify-buttons">
-                    <button class="button" (click)="saveChanges()">Confirm</button>
+                    <button class="button" (click)="userModify()">Confirm</button>
                     <button class="button" (click)="toggleEditMode()">Back</button>
                 </div>
             </div>

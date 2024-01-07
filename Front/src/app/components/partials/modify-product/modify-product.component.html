@@ -5,8 +5,20 @@
         </div>
         <h1 class="title">{{product.BrandName}}</h1>
         <div class="line">
-            <i class="fa-solid fa-car"></i>
-            <input #name class="input-form" type="text" id="name" name="name" value={{product.BrandName}}/>
+            <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
+            <input #year placeholder="Year of the product" class="input-form" type="number" id="year" name="year" value={{product.Year}}/>
+        </div>
+        <div class="line">
+            <select #brand class="input-form" (change)="onBrandChange(brand.value)">
+                <option value="" disabled selected>Choose a brand</option>
+                <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
+            </select>
+        </div>
+        
+        <div class="line" *ngIf="models.length > 0">
+            <select #model class="input-form" [(ngModel)]="selectedModelId">
+                <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
+            </select>
         </div>
 
         <div class="line">
@@ -20,7 +32,7 @@
                 name="desc" value={{product.Description}}/>
         </div>
 
-        <button class="button" (click)="changeProduct(name.value, price.value, description.value)" type="button">
+        <button class="button" (click)="changeProduct(selectedModelId, price.value, description.value)" type="button">
             Modify Product!</button><br />
         <p class="message">{{message}}</p>
     </div>

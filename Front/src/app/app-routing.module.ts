@@ -7,7 +7,6 @@ import { ConnectionComponent } from './components/pages/connection/connection.co
 import { LogoutComponent } from './components/pages/logout/logout.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { MeComponent } from './components/pages/me/me.component';
-import { ModifyUserComponent } from './components/partials/modify-user/modify-user.component';
 import { DeleteUserComponent } from './components/partials/delete-user/delete-user.component';
 import { UserComponent } from './components/pages/user/user.component';
 import { AuthGuard } from './services/auth.guard';
@@ -35,7 +34,6 @@ const routes: Routes = [
     { path: 'logout', component: LogoutComponent },
     { path: 'register', component: SignupComponent },
     { path: 'me', component: MeComponent, canActivate: [AuthGuard] },
-    { path: 'modify', component: ModifyUserComponent, canActivate: [AuthGuard] },
     { path: 'user/delete/:id', component: DeleteUserComponent, canActivate: [AuthGuard] },
     { path: 'user/:id', component: UserComponent, canActivate: [AuthGuard] },
     { path: 'user/notloggedin', component: UserComponent, canActivate: [AuthGuard] },

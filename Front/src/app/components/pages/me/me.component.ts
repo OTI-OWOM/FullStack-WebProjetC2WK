@@ -82,28 +82,21 @@ export class MeComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('newproduct/create');
     }
 
-    saveChanges(): void {
+    userModify() {
         if (this.isEditMode) {
-            this.userModify(this.data.Name!, this.data.Email!, this.data.Address!, this.password!);
+            this.subscription.add(
+                this.usersService
+                    .modifyUser(
+                        this.userID,
+                        this.data
+                    )
+                    .subscribe((res: any) => {
+                        if (res) {
+                            this.message = res.message;
+                        }
+                    }),
+            );
             this.toggleEditMode();
         }
-    }
-
-    userModify(Name: string, Email: string, Address: string, Password: string) {
-        this.subscription.add(
-            this.usersService
-                .modifyUser(
-                    this.userID,
-                    Name,
-                    Password,
-                    Email,
-                    Address,
-                )
-                .subscribe((res: any) => {
-                    if (res) {
-                        this.message = res.message;
-                    }
-                }),
-        );
     }
 }

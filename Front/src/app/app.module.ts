@@ -12,7 +12,6 @@ import { UsersComponent } from './components/pages/users/users.component';
 import { ConnectionComponent } from './components/pages/connection/connection.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { MeComponent } from './components/pages/me/me.component';
-import { ModifyUserComponent } from './components/partials/modify-user/modify-user.component';
 import { DeleteUserComponent } from './components/partials/delete-user/delete-user.component';
 import { UserComponent } from './components/pages/user/user.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -40,7 +39,6 @@ import { HttpRequestInterceptor } from './interceptors/http-request.interceptor'
         ConnectionComponent,
         SignupComponent,
         MeComponent,
-        ModifyUserComponent,
         DeleteUserComponent,
         UserComponent,
         UserProductsComponent,
