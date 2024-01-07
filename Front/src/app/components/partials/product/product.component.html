@@ -19,11 +19,13 @@
                 <hr class="hr-info" />
                 <h3 class="showcase">Year :</h3>
                 <p class="text">{{product.Year}}</p>
-                <hr class="hr-info" />
-                <h3 class="showcase">Car Details : </h3>
-                <div *ngFor="let detail of product.CarDetails">
-                    <p class="detail" style="display:inline">{{detail.DetailName}} : </p>
-                    <p class="text" style="display:inline">{{detail.DetailValue}}</p>
+                <div *ngIf="product.CarDetails.length > 0">
+                    <hr class="hr-info" />
+                    <h3 class="showcase">Car Details : </h3>
+                    <div *ngFor="let detail of product.CarDetails">
+                        <p class="detail" style="display:inline">{{detail.DetailName}} : </p>
+                        <p class="text" style="display:inline">{{detail.DetailValue}}</p>
+                    </div>
                 </div>
                 <hr class="hr-info" />
                 <h3 class="showcase">Price :</h3>
