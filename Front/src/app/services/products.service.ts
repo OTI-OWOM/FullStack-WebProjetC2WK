@@ -78,17 +78,10 @@ export class ProductsService {
 
     public modifyProduct(
         productId: string,
-        BrandName: string,
-        Price: string,
-        Description: string,
+        product: Partial<Product>,
     ) {
         return this.http.put(
-            URL.PRODUCT + productId,
-            {
-                BrandName,
-                Price,
-                Description,
-            },
+            URL.PRODUCT + productId, product,
         );
     }
 

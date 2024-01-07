@@ -8,6 +8,7 @@ export interface Product {
     Available: boolean;
     SellerID: string;
     ModelBrandName: string;
+    ModelBrandID: string;
     BrandName: string;
     CarDetails: CarDetail[];
 }

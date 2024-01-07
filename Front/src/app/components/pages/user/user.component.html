@@ -37,7 +37,7 @@
             <div *ngIf="isEditMode">
                 <div class="line">
                     <i class="fa fa-user"></i>
-                    <input [(ngModel)]="targetUser.Name" placeholder="{{ targetUser.Name }}" class="input-form" type="text" id="name" name="name" />
+                    <input [(ngModel)]="targetUser.Name" autofocus placeholder="{{ targetUser.Name }}" class="input-form" type="text" id="name" name="name" />
                 </div>
                 <div class="line">
                     <i class="fa fa-user"></i>
@@ -45,7 +45,7 @@
                 </div>    
                 <div class="line">
                     <i class="fa-solid fa-at"></i>
-                    <input [(ngModel)]="targetUser.Email" autofocus placeholder="{{ targetUser.Email }}" class="input-form" type="text" id="email" name="email" />
+                    <input [(ngModel)]="targetUser.Email" placeholder="{{ targetUser.Email }}" class="input-form" type="text" id="email" name="email" />
                 </div>
                 <div class="line">
                     <i class="fa-solid fa-location-dot"></i>

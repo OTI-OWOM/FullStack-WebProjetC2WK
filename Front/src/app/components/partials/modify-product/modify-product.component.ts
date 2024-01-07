@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 import { Product } from '../../../shared/interfaces/Product';
 import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
 import { CarBrands } from 'src/app/shared/interfaces/Brands';
+import { CarImage } from 'src/app/shared/interfaces/Images';
+import { URL } from '../../../shared/constants/url';
 
 @Component({
     selector: 'app-modify-product',
@@ -14,21 +16,26 @@ import { CarBrands } from 'src/app/shared/interfaces/Brands';
 export class ModifyProductComponent implements OnInit {
     subscription: Subscription = new Subscription();
 
-    product!:Product;
+    product: Product = {} as Product;
+    data: Partial<Product> = {} as Product;
     brands: CarBrands[] = [];
+    currentBrandId!: number;
     models: CarModelBrands[] = [];
+    images: string[] = [];
+    currentImageIndex: number = 0;
 
     userID!: string;
-    image!:string;
+    image!: string;
 
     selectedImages: File[] = [];
-    selectedModelId: number | null = null; 
-    selectedCarId: number | null = null; 
+    selectedModelId: number | null = null;
+    selectedCarId: number | null = null;
 
     message!: string;
     paramID!: string;
 
     constructor(
+        private router: Router,
         private route: ActivatedRoute,
         private productService: ProductsService,
     ) {
@@ -38,34 +45,38 @@ export class ModifyProductComponent implements OnInit {
     ngOnInit(): void {
         this.userID = sessionStorage.getItem('userId') ?? '';
         this.route.params.subscribe((params) => { this.paramID = params['id']; });
-        this.productService.getProductById(this.paramID )
-            .subscribe((response:Product) => {
+        this.productService.getProductById(this.paramID)
+            .subscribe((response: Product) => {
                 this.product = response;
-                this.setImage();
+
+                this.productService.getAllImages(this.product.id)
+                .subscribe((response: CarImage[]) => {
+                    this.images = response.map(image => `${URL.IMAGE}${image.id}`);
+                    
+                });
+                this.subscription.add(this.productService.getAllBrands()
+                    .subscribe({
+                        next: (res: CarBrands[]) => {
+                            this.brands = res;
+                            this.currentBrandId = this.brands.find((brand) => brand.BrandName == this.product.BrandName)?.id || 0;
+                            this.onBrandChange(this.currentBrandId.toString());
+        
+                        },
+                        error: (err: any) => {
+                            this.message = err.error.message;
+                        },
+                    }))
             });
 
-        this.subscription.add(this.productService.getAllBrands()
-        .subscribe({
-            next: (res: CarBrands[]) => {
-                this.brands = res;
-            },
-            error: (err: any) => {
-                this.message = err.error.message;
-            },
-        }))
     }
 
     onBrandChange(brandId: string): void {
-        this.subscription.add(this.productService.getAllModels(brandId)
+        this.currentBrandId = parseInt(brandId);
+        this.subscription.add(this.productService.getAllModels(brandId.toString())
             .subscribe({
                 next: (res: CarModelBrands[]) => {
                     this.models = res;
-                    if (this.models.length > 0) {
-                        // Preselect the first model
-                        this.selectedModelId = this.models[0].id;
-                    } else {
-                        this.selectedModelId = null;
-                    }
+                    this.data.ModelBrandID = this.models[0].id.toString();
                 },
                 error: (err: any) => {
                     this.message = err.error.message;
@@ -73,24 +84,29 @@ export class ModifyProductComponent implements OnInit {
             }));
     }
 
-    changeProduct(ModelBrandID: number | null, price: string, description: string) {
-        if (ModelBrandID && price && description) {
-            this.subscription.add(
-                this.productService
-                    // eslint-disable-next-line no-underscore-dangle
-                    .modifyProduct(this.product.id, ModelBrandID, price, description)
-                    .subscribe((res: any) => {
-                        if (res) {
-                            this.message = res.message;
-                        }
-                    }),
-            );
+    changeProduct() {
+        this.subscription.add(
+            this.productService
+                // eslint-disable-next-line no-underscore-dangle
+                .modifyProduct(this.product.id, this.data)
+                .subscribe((res: any) => {
+                    if (res) {
+                        this.message = res.message;
+                        this.router.navigate([`/product/${this.product.id}`])
+                    }
+                }),
+        );
+    }
+
+    nextImage() {
+        if (this.currentImageIndex < this.images.length - 1) {
+            this.currentImageIndex++;
         }
     }
 
-    setImage() {
-        // eslint-disable-next-line no-underscore-dangle
-        const index = (parseInt(this.product.id, 16) % 25) + 1;
-        this.image = `voiture (${index}).jpg`;
+    previousImage() {
+        if (this.currentImageIndex > 0) {
+            this.currentImageIndex--;
+        }
     }
 }

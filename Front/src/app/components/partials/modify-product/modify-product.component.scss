@@ -31,6 +31,35 @@
             border: 0.3rem solid;
             border-radius: 2rem;
         }
+
+        .button-image{
+            display: flex;
+            justify-content: center;
+
+            .arrow {
+                top: 50%;
+                transform: translateY(10%);
+                background-color: transparent;
+                width: 20%;
+                color: black;
+                border: none;
+                font-size: 3rem;
+                cursor: pointer;
+        
+                &:disabled {
+                    cursor: default;
+                    opacity: 0.5;
+                }
+            }
+        
+            .left-arrow {
+                left: 0;
+            }
+        
+            .right-arrow {
+                right: 0;
+            }
+        }
     }
 
     .title {
