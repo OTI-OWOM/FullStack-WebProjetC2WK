@@ -4,10 +4,10 @@
     </h1>
     <hr />
 </div>
-<div *ngIf="productList.length == 0">
-    It looks like none of our products corresponds to your search.
-</div>
 <div class="products-container">
+    <div *ngIf="productList.length == 0">
+        It looks like none of our products corresponds to your search.
+    </div>
     <div routerLink="../../product/{{ product.id }}" class="product-card" *ngFor="let product of productList">
         <div class="product-card-content">
             <div class="product-image">
