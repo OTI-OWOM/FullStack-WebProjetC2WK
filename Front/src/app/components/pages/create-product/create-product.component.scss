@@ -7,176 +7,46 @@ $button-width: 45%;
 $border-radius: 4px;
 $transition-time: 0.4s;
 
-
-.wrapper {
+.new-product {
     display: flex;
-    align-items: center;
     flex-direction: column;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    min-height: 100%;
-    padding: 8rem 2rem;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    width: 115rem;
+    max-width: 100%;
+    min-height: 20%;
+    background: var(--cream);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 
-    .new-product {
+    .values {
         display: flex;
-        flex-direction: column;
-        border-radius: 5px;
-        padding: 1rem 2rem;
-        width: 115rem;
-        max-width: 100%;
-        min-height: 20%;
-        background: var(--cream);
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        flex-direction: row;
 
-        .title {
-            color: var(--dark);
+        .admin-text {
+            color: var(--gold);
+            background-color: var(--dark);
+            font-weight: bold;
             text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #bebebe;
         }
 
-        .values {
-            display: flex;
-            flex-direction: row;
-
-            .admin-text {
-                color: var(--gold);
-                background-color: var(--dark);
-                font-weight: bold;
-                text-align: center;
-            }
-    
-            i {
-                color: var(--dark);
-                margin: 0 1rem 0 0;
-            }
-    
-            .display-details {
-                row-gap: 0.5rem;
-                max-height: 100px;
-                height: 100px;
-                overflow-y: auto; 
-                border: 1px solid #bebebe;
-                padding-right: 1rem;
-            }
-            
-            .line {
-                display: flex;
-                align-items: baseline;
-                
-                .input-form,
-                .details,
-                .display-form,
-                .brand-model {
-                    width: 100%;
-                    padding: $input-padding;
-                    margin: 1rem 0;
-                    font-size: large;
-                    border-radius: $border-radius;
-                    border: 1px solid $border-color;
-                    transition: border-width $transition-time;
-    
-                    &:focus {
-                        outline: none;
-                        color: #444;
-                        border-color: $blue-color;
-                        border-left-width: 3rem;
-                    }
-                }
-    
-                .display-form {
-                    padding: 0.3rem 1rem;
-                    margin: 0.2rem 0.4rem;
-                }
-    
-                .details,
-                .brand-model {
-                    padding: 10px 1rem;
-    
-                    &:focus {
-                        border-left-width: 1px;
-                    }
-    
-                }
-    
-                .detail-button {
-                    width: 15%;
-                    margin: 0.2rem 0.2rem;
-                    max-width: 15%;
-                    height: 5%;
-                }
-            }           
+        i {
+            color: var(--dark);
+            margin: 0 1rem 0 0;
         }
 
-        .add-image {
-            box-sizing: border-box;
-            width: 45%;
-
-            margin: 0 4rem;
-
-            h3 {
-                color: var(--dark);
-                border-bottom: 1px solid #bebebe;
-            }
-    
-            .add-image-container {
-                display: flex;
-                flex-wrap: wrap;
-
-                gap: 0.5rem;
-                max-height: 330px;
-                overflow-y: auto; 
-                border: 1px solid #bebebe;
-                padding: 1rem;
-                align-items: center;
-    
-                label {
-                    font-size: 150%;
-                }
-                
-                img,
-                label {
-                    cursor: pointer;
-                    display: flex;
-                    width: 150px;
-                    height: 150px;
-                    justify-content: center;
-                    align-items: center;
-                    border: solid 1px black;
-                    border-radius: 5px;
-                    object-fit: cover;
-                }
-
-        
-                input {
-                    width: 150px;
-                    height: 150px;
-                    opacity: 0;
-                    height: 0;
-                }
-            }
+        .display-details {
+            row-gap: 0.5rem;
+            max-height: 100px;
+            height: 100px;
+            overflow-y: auto;
+            border: 1px solid #bebebe;
+            padding-right: 1rem;
         }
     }
-
-    .message {
-        text-align: center;
-        align-self: center;
-        margin-top: -1rem;
-        padding: 1rem;
-        border: 1px solid;
-        border-radius: 18px;
-        border-color: rgb(121, 121, 121);
-        font-size: 2rem;
-        min-width: 250px;
-        max-width: 400px;
-        min-height: 45px;
-        position: static;
-    }
+}
 
 
-    .button {
-        width: 25%;
-        margin-top: 5rem;
-    }
+.button {
+    width: 25%;
+    margin-top: 5rem;
 }

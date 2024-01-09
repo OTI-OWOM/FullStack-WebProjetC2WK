@@ -1,18 +1,18 @@
-<div class="wrapper">
+<div class="user-wrapper">
     <div class="new-product">
         <h1 class="title">Create a new product</h1>
         <div class="values">
             <div>
-                <div class="line">
+                <div class="line" style="justify-content: flex-start;">
                     <i class="fa-solid fa-car"></i>
                     <div>
-                        <select #brand class="input-form" (change)="onBrandChange(brand.value)" class="brand-model">
+                        <select #brand class="brand-model" (change)="onBrandChange(brand.value)">
                             <option value="" disabled selected>Choose a brand</option>
                             <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
                         </select>
                     </div>
                     <div *ngIf="models.length > 0">
-                        <select #model class="input-form" [(ngModel)]="selectedModelId" class="brand-model">
+                        <select #model class="brand-model" [(ngModel)]="selectedModelId">
                             <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
                         </select>
                     </div>
