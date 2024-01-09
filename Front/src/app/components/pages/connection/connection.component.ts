@@ -24,10 +24,7 @@ export class ConnectionComponent {
     validation(Email: string, Password: string): void {
         if (Email && Password) {
             const loginSubscription = this.auth.loginUser(Email, Password).subscribe({
-                        next: (res: any) => {
-                            // sessionStorage.setItem('token', `${res.token}`);
-                            // sessionStorage.setItem('userId', res.userId);
-                            // this.auth.updateAuthStatus();
+                        next: () => {
                             this.router.navigateByUrl('/products');
                         },
                         error: (err: any) => {

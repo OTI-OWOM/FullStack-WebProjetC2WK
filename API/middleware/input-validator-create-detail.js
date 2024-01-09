@@ -5,11 +5,13 @@ const Car = db.Car;
 
 module.exports = async (req, res, next) => {
     let data = helper.dataPass(req);
+    console.log(data);
 
     // Schema that our data must match to
     const inputSchema = {
-        DetailName: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
-        DetailValue: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+,%.#\\-]+$/', 'max:200']
+        details: 'required|array',
+        'details.*.DetailName': ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
+        'details.*.DetailValue': ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+,%.#\\-]+$/', 'max:200']
     };
 
     const validation = new Validator(data, inputSchema);
@@ -23,6 +25,7 @@ module.exports = async (req, res, next) => {
     }
 
     try {
+        const carExists = await Car.findByPk(req.params.carId);
         if(carExists.SellerID !== req.auth.userId) {
             return res.status(401).json({ message: 'Not authorized' });
         }

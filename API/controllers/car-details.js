@@ -2,24 +2,31 @@ const db = require('../db/models');
 const CarDetail = db.CarDetail;
 
 /**
-* Add a new car detail
+* Add a new car details
 * @param {object} req - request
 * @param {object} res - response
 */
 exports.createCarDetail = async (req, res) => {
-    const carObject = req.body;
-    console.log(req.body);
-    carObject.CarID = req.params.carId;
-    const details = await CarDetail.findAll({ where: { DetailName: req.body.DetailName, CarID: req.body.CarID }});
-
-    if (details.length !== 0) {
-        details.forEach(async element => {
-            await element.update(carObject).catch(error => res.status(400).json({ error }));
-        });
-    } else {
-        await CarDetail.create(carObject)
-            .catch(error => res.status(400).json({ error }));
+    console.log(`Req body : ${req.body}`);
+    const carDetailList = req.body.details;
+    if (!carDetailList) {
+        return res.status(400).json({error: "No Details Found"})
     }
+
+    carDetailList.forEach(async (carDetail) => {
+        console.log(req.body);
+        carDetail.CarID = req.params.carId;
+        const details = await CarDetail.findAll({ where: { DetailName: carDetail.DetailName, CarID: carDetail.CarID }});
+    
+        if (details.length !== 0) {
+            details.forEach(async element => {
+                await element.update(carDetail).catch(error => res.status(400).json({ error }));
+            });
+        } else {
+            await CarDetail.create(carDetail)
+                .catch(error => res.status(400).json({ error }));
+        }
+    });
     res.status(201).json({ message: 'Car detail added!' })
 };
 

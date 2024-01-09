@@ -37,10 +37,9 @@ export class ProductsService {
         return this.http.get<Product[]>(`${URL.PRODUCTS}/${id}`);
     }
 
-    public createCarDetail(carId: number, DetailName: string, DetailValue: string) {
+    public createCarDetail(carId: number, details: Partial<CarDetail>[]) {
         return this.http.post(`${URL.DETAIL}${carId}`, {
-            DetailName,
-            DetailValue,
+            details
         });
     }
 

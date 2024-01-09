@@ -1,46 +1,69 @@
 <div class="wrapper">
     <div class="new-product">
         <h1 class="title">Create a new product</h1>
-        <div class="line">
-            <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
-            <input #year placeholder="Year of the product" class="input-form" type="number" id="year" name="year" />
+        <div class="values">
+            <div>
+                <div class="line">
+                    <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
+                    <input #year placeholder="Year of the product" class="input-form" type="number" id="year"
+                        name="year" />
+                </div>
+                <div class="line">
+                    <i class="fa-solid fa-eur" style="padding: 0 4px 0 3px;"></i>
+                    <input #price placeholder="Price of the product in €" class="input-form" type="number" id="price"
+                        name="price" />
+                </div>
+                <div class="line">
+                    <i class="fa-solid fa-commenting"></i>
+                    <input #description placeholder="Description of the product" class="input-form" type="text"
+                        id="desc" name="desc" />
+                </div>
+                <div class="line">
+                    <i class="fa-solid fa-car"></i>
+                    <div>
+                        <select #brand class="input-form" (change)="onBrandChange(brand.value)" class="brand-model">
+                            <option value="" disabled selected>Choose a brand</option>
+                            <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="models.length > 0">
+                        <select #model class="input-form" [(ngModel)]="selectedModelId" class="brand-model">
+                            <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="line">
+                    <input #detailNameInput [(ngModel)]="carDetailName" class="details" placeholder="Detail Name">
+                    <input [(ngModel)]="carDetailValue" class="details" placeholder="Detail Value"
+                        (keydown.enter)="addCarDetail()">
+                    <button (click)="addCarDetail()" class="detail-button">+</button>
+                </div>
+                <div class="display-details">
+                    <div *ngFor="let detail of carDetails; let i = index" class="line">
+                        <p class="display-form">{{ detail.DetailName }}</p>
+                        <p class="display-form">{{ detail.DetailValue }}</p>
+                        <button (click)="carDetails.splice(i, 1)" class="detail-button">-</button>
+                    </div>
+                </div>
+            </div>
+            <div class="add-image">
+                <h3>Add image</h3>
+                <div class="add-image-container">
+                    <div *ngFor="let preview of imagePreviews" >
+                        <img [src]="preview">
+                    </div>
+                    <label *ngIf="imagePreviews.length !== 10" for="add-single-img">+</label>
+                    <input type="file" (change)="onImagesSelected($event)" id="add-single-img" accept="image/jpeg"
+                        multiple />
+                </div>
+            </div>
         </div>
 
-        <div class="line">
-            <i class="fa-solid fa-eur" style="padding: 0 4px 0 3px;"></i>
-            <input #price placeholder="Price of the product in €" class="input-form" type="number" id="price" name="price" />
-        </div>
-
-        <div class="line">
-            <i class="fa-solid fa-commenting"></i>
-            <input #description placeholder="Description of the product" class="input-form" type="text" id="desc" name="desc" />
-        </div>
-        
-        <div class="line">
-            <select #brand class="input-form" (change)="onBrandChange(brand.value)">
-                <option value="" disabled selected>Choose a brand</option>
-                <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
-            </select>
-        </div>
-        
-        <div class="line" *ngIf="models.length > 0">
-            <select #model class="input-form" [(ngModel)]="selectedModelId">
-                <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
-            </select>
-        </div>
-        
-        <div class="line">
-            <input type="file" (change)="onImagesSelected($event)" multiple />
-        </div>
-        <div class="line">
-            <input [(ngModel)]="carDetailName" placeholder="Car Detail Name" class="input-form" type="text" />
-        </div>
-        <div class="line">
-            <input [(ngModel)]="carDetailValue" placeholder="Car Detail Value" class="input-form" type="text" />
-        </div>
-        <button class="button" (click)="addProduct(year.value, price.value, description.value, selectedModelId)" type="button">
-            Create Product!</button
-        ><br />
-    <p class="message">{{message}}</p>
+        <!-- Submit All Details -->
+        <button class="button" (click)="addProduct(year.value, price.value, description.value, selectedModelId)"
+            type="button">
+            Create Product!</button><br />
+        <p class="message">{{message}}</p>
     </div>
 </div>

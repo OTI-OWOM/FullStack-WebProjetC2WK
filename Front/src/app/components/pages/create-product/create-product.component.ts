@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Subscription, delay } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 import { CarBrands } from '../../../shared/interfaces/Brands';
 import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
 import { CreateProductResponse } from '../../../shared/interfaces/CreateProductRes';
 import { Router } from '@angular/router';
+import { CarDetail } from 'src/app/shared/interfaces/Details';
 
 @Component({
     selector: 'app-create-product',
@@ -12,18 +13,20 @@ import { Router } from '@angular/router';
     styleUrls: ['./create-product.component.scss'],
 })
 export class CreateProductComponent implements OnInit {
+    @ViewChild('detailNameInput') detailNameInput!: ElementRef;
     subscription: Subscription = new Subscription();
 
     carDetailName: string = '';
     carDetailValue: string = '';
-
+    carDetails: Partial<CarDetail>[] = [];
     selectedImages: File[] = [];
-    selectedModelId: number | null = null; 
-    selectedCarId: number | null = null; 
+    imagePreviews: string[] = [];
+    selectedModelId: number | null = null;
+    selectedCarId: number | null = null;
 
     brands: CarBrands[] = [];
     models: CarModelBrands[] = [];
-    
+
     userID!: string;
     message!: string;
 
@@ -36,14 +39,14 @@ export class CreateProductComponent implements OnInit {
         this.userID = sessionStorage.getItem('userId') ?? '';
 
         this.subscription.add(this.productService.getAllBrands()
-        .subscribe({
-            next: (res: CarBrands[]) => {
-                this.brands = res;
-            },
-            error: (err: any) => {
-                this.message = err.error.message;
-            },
-        }))
+            .subscribe({
+                next: (res: CarBrands[]) => {
+                    this.brands = res;
+                },
+                error: (err: any) => {
+                    this.message = err.error.message;
+                },
+            }))
     }
 
     onBrandChange(brandId: string): void {
@@ -65,32 +68,56 @@ export class CreateProductComponent implements OnInit {
     }
 
     onImagesSelected(event: Event) {
-        const files = (event.target as HTMLInputElement).files;
-        if (files && files.length <= 10) {
+        const element = event.target as HTMLInputElement;
+        let files = element.files;
+        if (files && files.length <= 10 && (this.imagePreviews.length + files.length) <= 10) {
             this.selectedImages = Array.from(files);
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e: any) => {
+                    this.imagePreviews.push(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
         } else {
-            // Handle error: more than 10 files
+            this.message = "A maximum of 10 images allowed!"
         }
     }
 
     async addCarDetail() {
-        if (this.selectedCarId && this.carDetailName && this.carDetailValue) {
-            try {
-                await this.productService.createCarDetail(
-                    this.selectedCarId,
-                    this.carDetailName,
-                    this.carDetailValue
-                ).toPromise();
+        if (this.carDetailName && this.carDetailValue) {
+            this.carDetails.push({
+                DetailName: this.carDetailName,
+                DetailValue: this.carDetailValue
+            });
 
-                this.message = 'Car detail added successfully!';
-                // Reset fields after successful addition
-                this.carDetailName = '';
-                this.carDetailValue = '';
-            } catch (err: any) {
-                this.message = err.error.message;
-            }
+            // Reset fields after addition
+            this.carDetailName = '';
+            this.carDetailValue = '';
+
+            this.detailNameInput.nativeElement.focus();
         } else {
             this.message = 'Please fill in all car detail fields.';
+        }
+    }
+
+    async submitCarDetails() {
+        if (this.selectedCarId && this.carDetails.length > 0) {
+            await this.productService.createCarDetail(
+                this.selectedCarId, this.carDetails
+            ).subscribe({
+                next: (res: any) => {
+                    this.message = res.message;
+                },
+                error: (err: any) => {
+                    this.message = err.message;
+                }
+            });
+
+            // Reset carDetails array after successful submission
+            this.carDetails = [];
+        } else {
+            this.message = 'Please add at least one car detail.';
         }
     }
 
@@ -102,34 +129,42 @@ export class CreateProductComponent implements OnInit {
     ) {
 
         Price = `${parseInt(Price, 10) * 100}`;
-        
+
         if (Year && Price && Description) {
-            try {
-                const productRes = await this.productService.createProduct(
-                    parseInt(Year),
-                    parseInt(Price),
-                    Description,
-                    1, // Assuming 1 represents 'Available'
-                    ModelBrandID,
-                ).toPromise() as CreateProductResponse;
-    
-                this.message = productRes.message;
-                this.selectedCarId = parseInt(productRes.carId);
-    
-                // If there's an image selected, upload it after the product is created
-                console.log(this.selectedImages.length !== 0);
-                
-                if (this.selectedImages.length !== 0 && this.selectedCarId) {
-                    await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages).toPromise();
+            await this.productService.createProduct(
+                parseInt(Year),
+                parseInt(Price),
+                Description,
+                1,
+                ModelBrandID,
+            ).subscribe({
+                next: async (res: any) => {
+                    this.message = res.message;
+                    this.selectedCarId = parseInt(res.carId);
+
+                    // If there's an image selected, upload it after the product is created
+                    console.log(this.selectedImages.length !== 0);
+
+                    if (this.selectedImages.length !== 0 && this.selectedCarId) {
+                        await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages)
+                        .subscribe({
+                            next: async (res: any) => {
+                                await this.submitCarDetails();
+                                this.message = 'Product and image added successfully!';
+                                delay(5000);
+                                this.router.navigate([`product/${this.selectedCarId}`])
+                            },
+                            error: (err: any) => {
+                                this.message = err.message;
+                            }
+                        });
+                    }
+                },
+                error: (err: any) => {
+                    this.message = err.error.message;
+                    console.log(err);
                 }
-                await this.addCarDetail();
-                this.message = 'Product and image added successfully!';
-                this.router.navigate([`product/${this.selectedCarId}`])
-            } catch (err: any) {
-                this.message = err.error.message;
-                console.log(err);
-                
-            }
+            });
         }
     }
 }
