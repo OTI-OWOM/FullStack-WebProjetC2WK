@@ -59,7 +59,7 @@ exports.getImage = async (req, res) => {
     try{
         imagePath = path.join(__dirname, '..', image.ImageURL);
     } catch(err) {
-        res.status(500).send(err)
+        res.status(500).json({error : err})
     }
     
     if (fs.existsSync(imagePath)) {

@@ -54,7 +54,7 @@ describe('getOnecar', () => {
     
         // Assert
         sinon.assert.calledWithExactly(res.status, 404);
-        expect(res.json.calledOnceWith({ error: 'car not found' })).to.be.true;
+        expect(res.json.calledOnceWith({ message: 'Car not found !' })).to.be.true;
     });
     
     it('should return a 404 error on a database error', async () => {

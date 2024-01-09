@@ -31,11 +31,11 @@ exports.JWTAthorization = async (req, res, next) => {
 exports.adminOrUserCheck = async (req, res, next) => {
     const user = await User.findByPk(req.params.userId);
     if (!user) {
-        return res.status(404).send('User not found');
+        return res.status(404).json({message: 'User not found'});
     }
 
     if (req.auth.userId !== user.id && !req.auth.isAdmin) {
-        return res.status(401).send('Unauthorized');
+        return res.status(401).json({message: 'Unauthorized'});
     } else {
         next();
     }
@@ -44,7 +44,7 @@ exports.adminOrUserCheck = async (req, res, next) => {
 exports.carCheck = async (req, res, next) => {
     const car = await Car.findByPk(req.params.carId);
     if (!car) {
-        return res.status(404).send('Car not found');
+        return res.status(404).json({message: 'Car not found !'});
     }
     
     req.params.userId = car.SellerID;
@@ -54,7 +54,7 @@ exports.carCheck = async (req, res, next) => {
 exports.imageCheck = async (req, res, next) => {
     const image = await CarImage.findByPk(req.params.imageId);
     if (!image) {
-        return res.status(404).send('Image not found');
+        return res.status(404).json({message: 'Image not found'});
     }
     
     req.params.carId = image.CarID;
@@ -64,7 +64,7 @@ exports.imageCheck = async (req, res, next) => {
 exports.detailCheck = async (req, res, next) => {
     const detail = await CarDetail.findByPk(req.params.detailId);
     if (!detail) {
-        return res.status(404).send('Detail not found');
+        return res.status(404).json({message: 'Detail not found'});
     }
 
     req.params.carId = detail.CarID;
@@ -73,7 +73,7 @@ exports.detailCheck = async (req, res, next) => {
 
 exports.adminAuth = (req, res, next) => {
     if (!req.auth.isAdmin) {
-        return res.status(401).send('Unauthorized');
+        return res.status(401).json({message: 'Unauthorized'});
     }
     next();
 }

@@ -85,7 +85,7 @@ exports.modifyCar = (req, res) => {
     return Car.findByPk(req.params.carId)
         .then(car => {
             if (!car) {
-                return res.status(404).json({ error: 'Car not found' });
+                return res.status(404).json({ message: 'Car not found !' });
             }
             return car.update(req.body)
                 .then(() => res.status(200).json({ message: 'Car modified!' }))

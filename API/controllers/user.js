@@ -10,7 +10,7 @@ const User = db.User;
  * @param {Object} res  The response object used to send back the response to the client.
  */
 exports.register = (req, res) => {
-    if (!req.body.Password || !req.body.Email) return res.status(400).send('Invalid request');
+    if (!req.body.Password || !req.body.Email) return res.status(400).json({ message: 'Invalid request' });
     // we salt the password 10 times
     return bcrypt.hash(req.body.Password, 10)
         .then((hash) => {

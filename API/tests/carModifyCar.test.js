@@ -45,7 +45,7 @@ describe('modifyCar', () => {
         await modifyCar(req, res);
 
         sinon.assert.calledWithExactly(res.status, 404);
-        expect(res.json.calledOnceWith({ error: 'car not found' })).to.be.true;
+        expect(res.json.calledOnceWith({ message: 'Car not found !' })).to.be.true;
     });
 
     it('should return status 400 on a database error during modification', async () => {

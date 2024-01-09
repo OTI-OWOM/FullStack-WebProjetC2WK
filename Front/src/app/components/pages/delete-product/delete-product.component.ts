@@ -26,14 +26,22 @@ export class DeleteProductComponent {
     productDelete(): void {
         this.subscription.add(
             this.product_service
-                .deleteProduct(this.paramID )
-                .subscribe((res: any) => {
-                    if (res) {
-                        this.message = res.message;
-                        delay(2000);
-                        this.router.navigate(['products']);
+                .deleteProduct(this.paramID)
+                .subscribe({
+                    next: (res: any) => {
+                        if (res) {
+                            delay(2000);
+                            this.router.navigate(['products']);
+                        }
+                    },
+                    error: (err: any) => {
+                        console.log(err);
+                        
+                        this.message = err.error.message;
                     }
-                }),
+                }
+                    
+),
         );
     }
 }

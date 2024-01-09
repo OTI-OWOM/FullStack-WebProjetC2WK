@@ -46,7 +46,7 @@ module.exports = async (req, res, next) => {
 
         // Verify that the user has access to change the car
         if (!carExists) {
-            return res.status(404).json({ message: 'Car not found' });
+            return res.status(404).json({ message: 'Car not found !' });
         } else if(carExists.SellerID !== req.auth.userId) {
             return res.status(401).json({ message: 'Not authorized' });
         }
