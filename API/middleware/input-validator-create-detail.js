@@ -23,11 +23,7 @@ module.exports = async (req, res, next) => {
     }
 
     try {
-        const carExists = await Car.findByPk(req.params.carId);
-        console.log(carExists);
-        if (!carExists) {
-            return res.status(404).json({ message: 'Car not found' });
-        } else if(carExists.SellerID !== req.auth.userId) {
+        if(carExists.SellerID !== req.auth.userId) {
             return res.status(401).json({ message: 'Not authorized' });
         }
         next();

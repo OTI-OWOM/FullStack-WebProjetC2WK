@@ -8,15 +8,19 @@ const CarDetail = db.CarDetail;
 */
 exports.createCarDetail = async (req, res) => {
     const carObject = req.body;
+    console.log(req.body);
     carObject.CarID = req.params.carId;
-    const cars = await CarDetail.findAll({ where: { DetailName: req.body.DetailName, CarID: req.body.CarID }});
+    const details = await CarDetail.findAll({ where: { DetailName: req.body.DetailName, CarID: req.body.CarID }});
 
-    if (cars.length !== 0) {
-        return res.status(400).json({message: 'The Detail Name should be unique'})
+    if (details.length !== 0) {
+        details.forEach(async element => {
+            await element.update(carObject).catch(error => res.status(400).json({ error }));
+        });
+    } else {
+        await CarDetail.create(carObject)
+            .catch(error => res.status(400).json({ error }));
     }
-    CarDetail.create(carObject)
-        .then(() => res.status(201).json({ message: 'Car detail added!' }))
-        .catch(error => res.status(400).json({ error }));
+    res.status(201).json({ message: 'Car detail added!' })
 };
 
 /**
