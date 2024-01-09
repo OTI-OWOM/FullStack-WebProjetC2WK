@@ -1,8 +1,8 @@
 .wrapper {
     display: flex;
     justify-content: center;
-    // min-width: 1000px;
 }
+
 .product-container {
     display: flex;
     flex-direction: column;
@@ -15,7 +15,6 @@
     padding: 5rem 2rem 5rem 2rem;
     width: 75%;
     height: 50%;
-    // min-width: 500px;
 
     
     .title {
@@ -163,9 +162,9 @@
             cursor: pointer;
 
             &:hover {
-                background: linear-gradient(163deg, var(--gold) 10%, var(--light-gold));
+                // background: linear-gradient(163deg, var(--gold) 10%, var(--light-gold));
                 transform: scale(1.05);
-                color: black;
+                // color: black;
                 transition: 0.2s;
             }
 
