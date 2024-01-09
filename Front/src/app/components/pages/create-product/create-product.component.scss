@@ -161,11 +161,11 @@ $transition-time: 0.4s;
     
                 label {
                     font-size: 150%;
-                    cursor: pointer;
                 }
                 
                 img,
                 label {
+                    cursor: pointer;
                     display: flex;
                     width: 150px;
                     height: 150px;

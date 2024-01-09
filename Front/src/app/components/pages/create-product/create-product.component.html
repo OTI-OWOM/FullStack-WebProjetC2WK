@@ -4,6 +4,20 @@
         <div class="values">
             <div>
                 <div class="line">
+                    <i class="fa-solid fa-car"></i>
+                    <div>
+                        <select #brand class="input-form" (change)="onBrandChange(brand.value)" class="brand-model">
+                            <option value="" disabled selected>Choose a brand</option>
+                            <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="models.length > 0">
+                        <select #model class="input-form" [(ngModel)]="selectedModelId" class="brand-model">
+                            <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="line">
                     <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
                     <input #year placeholder="Year of the product" class="input-form" type="number" id="year"
                         name="year" />
@@ -17,20 +31,6 @@
                     <i class="fa-solid fa-commenting"></i>
                     <input #description placeholder="Description of the product" class="input-form" type="text"
                         id="desc" name="desc" />
-                </div>
-                <div class="line">
-                    <i class="fa-solid fa-car"></i>
-                    <div>
-                        <select #brand class="input-form" (change)="onBrandChange(brand.value)" class="brand-model">
-                            <option value="" disabled selected>Choose a brand</option>
-                            <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
-                        </select>
-                    </div>
-                    <div *ngIf="models.length > 0">
-                        <select #model class="input-form" [(ngModel)]="selectedModelId" class="brand-model">
-                            <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="line">
@@ -50,8 +50,8 @@
             <div class="add-image">
                 <h3>Add image</h3>
                 <div class="add-image-container">
-                    <div *ngFor="let preview of imagePreviews" >
-                        <img [src]="preview">
+                    <div *ngFor="let preview of imagePreviews; let i = index" >
+                        <img [src]="preview" (click)="removeImage(i)">
                     </div>
                     <label *ngIf="imagePreviews.length !== 10" for="add-single-img">+</label>
                     <input type="file" (change)="onImagesSelected($event)" id="add-single-img" accept="image/jpeg"

@@ -71,7 +71,7 @@ export class CreateProductComponent implements OnInit {
         const element = event.target as HTMLInputElement;
         let files = element.files;
         if (files && files.length <= 10 && (this.imagePreviews.length + files.length) <= 10) {
-            this.selectedImages = Array.from(files);
+            this.selectedImages.push(...Array.from(files));
             Array.from(files).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = (e: any) => {
@@ -79,9 +79,15 @@ export class CreateProductComponent implements OnInit {
                 };
                 reader.readAsDataURL(file);
             });
+            console.log(this.selectedImages);
         } else {
             this.message = "A maximum of 10 images allowed!"
         }
+    }
+
+    removeImage(index: number): void {
+        this.imagePreviews.splice(index, 1);
+        this.selectedImages.splice(index, 1);
     }
 
     async addCarDetail() {
@@ -142,10 +148,9 @@ export class CreateProductComponent implements OnInit {
                     this.message = res.message;
                     this.selectedCarId = parseInt(res.carId);
 
-                    // If there's an image selected, upload it after the product is created
-                    console.log(this.selectedImages.length !== 0);
-
                     if (this.selectedImages.length !== 0 && this.selectedCarId) {
+                        console.log(this.selectedImages);
+                        
                         await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages)
                         .subscribe({
                             next: async (res: any) => {
