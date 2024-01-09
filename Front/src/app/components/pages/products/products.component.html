@@ -3,9 +3,11 @@
         <h1>{{ catchPhrase }}</h1>
         <h3>Discover our collection of high end cars</h3>
     </div>
+
     <div id="sort-options">
         <input type="text" placeholder="🔎 Search..." name="search" class='search-bar' [(ngModel)]="searchString"
             (input)="updateResult()">
+    
         <div class="right-options">
             <div class="slider-container">
                 <div class="text-input">
@@ -26,7 +28,9 @@
         </div>
     </div>
 </div>
+
 <hr style="width: 80%; margin-bottom: 5rem;" />
+
 <div class="products-container">
     <div *ngIf="resultList.length == 0" style="color: black;">
         It looks like none of our products corresponds to your search.

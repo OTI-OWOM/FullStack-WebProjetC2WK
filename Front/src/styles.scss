@@ -57,4 +57,30 @@ a {
     text-decoration: none;
 }
 
+.button {
+    width: 45%;
+    height: 5rem;
+    padding: 1rem;
+    background: #7187bc;
+    display: block;
+    margin: auto;
+    border: none;
+    border-radius: 1rem;
+    border-bottom-width: 7px;
+    color: #fff;
+    font-size: large;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.01);
+        box-shadow: 0 1px 3px #7187bc;
+    }
+
+    &:active {
+        transform: scale(0.95);
+        border-bottom-width: 3px;
+        outline: none;
+    }
+}
 /* End GLOBAL */

@@ -52,7 +52,9 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "src/styles/user.styles.scss",
+                            "src/styles/car.styles.scss"
                         ],
                         "scripts": []
                     },
@@ -115,7 +117,9 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "src/styles/user.styles.scss",
+                            "src/styles/car.styles.scss"
                         ],
                         "scripts": []
                     }

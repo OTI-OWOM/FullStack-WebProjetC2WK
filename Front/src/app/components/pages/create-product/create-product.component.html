@@ -37,13 +37,13 @@
                     <input #detailNameInput [(ngModel)]="carDetailName" class="details" placeholder="Detail Name">
                     <input [(ngModel)]="carDetailValue" class="details" placeholder="Detail Value"
                         (keydown.enter)="addCarDetail()">
-                    <button (click)="addCarDetail()" class="detail-button">+</button>
+                    <button (click)="addCarDetail()" class="detail-button button">+</button>
                 </div>
                 <div class="display-details">
                     <div *ngFor="let detail of carDetails; let i = index" class="line">
                         <p class="display-form">{{ detail.DetailName }}</p>
                         <p class="display-form">{{ detail.DetailValue }}</p>
-                        <button (click)="carDetails.splice(i, 1)" class="detail-button">-</button>
+                        <button (click)="carDetails.splice(i, 1)" class="detail-button button">-</button>
                     </div>
                 </div>
             </div>

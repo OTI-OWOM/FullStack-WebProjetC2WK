@@ -7,32 +7,6 @@ $button-width: 45%;
 $border-radius: 4px;
 $transition-time: 0.4s;
 
-@mixin button-style($bg-color, $width) {
-    width: $width;
-    height: 5rem;
-    padding: 1rem;
-    background: $bg-color;
-    display: block;
-    margin: auto;
-    border: none;
-    border-radius: 1rem;
-    border-bottom-width: 7px;
-    color: #fff;
-    font-size: large;
-    transition: all 0.2s;
-    cursor: pointer;
-
-    &:hover {
-        transform: scale(1.01);
-        box-shadow: 0 1px 3px $bg-color;
-    }
-
-    &:active {
-        transform: scale(0.95);
-        border-bottom-width: 3px;
-        outline: none;
-    }
-}
 
 .wrapper {
     display: flex;
@@ -126,14 +100,12 @@ $transition-time: 0.4s;
     
                 }
     
-    
                 .detail-button {
-                    @include button-style($blue-color, $detail-button-width);
-                    margin: 0.2rem 0.4rem;
+                    width: 15%;
+                    margin: 0.2rem 0.2rem;
                     max-width: 15%;
                     height: 5%;
                 }
-    
             }           
         }
 
@@ -204,7 +176,7 @@ $transition-time: 0.4s;
 
 
     .button {
-        @include button-style($blue-color, $button-width);
+        width: 25%;
         margin-top: 5rem;
     }
 }
