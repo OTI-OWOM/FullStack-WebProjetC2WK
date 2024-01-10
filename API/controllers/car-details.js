@@ -7,27 +7,29 @@ const CarDetail = db.CarDetail;
 * @param {object} res - response
 */
 exports.createCarDetail = async (req, res) => {
-    console.log(`Req body : ${req.body}`);
     const carDetailList = req.body.details;
     if (!carDetailList) {
-        return res.status(400).json({error: "No Details Found"})
+        return res.status(400).json({ error: "No Details Found" });
     }
-
-    carDetailList.forEach(async (carDetail) => {
-        console.log(req.body);
-        carDetail.CarID = req.params.carId;
-        const details = await CarDetail.findAll({ where: { DetailName: carDetail.DetailName, CarID: carDetail.CarID }});
-    
-        if (details.length !== 0) {
-            details.forEach(async element => {
-                await element.update(carDetail).catch(error => res.status(400).json({ error }));
-            });
-        } else {
-            await CarDetail.create(carDetail)
-                .catch(error => res.status(400).json({ error }));
+    try {
+        for (const carDetail of carDetailList) {
+            carDetail.CarID = req.params.carId;
+            const detail = await CarDetail.findOne({ where: { DetailName: carDetail.DetailName, CarID: carDetail.CarID } });
+            if (detail) {
+                await detail.update(carDetail);
+            } else {
+                const detailDelete = await CarDetail.findByPk(carDetail.id);
+                if (detailDelete) {
+                    await detailDelete.destroy(carDetail);
+                }
+                await CarDetail.create(carDetail);
+            }
         }
-    });
-    res.status(201).json({ message: 'Car detail added!' })
+        res.status(201).json({ message: 'Car detail added!' });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error, message: "Test" });
+    }
 };
 
 /**
@@ -38,7 +40,7 @@ exports.createCarDetail = async (req, res) => {
 exports.deleteCarDetail = async (req, res) => {
     const detail = await CarDetail.findByPk(req.params.detailId);
 
-    return detail.destroy()        
+    return detail.destroy()
         .then(() => res.status(200).json({ message: 'Car detail deleted!' }))
         .catch(error => res.status(400).json({ error }));;
 };

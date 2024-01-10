@@ -5,8 +5,6 @@ const Car = db.Car;
 
 module.exports = async (req, res, next) => {
     let data = helper.dataPass(req);
-    console.log(data);
-
     // Schema that our data must match to
     const inputSchema = {
         details: 'required|array',
