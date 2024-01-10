@@ -3,8 +3,8 @@ import { Subscription, delay } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 import { CarBrands } from '../../../shared/interfaces/Brands';
 import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
-import { CreateProductResponse } from '../../../shared/interfaces/CreateProductRes';
 import { Router } from '@angular/router';
+import { Product } from 'src/app/shared/interfaces/Product';
 import { CarDetail } from 'src/app/shared/interfaces/Details';
 
 @Component({
@@ -16,12 +16,12 @@ export class CreateProductComponent implements OnInit {
     @ViewChild('detailNameInput') detailNameInput!: ElementRef;
     subscription: Subscription = new Subscription();
 
+    product: Partial<Product> = {};
     carDetailName: string = '';
     carDetailValue: string = '';
     carDetails: Partial<CarDetail>[] = [];
     selectedImages: File[] = [];
     imagePreviews: string[] = [];
-    selectedModelId: number | null = null;
     selectedCarId: number | null = null;
 
     brands: CarBrands[] = [];
@@ -37,6 +37,7 @@ export class CreateProductComponent implements OnInit {
 
     ngOnInit(): void {
         this.userID = sessionStorage.getItem('userId') ?? '';
+        this.product.Available = 1;
 
         this.subscription.add(this.productService.getAllBrands()
             .subscribe({
@@ -56,9 +57,9 @@ export class CreateProductComponent implements OnInit {
                     this.models = res;
                     if (this.models.length > 0) {
                         // Preselect the first model
-                        this.selectedModelId = this.models[0].id;
+                        this.product.ModelBrandID = this.models[0].id;
                     } else {
-                        this.selectedModelId = null;
+                        this.product.ModelBrandID = null;
                     }
                 },
                 error: (err: any) => {
@@ -92,6 +93,10 @@ export class CreateProductComponent implements OnInit {
 
     async addCarDetail() {
         if (this.carDetailName && this.carDetailValue) {
+            if (!this.carDetails) {
+                this.carDetails = [];
+            }
+
             this.carDetails.push({
                 DetailName: this.carDetailName,
                 DetailValue: this.carDetailValue
@@ -108,6 +113,9 @@ export class CreateProductComponent implements OnInit {
     }
 
     async submitCarDetails() {
+        if (!this.carDetails) {
+            this.carDetails = [];
+        }
         if (this.selectedCarId && this.carDetails.length > 0) {
             await this.productService.createCarDetail(
                 this.selectedCarId, this.carDetails
@@ -120,30 +128,18 @@ export class CreateProductComponent implements OnInit {
                 }
             });
 
-            // Reset carDetails array after successful submission
-            this.carDetails = [];
+            // Reset CarDetails array after successful submission
+            this.carDetails! = [];
         } else {
             this.message = 'Please add at least one car detail.';
         }
     }
 
-    async addProduct(
-        Year: string,
-        Price: string,
-        Description: string,
-        ModelBrandID: number | null
-    ) {
+    async addProduct() {
+        this.product.Price = (this.product.Price, 10) * 100;
 
-        Price = `${parseInt(Price, 10) * 100}`;
-
-        if (Year && Price && Description) {
-            await this.productService.createProduct(
-                parseInt(Year),
-                parseInt(Price),
-                Description,
-                1,
-                ModelBrandID,
-            ).subscribe({
+        if (this.product.Year && this.product.Price && this.product.Description) {
+            await this.productService.createProduct(this.product).subscribe({
                 next: async (res: any) => {
                     this.message = res.message;
                     this.selectedCarId = parseInt(res.carId);

@@ -5,10 +5,10 @@ export interface Product {
     Year: number;
     Price: number;
     Description: string;
-    Available: boolean;
+    Available: number;
     SellerID: string;
     ModelBrandName: string;
-    ModelBrandID: string;
+    ModelBrandID: number | null;
     BrandName: string;
-    CarDetails: CarDetail[];
+    CarDetails: Partial<CarDetail>[];
 }

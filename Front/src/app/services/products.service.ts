@@ -56,23 +56,8 @@ export class ProductsService {
         });
     }
 
-    public createProduct(
-        Year: number,
-        Price: number,
-        Description: string,
-        Available: number,
-        ModelBrandID: number | null,
-    ) {
-        return this.http.post(
-            URL.PRODUCT_CREATE,
-            {
-                Year,
-                Price,
-                Description,
-                Available,
-                ModelBrandID,
-            },
-        );
+    public createProduct(car: Partial<Product>) {
+        return this.http.post(URL.PRODUCT_CREATE, car);
     }
 
     public modifyProduct(

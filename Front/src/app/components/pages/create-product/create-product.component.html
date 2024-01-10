@@ -12,24 +12,24 @@
                         </select>
                     </div>
                     <div *ngIf="models.length > 0">
-                        <select #model class="brand-model model" [(ngModel)]="selectedModelId">
+                        <select #model class="brand-model model" [(ngModel)]="product.ModelBrandID">
                             <option *ngFor="let model of models" [value]="model.id" >{{model.ModelName}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="line">
                     <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
-                    <input #year placeholder="Year of the product" class="input-form" type="number" id="year"
+                    <input [(ngModel)]="product.Year" placeholder="Year of the product" class="input-form" type="number" id="year"
                         name="year" />
                 </div>
                 <div class="line">
                     <i class="fa-solid fa-eur" style="padding: 0 4px 0 3px;"></i>
-                    <input #price placeholder="Price of the product in €" class="input-form" type="number" id="price"
+                    <input [(ngModel)]="product.Price" placeholder="Price of the product in €" class="input-form" type="number" id="price"
                         name="price" />
                 </div>
                 <div class="line">
                     <i class="fa-solid fa-commenting"></i>
-                    <input #description placeholder="Description of the product" class="input-form" type="text"
+                    <input [(ngModel)]="product.Description" placeholder="Description of the product" class="input-form" type="text"
                         id="desc" name="desc" />
                 </div>
 
@@ -61,7 +61,7 @@
         </div>
 
         <!-- Submit All Details -->
-        <button class="create-button button" (click)="addProduct(year.value, price.value, description.value, selectedModelId)"
+        <button class="create-button button" (click)="addProduct()"
             type="button">
             Create Product!</button><br />
         <p class="message">{{message}}</p>
