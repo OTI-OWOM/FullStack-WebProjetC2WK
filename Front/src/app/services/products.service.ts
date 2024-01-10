@@ -43,6 +43,10 @@ export class ProductsService {
         });
     }
 
+    public deleteCarImage(imageId: number | null) {
+        return this.http.delete(`${URL.IMAGE}${imageId}`);
+    }
+
     public uploadCarImage(carId: number | null, imageFiles: File[]) {
         const formData = new FormData();
         imageFiles.forEach((file, index) => {

@@ -17,12 +17,14 @@ export class CreateProductComponent implements OnInit {
     subscription: Subscription = new Subscription();
 
     product: Partial<Product> = {};
+    selectedCarId: number | null = null;
+
     carDetailName: string = '';
     carDetailValue: string = '';
     carDetails: Partial<CarDetail>[] = [];
+
     selectedImages: File[] = [];
     imagePreviews: string[] = [];
-    selectedCarId: number | null = null;
 
     brands: CarBrands[] = [];
     models: CarModelBrands[] = [];
@@ -33,7 +35,7 @@ export class CreateProductComponent implements OnInit {
     constructor(
         private productService: ProductsService,
         private router: Router,
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.userID = sessionStorage.getItem('userId') ?? '';
@@ -56,7 +58,6 @@ export class CreateProductComponent implements OnInit {
                 next: (res: CarModelBrands[]) => {
                     this.models = res;
                     if (this.models.length > 0) {
-                        // Preselect the first model
                         this.product.ModelBrandID = this.models[0].id;
                     } else {
                         this.product.ModelBrandID = null;
@@ -135,31 +136,24 @@ export class CreateProductComponent implements OnInit {
         }
     }
 
-    async addProduct() {
+    addProduct() {
         this.product.Price = (this.product.Price, 10) * 100;
 
         if (this.product.Year && this.product.Price && this.product.Description) {
-            await this.productService.createProduct(this.product).subscribe({
+            this.productService.createProduct(this.product).subscribe({
                 next: async (res: any) => {
                     this.message = res.message;
                     this.selectedCarId = parseInt(res.carId);
-
-                    if (this.selectedImages.length !== 0 && this.selectedCarId) {
-                        console.log(this.selectedImages);
-                        
-                        await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages)
+                    await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages)
                         .subscribe({
-                            next: async (res: any) => {
-                                await this.submitCarDetails();
-                                this.message = 'Product and image added successfully!';
-                                delay(5000);
-                                this.router.navigate([`product/${this.selectedCarId}`])
-                            },
                             error: (err: any) => {
                                 this.message = err.message;
                             }
                         });
-                    }
+                    await this.submitCarDetails();
+                    this.message = 'Product and image added successfully!';
+                    delay(5000);
+                    this.router.navigate([`product/${this.selectedCarId}`])
                 },
                 error: (err: any) => {
                     this.message = err.error.message;
