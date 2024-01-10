@@ -1,9 +1,9 @@
-<div class="user-wrapper">
+<div class="main-wrapper">
     <div *ngIf="isVisitorAllowed; then thenBlock else elseBlock">
     </div>
 
     <ng-template #thenBlock>
-        <section class="user-panel">
+        <section class="main-panel">
             <h1 class="title">{{ targetUser.Name }}</h1>
 
             <p *ngIf="targetUser.Role" class="admin-text">Admin</p>

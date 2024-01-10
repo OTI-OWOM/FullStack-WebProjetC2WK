@@ -1,18 +1,4 @@
-
-// User Panel
-.user-wrapper {
-    display: flex;
-    align-items: center;
-
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    min-height: 100%;
-    padding: 8rem 2rem;
-}
-
-.user-panel {
+.main-panel {
     display: flex;
     flex-direction: column;
     border-radius: 5px;

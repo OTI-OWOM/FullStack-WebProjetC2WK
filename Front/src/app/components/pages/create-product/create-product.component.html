@@ -1,10 +1,10 @@
-<div class="user-wrapper">
-    <div class="new-product">
+<div class="main-wrapper">
+    <div class="main-panel car-panel">
         <h1 class="title">Create a new product</h1>
         <div class="values">
             <div>
                 <div class="line" style="justify-content: flex-start;">
-                    <i class="fa-solid fa-car"></i>
+                    <i class="fa-solid fa-car" style="margin-right: 24px;"></i>
                     <div>
                         <select #brand class="brand-model" (change)="onBrandChange(brand.value)">
                             <option value="" disabled selected>Choose a brand</option>
@@ -12,8 +12,8 @@
                         </select>
                     </div>
                     <div *ngIf="models.length > 0">
-                        <select #model class="brand-model" [(ngModel)]="selectedModelId">
-                            <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
+                        <select #model class="brand-model model" [(ngModel)]="selectedModelId">
+                            <option *ngFor="let model of models" [value]="model.id" >{{model.ModelName}}</option>
                         </select>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <button (click)="addCarDetail()" class="detail-button button">+</button>
                 </div>
                 <div class="display-details">
-                    <div *ngFor="let detail of carDetails; let i = index" class="line">
+                    <div *ngFor="let detail of carDetails; let i = index" class="detail-line line">
                         <p class="display-form">{{ detail.DetailName }}</p>
                         <p class="display-form">{{ detail.DetailValue }}</p>
                         <button (click)="carDetails.splice(i, 1)" class="detail-button button">-</button>
@@ -61,7 +61,7 @@
         </div>
 
         <!-- Submit All Details -->
-        <button class="button" (click)="addProduct(year.value, price.value, description.value, selectedModelId)"
+        <button class="create-button button" (click)="addProduct(year.value, price.value, description.value, selectedModelId)"
             type="button">
             Create Product!</button><br />
         <p class="message">{{message}}</p>

@@ -12,6 +12,7 @@ $transition-time: 0.4s;
 
     --dark: #00296b;
     --darker: #2d2d4b;
+    --red: #af684c;
     --primary: hsla(212, 100%, 27%, 1);
     --light: hsla(209, 100%, 31%, 1);
     --gold: hsla(47, 100%, 50%, 1);
@@ -62,6 +63,30 @@ a {
     text-decoration: none;
 }
 
+.main-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    padding: 8rem 2rem;
+
+    .main-panel {
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
+        padding: 1rem 2rem 2rem 2rem;
+        width: 50rem;
+        max-width: 100%;
+        min-height: 20%;
+        background: var(--cream);
+        padding-bottom: 2rem;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    }
+}
+
 // Global button style
 .button {
     width: 45%;
@@ -94,12 +119,13 @@ a {
 .line {
     display: flex;
     align-items: baseline;
+    justify-content: space-between;
     
     .input-form,
     .details,
     .display-form,
     .brand-model {
-        width: 100%;
+        width: 92%;
         padding: $input-padding;
         margin: 1rem 0;
         font-size: large;
@@ -116,7 +142,7 @@ a {
     }
 
     .display-form {
-        padding: 0.3rem 1rem;
+        padding: 1rem;
         margin: 0.2rem 0.4rem;
     }
 
@@ -130,11 +156,8 @@ a {
 
     }
 
-    .detail-button {
-        width: 15%;
-        margin: 0.2rem 0.2rem;
-        max-width: 15%;
-        height: 5%;
+    i {
+        color: var(--dark);
     }
 }        
 
@@ -200,14 +223,14 @@ a {
 .message {
     text-align: center;
     align-self: center;
-    margin-bottom: 8rem;
+    // margin-bottom: 8rem;
     padding: 1rem;
     border: 1px solid;
     border-radius: 18px;
     border-color: rgb(121, 121, 121);
     font-size: 2rem;
-    min-width: 220px;
-    max-width: 400px;
+    min-width: 200px;
+    max-width: 200px;
     min-height: 45px;
     position: static;
 }
