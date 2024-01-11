@@ -13,38 +13,32 @@ import { UsersService } from '../../../services/users.service';
     styleUrls: ['./me.component.scss'],
 })
 export class MeComponent implements OnInit, OnDestroy {
-    subscription: Subscription = new Subscription();
+    protected subscription: Subscription = new Subscription();
+
+    protected userID: string = '';
+    protected isVisitorAllowed = false;
+    protected data: Partial<User> = {} as User;
+
+    protected title: string = "Your account";
+    protected isMe: boolean = true;
     
     isEditMode: boolean = false;
-
-    password: string = '';
-    userID: string = '';
-
-    data: Partial<User> = {} as User;
-    products: Product[] = [];
-
-    message: string = "Test";
+    
+    message: string = "";
 
     constructor(
-        private usersService: UsersService,
-        private productService: ProductsService,
-        private router: Router,
+        protected usersService: UsersService,
+        protected router: Router,
     ) {}
 
     ngOnInit(): void {
         this.userID = sessionStorage.getItem('userId') ?? '';
         this.subscription.add(
-            this.productService
-                .getAllProductsFromUser(this.userID )
-                .subscribe((res) => {
-                    this.products = res;
-                }),
-        );
-        this.subscription.add(
             this.usersService
                 .me()
                 .subscribe((res) => {
                     this.data = res;
+                    this.isVisitorAllowed = true;
                 }),
         );
     }
@@ -53,9 +47,7 @@ export class MeComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    getProducts(): Product[] {
-        return this.products;
-    }
+
 
     userDelete(): void {
         this.router.navigateByUrl(`user/delete/${this.userID}`);
