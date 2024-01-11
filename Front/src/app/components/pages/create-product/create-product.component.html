@@ -41,8 +41,10 @@
                 </div>
                 <div class="display-details">
                     <div *ngFor="let detail of carDetails; let i = index" class="detail-line line">
-                        <p class="display-form">{{ detail.DetailName }}</p>
-                        <p class="display-form">{{ detail.DetailValue }}</p>
+                        <input [(ngModel)]="detail.DetailName" class="details details-to-change" type="text"
+                            placeholder="Detail Name">
+                        <input [(ngModel)]="detail.DetailValue" class="details details-to-change" type="text"
+                            placeholder="Detail Value">
                         <button (click)="carDetails.splice(i, 1)" class="detail-button button">-</button>
                     </div>
                 </div>
@@ -60,10 +62,12 @@
             </div>
         </div>
 
-        <!-- Submit All Details -->
-        <button class="create-button button" (click)="addProduct()"
-            type="button">
-            Create Product!</button><br />
+        <div class="buttons">
+            <button class="button create-button" (click)="addProduct()" type="button">
+                Modify Product!</button><br />
+            <button class="button create-button cancel-button " (click)="cancel()" type="button">
+                Cancel!</button><br />
+        </div>
         <app-message [message]="message"></app-message>
     </div>
 </div>
