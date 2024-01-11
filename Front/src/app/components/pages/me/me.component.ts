@@ -22,7 +22,7 @@ export class MeComponent implements OnInit, OnDestroy {
 
     data: Partial<User> = {} as User;
 
-    message!: string;
+    message: string = "Test";
 
     products: Product[] = [];
 

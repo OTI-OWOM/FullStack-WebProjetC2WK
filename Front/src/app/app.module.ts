@@ -26,6 +26,7 @@ import { ContactComponent } from './components/pages/contact/contact.component';
 import { LegalComponent } from './components/pages/legal/legal.component';
 import { LogoutComponent } from './components/pages/logout/logout.component';
 import { HttpRequestInterceptor } from './interceptors/http-request.interceptor';
+import { MessageComponent } from './components/partials/message/message.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { HttpRequestInterceptor } from './interceptors/http-request.interceptor'
         ContactComponent,
         LegalComponent,
         LogoutComponent,
+        MessageComponent,
     ],
     imports: [
         BrowserModule,
