@@ -28,7 +28,8 @@ import { LogoutComponent } from './components/pages/logout/logout.component';
 import { HttpRequestInterceptor } from './interceptors/http-request.interceptor';
 import { MessageComponent } from './components/partials/message/message.component';
 import { ProductsListComponent } from './components/partials/products-list/products-list.component';
-import { BaseProductComponent } from './components/partials/base-product/base-product.component';
+import { DetailsComponent } from './components/partials/details/details.component';
+import { ImageCreationComponent } from './components/partials/image-creation/image-creation.component';
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import { BaseProductComponent } from './components/partials/base-product/base-pr
         LogoutComponent,
         MessageComponent,
         ProductsListComponent,
-        BaseProductComponent,
+        DetailsComponent,
+        ImageCreationComponent,
     ],
     imports: [
         BrowserModule,
