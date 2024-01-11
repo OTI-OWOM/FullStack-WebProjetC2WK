@@ -73,12 +73,15 @@ export class ModifyProductComponent extends CreateProductComponent implements On
     }
 
     override submit() {
+        this.selectedCarId = parseInt(this.product.id);
         this.subscription.add(
             this.productService
                 .modifyProduct(this.product.id, this.data)
                 .subscribe({
                     next: async (res: any) => {
                         if (this.selectedImages.length > 0) {
+                            console.log(this.selectedImages);
+                            
                             await this.productService.uploadCarImage(parseInt(this.product.id), this.selectedImages)
                             .subscribe({
                                 error: (err: any) => {
@@ -86,8 +89,9 @@ export class ModifyProductComponent extends CreateProductComponent implements On
                                 }
                             });
                         }
-
+                        
                         for (const imageId of this.imagesToRemove) {
+                            console.log(this.imagesToRemove);
                             await this.productService.deleteCarImage(imageId)
                             .subscribe({
                                 error: (err: any) => {
@@ -97,7 +101,7 @@ export class ModifyProductComponent extends CreateProductComponent implements On
                         }
 
                         await this.submitCarDetails();
-                        this.router.navigate([`/product/${this.product.id}`])
+                        this.router.navigate([`/product/${this.product.id}`]);
                     },
                     error: (err: any) => {
                         this.message = "Error updating Car!"

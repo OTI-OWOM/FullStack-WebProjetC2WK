@@ -13,55 +13,31 @@
                     </div>
                     <div *ngIf="models.length > 0">
                         <select #model class="brand-model" [(ngModel)]="data.ModelBrandID">
-                            <option *ngFor="let model of models" [value]="model.id" >{{model.ModelName}}</option>
+                            <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="line">
                     <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
-                    <input [(ngModel)]="data.Year" [value]="product.Year" placeholder="Year of the product" class="input-form" type="number" id="year"
-                        name="year" />
+                    <input [(ngModel)]="data.Year" [value]="product.Year" placeholder="Year of the product"
+                        class="input-form" type="number" id="year" name="year" />
                 </div>
                 <div class="line">
                     <i class="fa-solid fa-eur" style="padding: 0 4px 0 3px;"></i>
-                    <input [(ngModel)]="data.Price" [value]="product.Price" placeholder="Price of the product in €" class="input-form" type="number" id="price"
-                        name="price" />
+                    <input [(ngModel)]="data.Price" [value]="product.Price" placeholder="Price of the product in €"
+                        class="input-form" type="number" id="price" name="price" />
                 </div>
                 <div class="line">
                     <i class="fa-solid fa-commenting"></i>
-                    <input [(ngModel)]="data.Description" [value]="product.Description" placeholder="Description of the product" class="input-form" type="text"
-                        id="desc" name="desc" />
+                    <input [(ngModel)]="data.Description" [value]="product.Description"
+                        placeholder="Description of the product" class="input-form" type="text" id="desc" name="desc" />
                 </div>
-
-                <div class="line">
-                    <input #detailNameInput [(ngModel)]="carDetailName" class="details" placeholder="Detail Name">
-                    <input [(ngModel)]="carDetailValue" class="details" placeholder="Detail Value"
-                        (keydown.enter)="addCarDetail()">
-                    <button (click)="addCarDetail()" class="detail-button button">+</button>
-                </div>
-                <div class="display-details">
-                    <div *ngFor="let detail of carDetails; let i = index" class="detail-line line">
-                        <input [(ngModel)]="detail.DetailName" class="details details-to-change" type="text"
-                            placeholder="Detail Name">
-                        <input [(ngModel)]="detail.DetailValue" class="details details-to-change" type="text"
-                            placeholder="Detail Value">
-                        <button (click)="carDetails.splice(i, 1)" class="detail-button button">-</button>
-                    </div>
-                </div>
+                <app-details [(carDetails)]="carDetails" (messageChange)="message=$event"></app-details>
             </div>
-            <div class="add-image">
-                <h3>Add image</h3>
-                <div class="add-image-container">
-                    <div *ngFor="let preview of imagePreviews; let i = index" >
-                        <img [src]="preview" (click)="removeImage(i)">
-                    </div>
-                    <label *ngIf="imagePreviews.length !== 10" for="add-single-img">+</label>
-                    <input type="file" (change)="onImagesSelected($event)" id="add-single-img" accept="image/jpeg"
-                        multiple />
-                </div>
-            </div>
+            <app-image-creation class="add-image" [imagePreviews]="imagePreviews"
+                (selectedImagesEmit)="selectedImages=$event"
+                (imageRemovedIndex)="removeImage($event)"></app-image-creation>
         </div>
-
         <div class="buttons">
             <button class="button create-button" (click)="submit()" type="button">
                 {{createModify}} Product!</button><br />
