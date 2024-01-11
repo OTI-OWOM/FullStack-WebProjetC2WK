@@ -11,7 +11,7 @@ import { UsersService } from '../../../services/users.service';
 export class DeleteUserComponent implements OnDestroy {
     subscription: Subscription = new Subscription();
 
-    message!: Object;
+    message!: string;
 
     paramID!: string;
 

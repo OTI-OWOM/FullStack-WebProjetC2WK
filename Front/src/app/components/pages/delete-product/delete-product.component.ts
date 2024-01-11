@@ -11,7 +11,7 @@ import { ProductsService } from '../../../services/products.service';
 export class DeleteProductComponent implements OnDestroy {
     subscription: Subscription = new Subscription();
 
-    message!: Object;
+    message!: string;
 
     paramID!: string;
 

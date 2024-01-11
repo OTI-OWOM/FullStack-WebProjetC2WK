@@ -33,15 +33,11 @@ export class AuthService {
         return this.authStatus.asObservable();
     }
 
-    hasToken() {
+    private hasToken() {
         return !!this.authToken;
     }
 
-    getToken() {
-        return this.authToken;
-    }
-
-    updateAuthStatus() {
+    private updateAuthStatus() {
         this.authStatus.next(this.hasToken());
     }
 
