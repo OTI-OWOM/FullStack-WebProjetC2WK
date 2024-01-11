@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, delay } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UsersService } from '../../../services/users.service';
 
 @Component({
@@ -36,8 +36,9 @@ export class DeleteUserComponent implements OnDestroy {
                 .subscribe((res: any) => {
                     if (res) {
                         this.message = res.message;
-                        delay(2000);
-                        this.router.navigateByUrl('logout');
+                        setTimeout(() => {
+                            this.router.navigate(['logout']);
+                        }, 1000);
                     }
                 }),
         );

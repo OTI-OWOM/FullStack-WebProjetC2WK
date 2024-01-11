@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, delay } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
@@ -34,8 +34,9 @@ export class DeleteProductComponent implements OnDestroy {
                 .subscribe({
                     next: (res: any) => {
                         if (res) {
-                            delay(2000);
-                            this.router.navigate(['products']);
+                            setTimeout(() => {
+                                this.router.navigate(['products']);
+                            }, 1000);
                         }
                     },
                     error: (err: any) => {

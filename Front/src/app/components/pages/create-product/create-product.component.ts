@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { Subscription, delay } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 import { CarBrands } from '../../../shared/interfaces/Brands';
 import { CarModelBrands } from '../../../shared/interfaces/ModelBrands';
@@ -142,8 +142,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
                     }
                     await this.submitCarDetails();
                     this.message = 'Product and image added successfully!';
-                    delay(2000);
-                    this.router.navigate([`product/${this.selectedCarId}`]);
+                    setTimeout(() => {
+                        this.router.navigate([`product/${this.selectedCarId}`]);
+                    }, 1000);
                 },
                 error: (err: any) => {
                     this.message = err.error.message;

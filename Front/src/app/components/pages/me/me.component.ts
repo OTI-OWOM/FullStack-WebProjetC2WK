@@ -1,9 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { delay, Subscription } from 'rxjs';
-import { ProductsService } from 'src/app/services/products.service';
-import { Product } from 'src/app/shared/interfaces/Product';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/interfaces/Users';
 import { UsersService } from '../../../services/users.service';
 
