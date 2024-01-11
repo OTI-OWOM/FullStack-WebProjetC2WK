@@ -121,7 +121,6 @@ export class ModifyProductComponent implements OnInit {
     removeImage(index: number): void {
         const imageToRemove = this.imagePreviews[index];
         this.tracker = this.imagePreviews.length;
-        console.log(`Index : ${index}`);
         
         const existingImage = this.existingImages.find(image => image.url === imageToRemove);
         if (existingImage) {
@@ -131,7 +130,6 @@ export class ModifyProductComponent implements OnInit {
             this.selectedImages.splice(index-this.tracker, 1);
         }
 
-        console.log(this.imagesToRemove);
         this.imagePreviews.splice(index, 1);
     }
 
