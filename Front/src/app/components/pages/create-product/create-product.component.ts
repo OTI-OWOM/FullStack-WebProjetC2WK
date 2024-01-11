@@ -16,7 +16,11 @@ export class CreateProductComponent implements OnInit {
     @ViewChild('detailNameInput') detailNameInput!: ElementRef;
     subscription: Subscription = new Subscription();
 
-    product: Partial<Product> = {};
+    data: Partial<Product> = {};
+    currentBrandId!: number;
+    title: string = "Create a new product";
+    createModify: string = "Create";
+    product: Product = {} as Product;
     selectedCarId: number | null = null;
 
     carDetailName: string = '';
@@ -33,13 +37,13 @@ export class CreateProductComponent implements OnInit {
     message!: string;
 
     constructor(
-        private productService: ProductsService,
-        private router: Router,
-    ) { }
+        protected productService: ProductsService,
+        protected router: Router,
+    ) {}
 
     ngOnInit(): void {
         this.userID = sessionStorage.getItem('userId') ?? '';
-        this.product.Available = 1;
+        this.data.Available = 1;
 
         this.subscription.add(this.productService.getAllBrands()
             .subscribe({
@@ -58,9 +62,9 @@ export class CreateProductComponent implements OnInit {
                 next: (res: CarModelBrands[]) => {
                     this.models = res;
                     if (this.models.length > 0) {
-                        this.product.ModelBrandID = this.models[0].id;
+                        this.data.ModelBrandID = this.models[0].id;
                     } else {
-                        this.product.ModelBrandID = null;
+                        this.data.ModelBrandID = null;
                     }
                 },
                 error: (err: any) => {
@@ -81,7 +85,6 @@ export class CreateProductComponent implements OnInit {
                 };
                 reader.readAsDataURL(file);
             });
-            console.log(this.selectedImages);
         } else {
             this.message = "A maximum of 10 images allowed!"
         }
@@ -136,28 +139,28 @@ export class CreateProductComponent implements OnInit {
         }
     }
 
-    addProduct() {
-        this.product.Price = (this.product.Price, 10) * 100;
-
-        if (this.product.Year && this.product.Price && this.product.Description) {
-            this.productService.createProduct(this.product).subscribe({
+    submit() {
+        if (this.data.Year && this.data.Price && this.data.Description) {
+            this.productService.createProduct(this.data).subscribe({
                 next: async (res: any) => {
                     this.message = res.message;
                     this.selectedCarId = parseInt(res.carId);
-                    await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages)
-                        .subscribe({
-                            error: (err: any) => {
-                                this.message = err.message;
-                            }
-                        });
+                    
+                    if (this.selectedImages.length > 0) {
+                        await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages)
+                            .subscribe({
+                                error: (err: any) => {
+                                    this.message = err.message;
+                                }
+                            });
+                    }
                     await this.submitCarDetails();
                     this.message = 'Product and image added successfully!';
-                    delay(5000);
+                    delay(2000);
                     this.router.navigate([`product/${this.selectedCarId}`])
                 },
                 error: (err: any) => {
                     this.message = err.error.message;
-                    console.log(err);
                 }
             });
         }

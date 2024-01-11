@@ -27,6 +27,8 @@ import { LegalComponent } from './components/pages/legal/legal.component';
 import { LogoutComponent } from './components/pages/logout/logout.component';
 import { HttpRequestInterceptor } from './interceptors/http-request.interceptor';
 import { MessageComponent } from './components/partials/message/message.component';
+import { ProductsListComponent } from './components/partials/products-list/products-list.component';
+import { BaseProductComponent } from './components/partials/base-product/base-product.component';
 
 @NgModule({
     declarations: [
@@ -52,6 +54,8 @@ import { MessageComponent } from './components/partials/message/message.componen
         LegalComponent,
         LogoutComponent,
         MessageComponent,
+        ProductsListComponent,
+        BaseProductComponent,
     ],
     imports: [
         BrowserModule,

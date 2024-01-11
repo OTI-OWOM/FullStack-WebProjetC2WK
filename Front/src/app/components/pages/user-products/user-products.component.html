@@ -4,24 +4,4 @@
     </h1>
     <hr />
 </div>
-<div class="products-container">
-    <div *ngIf="productList.length == 0">
-        It looks like none of our products corresponds to your search.
-    </div>
-    <div routerLink="../../product/{{ product.id }}" class="product-card" *ngFor="let product of productList">
-        <div class="product-card-content">
-            <div class="product-image">
-                <img src="{{ images[product.id] }}" onerror="this.src='../../../../assets/images/voiture.png'" alt="{{ product.BrandName }}">
-            </div>
-            <div class="product-text">
-                <h2 class="product-name">{{ product.BrandName }}</h2>
-                <p class="product-model">{{ product.ModelBrandName }}</p>
-                <hr style="width: 100%; margin-top: -15px;" />
-                <p class="product-description">Description : {{ product.Description }}</p>
-            </div>
-        </div>
-        <div class="product-details">
-            <span class="product-price">{{ product.Price/100 }} €</span>
-        </div>
-    </div>
-</div>
+<app-products-list [resultList]="productList" [images]="images"></app-products-list>
