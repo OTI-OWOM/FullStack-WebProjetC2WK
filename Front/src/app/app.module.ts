@@ -30,6 +30,8 @@ import { MessageComponent } from './components/partials/message/message.componen
 import { ProductsListComponent } from './components/partials/products-list/products-list.component';
 import { DetailsComponent } from './components/partials/details/details.component';
 import { ImageCreationComponent } from './components/partials/image-creation/image-creation.component';
+import { UserCreateModifyComponent } from './components/partials/user-create-modify/user-create-modify.component';
+import { UserDisplayComponent } from './components/partials/user-display/user-display.component';
 
 @NgModule({
     declarations: [
@@ -58,6 +60,8 @@ import { ImageCreationComponent } from './components/partials/image-creation/ima
         ProductsListComponent,
         DetailsComponent,
         ImageCreationComponent,
+        UserCreateModifyComponent,
+        UserDisplayComponent,
     ],
     imports: [
         BrowserModule,

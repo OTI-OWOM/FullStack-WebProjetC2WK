@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,7 +9,7 @@ import { UsersService } from '../../../services/users.service';
     templateUrl: './connection.component.html',
     styleUrls: ['./connection.component.scss'],
 })
-export class ConnectionComponent {
+export class ConnectionComponent implements OnDestroy {
     subscription: Subscription = new Subscription();
 
     message!: string;
@@ -36,5 +36,9 @@ export class ConnectionComponent {
         } else {
             this.message = Email ? "You need to provide a password!" : "You need to provide an Email!"
         }
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

@@ -46,6 +46,10 @@ export class UserComponent implements OnInit, OnDestroy {
         );
     }
 
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
     getProducts(): void {
         sessionStorage.setItem('user', this.targetUser.Name ?? '');
         // eslint-disable-next-line no-underscore-dangle
@@ -90,9 +94,5 @@ export class UserComponent implements OnInit, OnDestroy {
             );
             this.toggleEditMode();
         }
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 }

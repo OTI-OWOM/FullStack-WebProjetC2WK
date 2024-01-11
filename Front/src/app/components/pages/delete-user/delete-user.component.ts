@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, delay } from 'rxjs';
 import { UsersService } from '../../../services/users.service';
@@ -8,7 +8,7 @@ import { UsersService } from '../../../services/users.service';
     templateUrl: './delete-user.component.html',
     styleUrls: ['./delete-user.component.scss'],
 })
-export class DeleteUserComponent {
+export class DeleteUserComponent implements OnDestroy {
     subscription: Subscription = new Subscription();
 
     message!: Object;
@@ -21,6 +21,10 @@ export class DeleteUserComponent {
         private router: Router,
     ) {
         this.paramID = this.route.snapshot.paramMap.get('id') ?? '';
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     userDelete(): void {

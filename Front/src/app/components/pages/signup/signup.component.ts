@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UsersService } from '../../../services/users.service';
 
@@ -7,13 +7,17 @@ import { UsersService } from '../../../services/users.service';
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent {
+export class SignupComponent implements OnDestroy {
     subscription: Subscription = new Subscription();
 
     message!: string;
 
     constructor(private user_service: UsersService) {}
 
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+    
     addUser(
         Name: string,
         LastName: string,

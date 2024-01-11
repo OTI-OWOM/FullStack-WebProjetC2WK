@@ -13,18 +13,17 @@ import { UsersService } from '../../../services/users.service';
     styleUrls: ['./me.component.scss'],
 })
 export class MeComponent implements OnInit, OnDestroy {
-    isEditMode: boolean = false;
-    password: string = '';
-    
     subscription: Subscription = new Subscription();
+    
+    isEditMode: boolean = false;
 
+    password: string = '';
     userID: string = '';
 
     data: Partial<User> = {} as User;
+    products: Product[] = [];
 
     message: string = "Test";
-
-    products: Product[] = [];
 
     constructor(
         private usersService: UsersService,
@@ -54,7 +53,7 @@ export class MeComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    public getProducts(): Product[] {
+    getProducts(): Product[] {
         return this.products;
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Subscription, delay } from 'rxjs';
 import { ProductsService } from '../../../services/products.service';
 import { CarBrands } from '../../../shared/interfaces/Brands';
@@ -12,7 +12,7 @@ import { CarDetail } from 'src/app/shared/interfaces/Details';
     templateUrl: './create-product.component.html',
     styleUrls: ['./create-product.component.scss'],
 })
-export class CreateProductComponent implements OnInit {
+export class CreateProductComponent implements OnInit, OnDestroy {
     @ViewChild('detailNameInput') detailNameInput!: ElementRef;
     subscription: Subscription = new Subscription();
 
@@ -52,6 +52,10 @@ export class CreateProductComponent implements OnInit {
                     this.message = err.error.message;
                 },
             }))
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     onImagesSelected(event: Event) {

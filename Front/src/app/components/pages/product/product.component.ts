@@ -52,16 +52,6 @@ export class ProductComponent implements OnInit, OnDestroy {
                 this.images = response.map(image => `${URL.IMAGE}${image.id}`);
             });
         });
-        
-        
-        // this.subscription.add(
-        //     this.usersService
-        //         .me()
-        //         .subscribe((res) => {
-        //             this.isAdmin = res.Role === 'admin';
-        //         }),
-        // );
-        
     }
 
     ngOnDestroy() {

@@ -64,13 +64,13 @@ export class UserProductsComponent implements OnInit, OnDestroy {
         );
     }
 
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
     back(): void {
         ['user', 'userID'].forEach((value) => sessionStorage.removeItem(value));
         this.router.navigateByUrl(`user/${this.currentUserID}`);
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 
     setImages() {
