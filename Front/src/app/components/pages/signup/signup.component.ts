@@ -8,7 +8,7 @@ import { UsersService } from '../../../services/users.service';
     styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnDestroy {
-    subscription: Subscription = new Subscription();
+    private subscription: Subscription = new Subscription();
 
     message!: string;
 

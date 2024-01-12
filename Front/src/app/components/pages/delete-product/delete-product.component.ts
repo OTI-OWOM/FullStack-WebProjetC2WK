@@ -9,7 +9,7 @@ import { ProductsService } from '../../../services/products.service';
     styleUrls: ['./delete-product.component.scss'],
 })
 export class DeleteProductComponent implements OnDestroy {
-    subscription: Subscription = new Subscription();
+    private subscription: Subscription = new Subscription();
 
     message!: string;
 
@@ -40,13 +40,9 @@ export class DeleteProductComponent implements OnDestroy {
                         }
                     },
                     error: (err: any) => {
-                        console.log(err);
-                        
                         this.message = err.error.message;
                     }
-                }
-                    
-),
+                }),
         );
     }
 }

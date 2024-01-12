@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     paramID: string = '';
 
-    subscription: Subscription = new Subscription();
+    private subscription: Subscription = new Subscription();
 
     constructor(
         private productsService: ProductsService,

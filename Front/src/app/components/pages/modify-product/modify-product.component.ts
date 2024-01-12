@@ -80,7 +80,6 @@ export class ModifyProductComponent extends CreateProductComponent implements On
                 .subscribe({
                     next: async (res: any) => {
                         if (this.selectedImages.length > 0) {
-                            console.log(this.selectedImages);
                             
                             await this.productService.uploadCarImage(parseInt(this.product.id), this.selectedImages)
                             .subscribe({
@@ -91,7 +90,6 @@ export class ModifyProductComponent extends CreateProductComponent implements On
                         }
                         
                         for (const imageId of this.imagesToRemove) {
-                            console.log(this.imagesToRemove);
                             await this.productService.deleteCarImage(imageId)
                             .subscribe({
                                 error: (err: any) => {

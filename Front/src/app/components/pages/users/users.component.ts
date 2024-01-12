@@ -9,7 +9,7 @@ import { User } from '../../../shared/interfaces/Users';
     styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit, OnDestroy {
-    subscription: Subscription = new Subscription();
+    private subscription: Subscription = new Subscription();
 
     userList!: User[];
 

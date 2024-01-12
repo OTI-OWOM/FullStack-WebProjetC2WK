@@ -9,7 +9,7 @@ import { UsersService } from '../../../services/users.service';
     styleUrls: ['./delete-user.component.scss'],
 })
 export class DeleteUserComponent implements OnDestroy {
-    subscription: Subscription = new Subscription();
+    private subscription: Subscription = new Subscription();
 
     message!: string;
 

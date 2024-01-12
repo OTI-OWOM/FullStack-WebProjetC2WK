@@ -16,7 +16,7 @@ import { URL } from '../../../shared/constants/url';
 export class ProductsComponent implements OnInit, OnDestroy {
     catchPhrase: string = '';
 
-    subscription:Subscription = new Subscription();
+    private subscription:Subscription = new Subscription();
 
     priceRange:number = 50000;
 

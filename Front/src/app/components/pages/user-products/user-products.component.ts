@@ -16,16 +16,14 @@ import { CarImage } from 'src/app/shared/interfaces/Images';
 })
 export class UserProductsComponent implements OnInit, OnDestroy {
     productList: Product[] = [];
-    
     resultList:Product[] = [];
 
     paramID: string = '';
 
     currentUser: string = '';
-
     currentUserID: string = '';
 
-    subscription: Subscription = new Subscription();
+    private subscription: Subscription = new Subscription();
 
     images: any = {};
 

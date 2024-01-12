@@ -2,7 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { UsersService } from '../../../services/users.service';
 
 @Component({
     selector: 'app-connection',
@@ -10,12 +9,11 @@ import { UsersService } from '../../../services/users.service';
     styleUrls: ['./connection.component.scss'],
 })
 export class ConnectionComponent implements OnDestroy {
-    subscription: Subscription = new Subscription();
+    private subscription: Subscription = new Subscription();
 
     message!: string;
 
     constructor(
-        private user_service: UsersService,
         private auth: AuthService,
         private router: Router,
     ) {}
