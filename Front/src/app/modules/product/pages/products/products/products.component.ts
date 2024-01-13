@@ -3,7 +3,7 @@ import {
     Component, OnInit, OnDestroy,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ProductsService } from '../../../services/products.service';
+import { DbService } from '../../../services/db.service';
 import { Product } from '@core/models/Product';
 import { CarImage } from '@core/models/Images';
 import { URL } from '@core/constants/url';
@@ -31,7 +31,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     images: any = {};
 
     constructor(
-        private productsService: ProductsService,
+        private productsService: DbService,
     ) { }
 
     ngOnInit(): void {

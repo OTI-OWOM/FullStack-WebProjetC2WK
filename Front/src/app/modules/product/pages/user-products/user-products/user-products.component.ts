@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { UsersService } from '@core/services/users.service';
 import { User } from '@core/models/Users';
 import { URL } from '@core/constants/url';
-import { ProductsService } from '../../../services/products.service';
+import { DbService } from '../../../services/db.service';
 import { Product } from '@core/models/Product';
 import { CarImage } from '@core/models/Images';
 
@@ -28,7 +28,7 @@ export class UserProductsComponent implements OnInit, OnDestroy {
     images: any = {};
 
     constructor(
-        private productsService: ProductsService,
+        private productsService: DbService,
         private route: ActivatedRoute,
         private usersService: UsersService,
         private router: Router,

@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ProductsService } from '../../../services/products.service';
+import { DbService } from '../../../services/db.service';
 import { CarBrands } from '@core/models/Brands';
 import { CarModelBrands } from '@core/models/ModelBrands';
 import { Router } from '@angular/router';
 import { Product } from '@core/models/Product';
 import { CarDetail } from '@core/models/Details';
+import { ProductService } from '../../../services/product.service';
+import { Message } from '@core/models/Message';
 
 @Component({
     selector: 'app-create-product',
@@ -36,8 +38,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     message!: string;
 
     constructor(
-        protected productService: ProductsService,
+        protected dbService: DbService,
         protected router: Router,
+        protected productService: ProductService
     ) { }
 
 
@@ -45,7 +48,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         this.userID = sessionStorage.getItem('userId') ?? '';
         this.data.Available = 1;
 
-        this.subscription.add(this.productService.getAllBrands()
+        this.subscription.add(this.dbService.getAllBrands()
             .subscribe({
                 next: (res: CarBrands[]) => {
                     this.brands = res;
@@ -78,7 +81,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     }
 
     onBrandChange(brandId: string): void {
-        this.subscription.add(this.productService.getAllModels(brandId)
+        this.subscription.add(this.dbService.getAllModels(brandId)
             .subscribe({
                 next: (res: CarModelBrands[]) => {
                     this.models = res;
@@ -99,59 +102,20 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         this.selectedImages.splice(index, 1);
     }
 
-    async submitCarDetails() {
-        if (!this.carDetails) {
-            this.carDetails = [];
-        }
-        console.log(this.selectedCarId);
 
-        if (this.selectedCarId && this.carDetails.length > 0) {
-            console.log(this.carDetails);
-            await this.productService.createCarDetail(
-                this.selectedCarId, this.carDetails
-            ).subscribe({
-                next: (res: any) => {
-                    this.message = res.message;
-                },
-                error: (err: any) => {
-                    this.message = err.message;
-                }
-            });
-
-            // Reset CarDetails array after successful submission
-            this.carDetails! = [];
-        } else {
-            this.message = 'Please add at least one car detail.';
-        }
-    }
 
     submit() {
-        if (this.data.Year && this.data.Price && this.data.Description) {
-            this.productService.createProduct(this.data).subscribe({
-                next: async (res: any) => {
-                    this.message = res.message;
-                    this.selectedCarId = parseInt(res.carId);
-
-                    if (this.selectedImages.length > 0) {
-                        console.log(this.selectedImages);
-                        await this.productService.uploadCarImage(this.selectedCarId, this.selectedImages)
-                            .subscribe({
-                                error: (err: any) => {
-                                    this.message = err.message;
-                                }
-                            });
-                    }
-                    await this.submitCarDetails();
-                    this.message = 'Product and image added successfully!';
+        this.productService.submit(this.data, this.selectedImages, this.carDetails)
+            .then((message: Message) => {
+                if (message.ok) {
+                    this.message = "Car added!"
                     setTimeout(() => {
-                        this.router.navigate([`product/car/${this.selectedCarId}`]);
+                        this.router.navigate([`product/car/${message.Value}`]);
                     }, 1000);
-                },
-                error: (err: any) => {
-                    this.message = err.error.message;
+                } else {
+                    this.message = message.Value;
                 }
             });
-        }
     }
 
     cancel() {

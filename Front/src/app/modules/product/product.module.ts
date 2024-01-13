@@ -7,6 +7,8 @@ import { ModifyProductModule } from './pages/modify-product/modify-product.modul
 import { ProductsModule } from './pages/products/products.module';
 import { ProductCarModule } from './pages/product-car/product-car.module';
 import { UserProductsModule } from './pages/user-products/user-products.module';
+import { ProductService } from './services/product.service';
+import { DbService } from './services/db.service';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { UserProductsModule } from './pages/user-products/user-products.module';
     CreateProductModule,
     CommonModule,
     ProductRoutingModule
-  ]
+  ],
+  providers: [ProductService, DbService]
 })
 export class ProductModule { 
   constructor() {

@@ -7,10 +7,8 @@ import { CarBrands } from '../../../core/models/Brands';
 import { CarModelBrands } from '../../../core/models/ModelBrands';
 import { CarDetail } from '../../../core/models/Details';
 
-@Injectable({
-    providedIn: 'root',
-})
-export class ProductsService {
+@Injectable()
+export class DbService {
     constructor(private http: HttpClient) {}
 
     public getAllProducts() {

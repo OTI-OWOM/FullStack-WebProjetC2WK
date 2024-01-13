@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductsService } from '../../../services/products.service';
+import { DbService } from '../../../services/db.service';
 
 @Component({
     selector: 'app-delete-product',
@@ -16,7 +16,7 @@ export class DeleteProductComponent implements OnDestroy {
     paramID!: string;
 
     constructor(
-        private product_service: ProductsService,
+        private product_service: DbService,
         private route: ActivatedRoute,
         private router: Router,
     ) {

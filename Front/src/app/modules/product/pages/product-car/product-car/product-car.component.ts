@@ -2,7 +2,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductsService } from '../../../services/products.service';
+import { DbService } from '../../../services/db.service';
 import { Product } from '@core/models/Product';
 import { CarImage } from '@core/models/Images';
 import { URL } from '@core/constants/url';
@@ -31,7 +31,7 @@ export class ProductCarComponent implements OnInit, OnDestroy {
     private subscription: Subscription = new Subscription();
 
     constructor(
-        private productsService: ProductsService,
+        private productsService: DbService,
         private route: ActivatedRoute,
     ) {}
 
