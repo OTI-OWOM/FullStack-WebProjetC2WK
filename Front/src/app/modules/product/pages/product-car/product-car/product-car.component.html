@@ -1,0 +1,44 @@
+<div class="main-wrapper">
+    <div class="product-container">
+        <div class="car-title">
+            <h1>{{product.BrandName}}</h1>
+            <p class="model-showcase">{{product.ModelBrandName}}</p>
+            <hr />
+        </div>
+        <div class="image-information-container">
+            <div class="image-container">
+                <img [src]="images[currentImageIndex]" onerror="this.src='../../../../../../assets/images/voiture.png'" alt="{{ product.BrandName }}">
+                <div class="button-image">
+                    <button class="arrow left-arrow" (click)="previousImage()" [disabled]="currentImageIndex === 0 || images.length === 0">&#8592;</button>
+                    <button class="arrow right-arrow" (click)="nextImage()" [disabled]="currentImageIndex === images.length - 1 || images.length === 0">&#8594;</button>
+                </div>
+            </div>
+            <div class="informations-container">
+                <h3 class="showcase">Description :</h3>
+                <p class="text">{{product.Description}}</p>
+                <hr class="hr-info" />
+                <h3 class="showcase">Year :</h3>
+                <p class="text">{{product.Year}}</p>
+                <div *ngIf="currentModelsLength !== 0">
+                    <hr class="hr-info" />
+                    <h3 class="showcase">Car Details : </h3>
+                    <div *ngFor="let detail of product.CarDetails">
+                        <p class="detail" style="display:inline">{{detail.DetailName}} : </p>
+                        <p class="text" style="display:inline">{{detail.DetailValue}}</p>
+                    </div>
+                </div>
+                <hr class="hr-info" />
+                <h3 class="showcase">Price :</h3>
+                <p class="text">{{product.Price/100}} €</p>
+                <hr class="hr-info" />
+            </div>
+        </div>
+        <div class="controls">
+            <a routerLink="/product" class="back-btn button">Back</a>
+            <a *ngIf="isOwnProduct || isAdmin" routerLink="/product/car/modify/{{ product.id }}"
+                class="modify-btn button">Modify</a>
+            <a *ngIf="isOwnProduct || isAdmin" routerLink="/product/car/delete/{{ product.id }}"
+                class="delete-btn button">Delete</a>
+        </div>
+    </div>
+</div>

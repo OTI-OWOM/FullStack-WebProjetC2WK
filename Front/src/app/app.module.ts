@@ -1,79 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/partials/header/header.component';
-import { FooterComponent } from './components/partials/footer/footer.component';
-import { ProductComponent } from './components/pages/product/product.component';
-import { ProductsComponent } from './components/pages/products/products.component';
-import { UsersComponent } from './components/pages/users/users.component';
-import { ConnectionComponent } from './components/pages/connection/connection.component';
-import { SignupComponent } from './components/pages/signup/signup.component';
-import { MeComponent } from './components/pages/me/me.component';
-import { DeleteUserComponent } from './components/pages/delete-user/delete-user.component';
-import { UserComponent } from './components/pages/user/user.component';
 import { AppRoutingModule } from './app-routing.module';
-import { UserProductsComponent } from './components/pages/user-products/user-products.component';
-import { CreateProductComponent } from './components/pages/create-product/create-product.component';
-import { DeleteProductComponent } from './components/pages/delete-product/delete-product.component';
-import { ModifyProductComponent } from './components/pages/modify-product/modify-product.component';
-import { HomeComponent } from './components/pages/home/home.component';
-import { Error404Component } from './components/pages/error404/error404.component';
-import { HomeFooterComponent } from './components/partials/home-footer/home-footer.component';
-import { ContactComponent } from './components/pages/contact/contact.component';
-import { LegalComponent } from './components/pages/legal/legal.component';
-import { LogoutComponent } from './components/pages/logout/logout.component';
-import { HttpRequestInterceptor } from './interceptors/http-request.interceptor';
-import { MessageComponent } from './components/partials/message/message.component';
-import { ProductsListComponent } from './components/partials/products-list/products-list.component';
-import { DetailsComponent } from './components/partials/details/details.component';
-import { ImageCreationComponent } from './components/partials/image-creation/image-creation.component';
-import { UserCreateModifyComponent } from './components/partials/user-create-modify/user-create-modify.component';
-import { UserDisplayComponent } from './components/partials/user-display/user-display.component';
+import { CoreModule } from '@core/core.module';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HeaderComponent,
-        FooterComponent,
-        ProductComponent,
-        ProductsComponent,
-        UsersComponent,
-        ConnectionComponent,
-        SignupComponent,
-        MeComponent,
-        DeleteUserComponent,
-        UserComponent,
-        UserProductsComponent,
-        CreateProductComponent,
-        DeleteProductComponent,
-        ModifyProductComponent,
-        HomeComponent,
-        Error404Component,
-        HomeFooterComponent,
-        ContactComponent,
-        LegalComponent,
-        LogoutComponent,
-        MessageComponent,
-        ProductsListComponent,
-        DetailsComponent,
-        ImageCreationComponent,
-        UserCreateModifyComponent,
-        UserDisplayComponent,
-    ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        FormsModule,
-    ],
-    providers: [
-        [
-            { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
-        ]
-    ],
+    declarations: [AppComponent],
+    imports: [BrowserModule, AppRoutingModule, CoreModule],
     bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -44,7 +44,11 @@
         "lib": [
             "ES2022",
             "dom"
-        ]
+        ],
+        "paths": {
+            "@core/*": ["src/app/core/*"],
+            "@ui": ["src/app/shared/ui"]
+        }
     },
     "exclude": [
         "build",
