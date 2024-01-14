@@ -8,7 +8,7 @@
             <div *ngIf="!isEditMode">
                 <app-user-display [data]="data" [userID]="userID"></app-user-display>
                 <div style="display: flex; flex-direction: row; margin-top: 3rem;">
-                    <button *ngIf="isMe" class="button" (click)="toggleEditMode()">Modify
+                    <button *ngIf="isMe || isAdmin" class="button" (click)="toggleEditMode()">Modify
                         account</button>
                     <button class="button" (click)="createProduct()">Create Product</button>
                 </div>

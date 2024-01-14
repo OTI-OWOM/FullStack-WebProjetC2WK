@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
 import { HomeFooterComponent } from '../../components/home-footer/home-footer.component';
 import { RouterModule } from '@angular/router';
+import { HomePageComponent } from './home/home-page.component';
 
 
 
 @NgModule({
   declarations: [
-    HomeComponent, 
+    HomePageComponent, 
     HomeFooterComponent
   ],
   imports: [
@@ -16,4 +16,4 @@ import { RouterModule } from '@angular/router';
     CommonModule
   ]
 })
-export class HomeModule { }
+export class HomePageModule { }
