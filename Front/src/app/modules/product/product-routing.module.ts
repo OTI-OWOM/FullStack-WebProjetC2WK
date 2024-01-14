@@ -6,11 +6,13 @@ import { ProductCarComponent } from './pages/product-car/product-car/product-car
 import { CreateProductComponent } from './pages/create-product/create-product/create-product.component';
 import { DeleteProductComponent } from './pages/delete-product/delete-product/delete-product.component';
 import { ModifyProductComponent } from './pages/modify-product/modify-product/modify-product.component';
+import { MeProductsComponent } from './pages/me-products/me-products/me-products.component';
 
 const routes: Routes = [
   { path: '', component: ProductsComponent },
   { path: 'car/:id', component: ProductCarComponent },
   { path: 'car/user/:user', component: UserProductsComponent },
+  { path: 'cars/user/self', component: MeProductsComponent },
   { path: 'create', component: CreateProductComponent },
   { path: 'car/delete/:id', component: DeleteProductComponent },
   { path: 'car/modify/:id', component: ModifyProductComponent },

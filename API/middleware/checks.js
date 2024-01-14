@@ -7,16 +7,16 @@ const CompanyLogo = db.CompanyLogo;
 const User = db.User;
 
 exports.carCheck = async (req, res, next) => {
-    const car = await Car.findByPk(req.params.carId);
-    if (!car) {
+    const car = await Car.findAll({where : {id: req.params.carId}});
+    if (car.length === 0) {
         return res.status(404).json({message: 'Car not found !'});
     }
     next();
 }
 
 exports.imageCheck = async (req, res, next) => {
-    const image = await CarImage.findByPk(req.params.imageId);
-    if (!image) {
+    const image = await CarImage.findAll({where : {id: req.params.imageId}});
+    if (image.length === 0) {
         return res.status(404).json({message: 'Image not found'});
     }
     
@@ -24,8 +24,8 @@ exports.imageCheck = async (req, res, next) => {
 }
 
 exports.detailCheck = async (req, res, next) => {
-    const detail = await CarDetail.findByPk(req.params.detailId);
-    if (!detail) {
+    const detail = await CarDetail.findAll({where : {id: req.params.detailId}});
+    if (detail.length === 0) {
         return res.status(404).json({message: 'Detail not found'});
     }
 
@@ -33,8 +33,8 @@ exports.detailCheck = async (req, res, next) => {
 }
 
 exports.companyCheck = async (req, res, next) => {
-    const company = await Company.findByPk(req.params.companyId);
-    if (!company) {
+    const company = await Company.findAll({where : {id: req.params.companyId}});
+    if (company.length === 0) {
         return res.status(404).json({message: 'Company not found'});
     }
     next();
@@ -50,7 +50,7 @@ exports.imageExistsCheck = async (req, res, next) => {
 
 exports.userCheck = async (req, res, next) => {
     const user = await User.findOne({where : {id: req.params.userId}});
-    if (!user) {
+    if (user.length === 0) {
         return res.status(404).json({ message: 'User not found!' });
     }
     next();

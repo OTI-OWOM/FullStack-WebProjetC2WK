@@ -24,14 +24,17 @@ exports.getAllUsers = (req, res) => {
 */
 exports.getAllUsersFromCompany = (req, res) => {
     return User.findAll({
-        where: {companyId: req.params.companyId},
+        where: { CompanyID: req.params.companyId },
         attributes: { exclude: ['Password'] }
 })
         .then(async users => {
-            const usersFormatted = await Promise.all(users.map(user => formatHelper.carFormat(user)));
+            const usersFormatted = await Promise.all(users.map(user => formatHelper.userFormat(user)));
             res.status(200).json(usersFormatted)
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({ error: "No users in this company!" })
+        });
 };
 
 

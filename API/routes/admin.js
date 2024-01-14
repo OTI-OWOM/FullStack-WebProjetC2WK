@@ -7,7 +7,7 @@ const checks = require('../middleware/checks');
 const adminController = require('../controllers/users/admin');
 
 // route to all users
-router.get('/admin/users/:companyId', authorize.jwtUserAuth, authorize.adminAuth, checks.companyCheck,  adminController.getAllUsersFromCompany);
+router.get('/admin/users/:companyId', authorize.jwtUserAuth, authorize.adminAuth, authorize.belongsToCompanySelf, checks.companyCheck,  adminController.getAllUsersFromCompany);
 
 // route to current user info
 router.get('/admin/user/:userId', authorize.jwtUserAuth, authorize.belongsToCompanyUser, authorize.adminAuth, checks.userCheck, adminController.getOneUser);

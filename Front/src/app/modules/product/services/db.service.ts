@@ -32,7 +32,11 @@ export class DbService {
     }
 
     public getAllProductsFromUser(id: string) {
-        return this.http.get<Product[]>(`${URL.PRODUCTS}/${id}`);
+        return this.http.get<Product[]>(`${URL.PRODUCTS_USER}/${id}`);
+    }
+
+    public getAllProductsFromSelf() {
+        return this.http.get<Product[]>(URL.PRODUCTS_ME);
     }
 
     public createCarDetail(carId: number, details: Partial<CarDetail>[]) {

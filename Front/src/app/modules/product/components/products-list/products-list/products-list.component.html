@@ -2,7 +2,7 @@
     <div *ngIf="resultList.length == 0" style="color: black;">
         It looks like none of our products corresponds to your search.
     </div>
-    <div routerLink="../product/car/{{ product.id }}" class="product-card" *ngFor="let product of resultList">
+    <div routerLink="/product/car/{{ product.id }}" class="product-card" *ngFor="let product of resultList">
         <div class="product-card-content">
             <div class="product-image">
                 <img src="{{images[product.id] }}" class="product-image" onerror="this.src='../../../../../../assets/images/voiture.png'"  alt="{{ product.BrandName }}">

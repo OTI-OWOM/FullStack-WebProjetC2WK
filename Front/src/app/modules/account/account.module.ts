@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { MeModule } from './pages/me/me.module';
-import { UsersModule } from './pages/users/users.module';
 import { DeleteUserModule } from './pages/delete-user/delete-user.module';
 import { UserModule } from './pages/user/user.module';
 
@@ -13,7 +12,6 @@ import { UserModule } from './pages/user/user.module';
     MeModule,
     DeleteUserModule,
     UserModule,
-    UsersModule,
     CommonModule,
     AccountRoutingModule
   ]

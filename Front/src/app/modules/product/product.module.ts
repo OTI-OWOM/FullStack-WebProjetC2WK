@@ -10,11 +10,13 @@ import { UserProductsModule } from './pages/user-products/user-products.module';
 import { ProductService } from './services/product.service';
 import { DbService } from './services/db.service';
 import { DeleteProductModule } from './pages/delete-product/delete-product.module';
+import { MeProductsModule } from './pages/me-products/me-products.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
+    MeProductsModule,
     DeleteProductModule,
     UserProductsModule,
     ModifyProductModule,

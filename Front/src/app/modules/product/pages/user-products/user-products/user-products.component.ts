@@ -15,6 +15,7 @@ import { CarImage } from '@core/models/Images';
     styleUrls: ['./user-products.component.scss'],
 })
 export class UserProductsComponent implements OnInit, OnDestroy {
+    protected subscription: Subscription = new Subscription();
     productList: Product[] = [];
     resultList:Product[] = [];
 
@@ -23,15 +24,14 @@ export class UserProductsComponent implements OnInit, OnDestroy {
     currentUser: string = '';
     currentUserID: string = '';
 
-    private subscription: Subscription = new Subscription();
 
     images: any = {};
 
     constructor(
-        private productsService: DbService,
-        private route: ActivatedRoute,
-        private usersService: UsersService,
-        private router: Router,
+        protected productsService: DbService,
+        protected route: ActivatedRoute,
+        protected usersService: UsersService,
+        protected router: Router,
     ) {
         this.route.params.subscribe((params) => {
             if (params['user']) {
@@ -53,13 +53,11 @@ export class UserProductsComponent implements OnInit, OnDestroy {
                 this.setImages();
             });
 
-        this.subscription.add(
-            this.usersService
-                .userSelect( this.paramID)
+
+            this.usersService.userSelect( this.paramID)
                 .subscribe((res: Partial<User>) => {
-                    this.currentUser = res.Name ?? '';
-                }),
-        );
+                    this.currentUser = res.Name ?? 'Test';
+                });
     }
 
     ngOnDestroy() {

@@ -7,7 +7,10 @@ import { AuthService } from '../services/auth.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService) {
+        console.log("Called");
+        
+    }
 
     canActivate(): Observable<boolean> {
         return this.authService.isAuthenticated();

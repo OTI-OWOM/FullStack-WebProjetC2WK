@@ -31,7 +31,10 @@ router.delete('/car/:carId', authorize.jwtUserAuth, authorize.sellerAuth , check
 router.get('/cars/', authorize.jwtUserAuth, carController.getAllcars);
 
 // route to get all cars of an user
-router.get('/cars/:userId', authorize.jwtUserAuth, authorize.adminAuth, authorize.belongsToCompanyUser, checks.userCheck,  carController.getAllcarsFromUser);
+router.get('/cars/all/:userId', authorize.jwtUserAuth, authorize.adminOrSelfAuth, authorize.belongsToCompanyUser, checks.userCheck,  carController.getAllcarsFromUser);
+
+// route to get all cars of an user
+router.get('/cars/self/all', authorize.jwtUserAuth, authorize.adminOrSelfAuth, carController.getAllcarsFromSelf);
 
 // route to get all cars of a company
 router.get('/company/cars/:companyId', authorize.jwtUserAuth, authorize.adminAuth, carController.getAllcarsFromCompany);

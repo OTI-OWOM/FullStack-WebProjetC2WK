@@ -9,8 +9,8 @@ exports.carFormat = async (car) => {
     const company = await Company.findByPk(car.CompanyID);
     const imageUrl = await CompanyLogo.findOne({where: {CompanyID: company.id}})
     const modelBrandObj = await ModelBrand.findByPk(car.ModelBrandID);
-    const brandObj = await Brand.findByPk(ModelBrandObj.BrandID);
-    const carDetails = await CarDetail.findAll({ where: { CarID: car.id } })
+    const brandObj = await Brand.findByPk(modelBrandObj.BrandID);
+    const CarDetails = await CarDetail.findAll({ where: { CarID: car.id } })
 
     const BrandName = brandObj.BrandName;
     const ModelBrandName = modelBrandObj.ModelName;
@@ -24,7 +24,7 @@ exports.carFormat = async (car) => {
         SellerID: car.SellerID,
         ModelBrandName,
         BrandName,
-        carDetails,
+        CarDetails,
         CompanyName: company ? company.Name : null,
         CompanyAdress: company ? company.Address : null,
         CompanyCity: company ? company.City : null,

@@ -3,6 +3,7 @@
     <ng-template #thenBlock>
         <div class="main-panel">
             <h1 class="title">{{title}}</h1>
+            <p *ngIf="data.IsSeller && !data.Role" class="admin-text">Salesman</p>
             <p *ngIf="data.Role" class="admin-text">Admin</p>
 
             <div *ngIf="!isEditMode">
@@ -10,10 +11,10 @@
                 <div style="display: flex; flex-direction: row; margin-top: 3rem;">
                     <button *ngIf="isMe" class="button" (click)="toggleEditMode()">Modify
                         account</button>
-                    <button *ngIf="isSeller" class="button" (click)="createProduct()">Create Product</button>
+                    <button *ngIf="data.IsSeller" class="button" (click)="createProduct()">Create Product</button>
                 </div>
                 <div class="products-text">
-                    <p routerLink="/product/car/user/{{ userID }}" class="products-link">
+                    <p routerLink="/product/cars/user/self" class="products-link">
                         <i class="fa-solid fa-eye"></i>
                         See all your products !
                     </p>

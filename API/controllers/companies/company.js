@@ -84,10 +84,9 @@ exports.modifyCompany = async (req, res) => {
  */
 exports.getOneCompany = (req, res) => {
     return Company.findByPk(req.params.companyId)
-        .then(user => res.status(200).json(formatHelper.userFormat(user)))
+        .then(company => res.status(200).json(company))
         .catch(error => res.status(500).json({ error }));
 };
-
 
 /**
 * Get data from the user

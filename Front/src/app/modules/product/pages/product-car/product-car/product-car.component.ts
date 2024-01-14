@@ -43,7 +43,9 @@ export class ProductCarComponent implements OnInit, OnDestroy {
         .getProductById(this.paramID )
         .subscribe((response: Product) => {
             this.product = response;
-            this.currentModelsLength = this.product.CarDetails.length;
+            console.log(this.product.CarDetails);
+            
+            this.currentModelsLength = this.product.CarDetails.length!;
             
             this.isOwnProduct = this.product.SellerID.toString() === sessionStorage.getItem('userId') ?? '';
 

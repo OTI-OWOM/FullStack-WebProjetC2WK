@@ -45,6 +45,23 @@ exports.getAllcarsFromUser = (req, res) => {
 };
 
 /**
+* For a user, get all its cars from the api
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.getAllcarsFromSelf = (req, res) => {
+    return Car.findAll({ where: { SellerID: req.auth.userId } })
+        .then(async cars => {
+            const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+            res.status(200).json(formattedCars);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(400).json({ error })
+        });
+};
+
+/**
 * For a company, get all its cars from the api
 * @param {object} req - request
 * @param {object} res - response
@@ -68,11 +85,15 @@ exports.getAllcarsFromCompany = (req, res) => {
 * @param {object} res - response
 */
 exports.getOnecar = (req, res) => {
+    console.log(req.params.carId);
     return Car.findByPk(req.params.carId)
         .then(async car => {
             res.status(200).json(await formatHelper.carFormat(car));
         })
-        .catch(error => res.status(404).json({ error }));
+        .catch(error =>{
+            console.log(error);
+            res.status(404).json({ error })
+        });
 };
 
 

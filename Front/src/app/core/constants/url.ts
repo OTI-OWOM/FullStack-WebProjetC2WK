@@ -13,6 +13,8 @@ export const URL:any = {
     MODELS: `${BASE_URL}/models/`,
     BRANDS: `${BASE_URL}/brands/`,
     PRODUCTS: `${BASE_URL}/cars`,
+    PRODUCTS_USER: `${BASE_URL}/cars/all`,
+    PRODUCTS_ME: `${BASE_URL}/cars/self/all`,
     PRODUCT: `${BASE_URL}/car/`,
     IMAGES: `${BASE_URL}/car/images/`,
     IMAGE: `${BASE_URL}/car/image/`,

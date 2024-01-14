@@ -43,6 +43,13 @@ exports.adminAuth = (req, res, next) => {
     next();
 }
 
+exports.adminOrSelfAuth = (req, res, next) => {
+    if (!req.auth.role < 0 && req.auth.userId != req.params.userId) {
+        return res.status(401).json({message: 'Unauthorized'});
+    }
+    next();
+}
+
 exports.superAdminAuth = (req, res, next) => {
     if (req.auth.role !== 2) {
         return res.status(401).json({message: 'Unauthorized'});
@@ -53,14 +60,14 @@ exports.superAdminAuth = (req, res, next) => {
 exports.belongsToCompanyUser = async (req, res, next) => {
     const user = await User.findByPk(req.params.userId);
     
-    if (req.auth.companyId !== user.CompanyID && req.auth.role !== 2) {
+    if (req.auth.companyId != user.CompanyID && req.auth.role !== 2) {
         return res.status(401).json({message: 'Unauthorized'});
     }
     next();
 }
 
 exports.belongsToCompanySelf = async (req, res, next) => {
-    if (req.auth.companyId !== req.params.companyId && req.auth.role !== 2) {
+    if (req.auth.companyId != req.params.companyId && req.auth.role !== 2) {
         return res.status(401).json({message: 'Unauthorized'});
     }
     next();
