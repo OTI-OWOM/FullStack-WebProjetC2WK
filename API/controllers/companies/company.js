@@ -1,6 +1,7 @@
 const db = require('../../db/models');
 const Company = db.Company;
-const modalHelper = require('../../helpers/modelHelper');
+const modelHelper = require('../../helpers/modelHelper');
+const formatHelper = require('../../helpers/formatHelper');
 
 /**
  * register - Create a new user in the database.
@@ -67,7 +68,7 @@ exports.getAllCompanies = (req, res) => {
  * or the request was not authorized.
  */
 exports.modifyCompany = async (req, res) => {
-    await modalHelper.modifyModel(Company, req.auth.companyId, req.body, res);
+    await modelHelper.modifyModel(Company, req.auth.companyId, req.body, res);
     // }
 };
 
@@ -83,7 +84,7 @@ exports.modifyCompany = async (req, res) => {
  */
 exports.getOneCompany = (req, res) => {
     return Company.findByPk(req.params.companyId)
-        .then(user => res.status(200).json(user))
+        .then(user => res.status(200).json(formatHelper.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -94,5 +95,5 @@ exports.getOneCompany = (req, res) => {
 * @param {object} res - response
 */
 exports.deleteCompany = (req, res) => {
-    modalHelper.deleteModel(Company, req.params.companyId, res);
+    modelHelper.deleteModel(Company, req.params.companyId, res);
 };

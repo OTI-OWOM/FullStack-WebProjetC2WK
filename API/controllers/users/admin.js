@@ -1,7 +1,7 @@
-const { where } = require('sequelize');
 const db = require('../../db/models');
 const User = db.User;
 const modelHelper = require('../../helpers/modelHelper');
+const formatHelper = require('../../helpers/formatHelper');
 
 /**
 * Get all the users data
@@ -11,7 +11,7 @@ exports.getAllUsers = (req, res) => {
     return User.findAll({
         attributes: { exclude: ['Password'] }
 })
-        .then(users => res.status(200).json(users))
+        .then(users => {res.status(200).json(users.map(user => formatHelper.userFormat(user)))})
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -24,7 +24,7 @@ exports.getAllUsersFromCompany = (req, res) => {
         where: {companyId: req.params.companyId},
         attributes: { exclude: ['Password'] }
 })
-        .then(users => res.status(200).json(users))
+        .then(users => {res.status(200).json(users.map(user => formatHelper.userFormat(user)))})
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -56,7 +56,7 @@ exports.getOneUser = (req, res) => {
     return User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(user => res.status(200).json(user))
+        .then(user => res.status(200).json(formatHelper.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
 };
 

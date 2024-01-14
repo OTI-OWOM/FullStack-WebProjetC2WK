@@ -1,6 +1,7 @@
 const db = require('../../db/models');
 const User = db.User;
 const modelHelper = require('../../helpers/modelHelper');
+const formatHelper = require('../../helpers/formatHelper');
 
 /**
 * Get data for the current user
@@ -11,7 +12,7 @@ exports.getCurrentUser = (req, res) => {
     return User.findByPk(req.auth.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(user => res.status(200).json(user))
+        .then(user => res.status(200).json(formatHelper.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -44,7 +45,7 @@ exports.getOneUser = (req, res) => {
     return User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(user => res.status(200).json(user))
+        .then(user => res.status(200).json(formatHelper.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
 };
 

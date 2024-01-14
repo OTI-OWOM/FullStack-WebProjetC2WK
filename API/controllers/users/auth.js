@@ -74,7 +74,8 @@ const register = (role) => (req, res) => {
                 Address: req.body.Address,
                 City: req.body.City,
                 PostalCode: req.body.PostalCode,
-                CompanyID: req.params.companyId
+                CompanyID: req.params.companyId,
+                IsSeller: req.params.companyId ? 1 : 0
             })
                 // 201 : successfully created a user (Created)
                 .then((response) => res.status(201).json({
