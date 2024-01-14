@@ -9,24 +9,9 @@ const formatHelper = require('../../helpers/formatHelper');
 */
 exports.getAllUsers = (req, res) => {
     return User.findAll({
+        where: req.auth.role === 1 ? { CompanyID: req.params.companyId } : {},
         attributes: { exclude: ['Password'] }
-})
-        .then(async users => {
-            const usersFormatted = await Promise.all(users.map(user => formatHelper.carFormat(user)));
-            res.status(200).json(usersFormatted)
-        })
-        .catch(error => res.status(500).json({ error }));
-};
-
-/**
-* Get all the users data
-* @param {object} res - response
-*/
-exports.getAllUsersFromCompany = (req, res) => {
-    return User.findAll({
-        where: { CompanyID: req.params.companyId },
-        attributes: { exclude: ['Password'] }
-})
+    })
         .then(async users => {
             const usersFormatted = await Promise.all(users.map(user => formatHelper.userFormat(user)));
             res.status(200).json(usersFormatted)

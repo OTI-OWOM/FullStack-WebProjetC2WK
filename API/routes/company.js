@@ -12,8 +12,20 @@ const companyImageController = require('../controllers/companies/company-image')
 // route to current user info
 router.get('/company', authorize.jwtUserAuth, authorize.adminAuth, companyController.getCompany);
 
+// route to user info
+router.post('/company', authorize.jwtUserAuth, authorize.superAdminAuth, companyController.createCompany);
+
 // route to current user info
-router.put('/company', authorize.jwtUserAuth, authorize.adminAuth, emailValidation, companyController.modifyCompany);
+router.put('/company', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, companyController.modifyCompany);
+
+// route to user info
+router.get('/company/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.superAdminAuth, companyController.getOneCompany);
+
+// route to delete company
+router.delete('/company/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.superAdminAuth, companyController.deleteCompany);
+
+// route to user info
+router.get('/companies', authorize.jwtUserAuth, authorize.superAdminAuth, companyController.getAllCompanies);
 
 // route to add a new car image
 router.post('/company/image/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.adminAuth, authorize.belongsToCompanySelf, checks.imageExistsCheck, upload.uploadCompany.array('images', 1), companyImageController.uploadCompanyLogo);

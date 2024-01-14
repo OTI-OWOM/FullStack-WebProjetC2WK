@@ -8,7 +8,6 @@ require('dotenv').config();
 const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
-const superAdminRoutes = require('./routes/super-admin');
 const adminRoutes = require('./routes/admin');
 const companyRoutes = require('./routes/company');
 
@@ -46,7 +45,6 @@ app.use(cookieParser());
 app.use(productRoutes);
 app.use(userRoutes);
 app.use(authRoutes);
-app.use(superAdminRoutes);
 app.use(adminRoutes);
 app.use(companyRoutes);
 
