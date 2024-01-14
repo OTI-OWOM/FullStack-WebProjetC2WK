@@ -7,11 +7,11 @@ import { UserComponent } from './pages/user/user/user.component';
 import { UsersComponent } from './pages/users/users/users.component';
 
 const routes: Routes = [
-  { path: 'me', component: MeComponent, canActivate: [AuthGuard] },
-  { path: 'user/delete/:id', component: DeleteUserComponent, canActivate: [AuthGuard] },
-  { path: 'user/:id', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'user/notloggedin', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'me', component: MeComponent },
+  { path: 'user/delete/:id', component: DeleteUserComponent },
+  { path: 'user/:id', component: UserComponent },
+  { path: 'user/notloggedin', component: UserComponent },
+  { path: 'users', component: UsersComponent },
 ];
 
 @NgModule({

@@ -35,10 +35,10 @@ export class ProductService {
   }
 
   async submit(
-    data: Partial<Product>, 
-    selectedImages: File[], 
+    data: Partial<Product>,
+    selectedImages: File[],
     carDetails: Partial<CarDetail>[]
-    ): Promise<Message> {
+  ): Promise<Message> {
     let message: Message;
     if (!data.Year || !data.Price || !data.Description) {
       return { Value: 'Required data is missing', ok: false };
@@ -67,36 +67,43 @@ export class ProductService {
   }
 
   async submitModify(
-    data: Partial<Product>, 
-    selectedImages: File[], 
-    carDetails: Partial<CarDetail>[], 
-    productId: string, 
+    data: Partial<Product>,
+    selectedImages: File[],
+    carDetails: Partial<CarDetail>[],
+    productId: string,
     imagesToRemove: number[]
-    ): Promise<Message> {
+  ): Promise<Message> {
+
     let message: Message;
+    let productCreationResponse: { message: string };
 
     try {
-      const productCreationResponse = await firstValueFrom(this.dbService.modifyProduct(productId, data)) as { message: string };
-
+      productCreationResponse = await firstValueFrom(this.dbService.modifyProduct(productId, data)) as { message: string };
+    } catch (err) {
+      return { Value: `Error modifying car!`, ok: false };
+    }
+    try {
       if (selectedImages.length > 0) {
         await firstValueFrom(this.dbService.uploadCarImage(parseInt(productId), selectedImages));
       }
-
+    } catch (err) {
+      return { Value: `Error uploading Images!`, ok: false };
+    }
+    try {
       for (const imageId of imagesToRemove) {
         await firstValueFrom(this.dbService.deleteCarImage(imageId));
       }
-
-      message = await this.submitCarDetails(carDetails, parseInt(productId))
-        .then(() => {
-          return { Value: productCreationResponse.message, ok: true };
-        })
-        .catch((err: any) => {
-          return { Value: `Error uploading details ${err}`, ok: false };
-        });
-
-      return message;
     } catch (err) {
-      return { Value: `An unknown error occurred ${err}`, ok: false };
+      return { Value: `Error uploading details!`, ok: false };
     }
-  }
+    message = await this.submitCarDetails(carDetails, parseInt(productId))
+      .then(() => {
+        return { Value: productCreationResponse.message, ok: true };
+      })
+      .catch((err: any) => {
+        return { Value: `Error uploading details!`, ok: false };
+      });
+
+    return message;
+}
 }
