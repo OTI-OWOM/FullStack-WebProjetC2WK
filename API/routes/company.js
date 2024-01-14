@@ -16,7 +16,7 @@ router.get('/company', authorize.jwtUserAuth, authorize.adminAuth, companyContro
 router.post('/company', authorize.jwtUserAuth, authorize.superAdminAuth, companyController.createCompany);
 
 // route to current user info
-router.put('/company', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, companyController.modifyCompany);
+router.put('/company/:companyId', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, companyController.modifyCompany);
 
 // route to user info
 router.get('/company/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.superAdminAuth, companyController.getOneCompany);
