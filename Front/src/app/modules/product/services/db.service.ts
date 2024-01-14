@@ -59,7 +59,7 @@ export class DbService {
     }
 
     public createProduct(car: Partial<Product>) {
-        return this.http.post(URL.PRODUCT_CREATE, car);
+        return this.http.post(URL.PRODUCT, car);
     }
 
     public modifyProduct(

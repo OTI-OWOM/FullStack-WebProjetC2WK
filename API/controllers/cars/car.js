@@ -70,9 +70,6 @@ exports.getAllcarsFromCompany = (req, res) => {
 exports.getOnecar = (req, res) => {
     return Car.findByPk(req.params.carId)
         .then(async car => {
-            if (!car) {
-                return res.status(404).json({ error: 'Car not found!' });
-            }
             res.status(200).json(await formatHelper.carFormat(car));
         })
         .catch(error => res.status(404).json({ error }));

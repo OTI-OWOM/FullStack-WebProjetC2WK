@@ -29,8 +29,8 @@ exports.jwtUserAuth = async (req, res, next) => {
 };
 
 exports.sellerAuth = async (req, res, next) => {
-    const carExists = await Car.findByPk(req.params.carId);
-    if(carExists.SellerID !== req.auth.userId && req.auth.role > 0) {
+    const user = await User.findByPk(req.auth.userId);
+    if(!user && req.auth.role < 0) {
         return res.status(401).json({ message: 'Not authorized' });
     }
     next();

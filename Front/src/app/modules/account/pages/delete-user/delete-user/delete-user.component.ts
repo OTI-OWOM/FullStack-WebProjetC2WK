@@ -30,14 +30,12 @@ export class DeleteUserComponent implements OnDestroy {
     userDelete(): void {
         this.subscription.add(
             this.usersService
-                .deleteUser(
-                    this.paramID,
-                )
+                .deleteUserSelf()
                 .subscribe((res: any) => {
                     if (res) {
                         this.message = res.message;
                         setTimeout(() => {
-                            this.router.navigate(['logout']);
+                            this.router.navigate(['auth/logout']);
                         }, 1000);
                     }
                 }),

@@ -9,11 +9,13 @@ import { ProductCarModule } from './pages/product-car/product-car.module';
 import { UserProductsModule } from './pages/user-products/user-products.module';
 import { ProductService } from './services/product.service';
 import { DbService } from './services/db.service';
+import { DeleteProductModule } from './pages/delete-product/delete-product.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
+    DeleteProductModule,
     UserProductsModule,
     ModifyProductModule,
     ProductCarModule,

@@ -53,7 +53,7 @@ export class UsersService {
         return this.http.put(URL.ME, user);
     }
 
-    public deleteUserSelf(id: string) {
+    public deleteUserSelf() {
         return this.http.delete(URL.ME);
     }
 }

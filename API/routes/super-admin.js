@@ -11,6 +11,9 @@ const companyController = require('../controllers/companies/company');
 // route to all users
 router.get('/super/admin/users', authorize.jwtUserAuth, authorize.superAdminAuth, adminController.getAllUsers);
 
+// route to current user info
+router.get('/super/admin/verify', authorize.jwtUserAuth, authorize.superAdminAuth, adminController.isSuperAdmin);
+
 // route to user info
 router.get('/super/admin/user/:userId', authorize.jwtUserAuth, checks.userCheck, authorize.superAdminAuth, adminController.getOneUser);
 

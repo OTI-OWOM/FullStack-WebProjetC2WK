@@ -16,7 +16,7 @@ const brandController = require('../controllers/cars/car-brands');
 
 // ----------------------------- Cars -----------------------------
 // route to get a car
-router.get('/car/:carId', authorize.jwtUserAuth,  checks.carCheck, carController.getOnecar);
+router.get('/car/:carId', authorize.jwtUserAuth, checks.carCheck, carController.getOnecar);
 
 // route to add a new car
 router.post('/car', authorize.jwtUserAuth, authorize.sellerAuth ,validateInputCreate, carController.createCar);
@@ -58,9 +58,9 @@ router.delete('/car/detail/:detailId', authorize.jwtUserAuth, checks.detailCheck
 
 // ----------------------------- Brands -----------------------------
 // route to get all brands
-router.get('/brands', authorize.jwtUserAuth, authorize.superAdminAuth, brandController.getAllBrands);
+router.get('/brands', authorize.jwtUserAuth, brandController.getAllBrands);
 
 // route to get all models
-router.get('/models/:brandId', authorize.jwtUserAuth, authorize.superAdminAuth, brandController.getAllModelbrand);
+router.get('/models/:brandId', authorize.jwtUserAuth, brandController.getAllModelbrand);
 
 module.exports = router;

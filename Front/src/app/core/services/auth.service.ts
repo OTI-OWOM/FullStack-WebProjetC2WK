@@ -43,9 +43,7 @@ export class AuthService {
 
     isAuthenticated(): Observable<boolean>  {
         if (!this.authToken) {
-            
             this.router.navigate(['/auth/login']);
-            
             return of(false);
         }
 
@@ -54,6 +52,26 @@ export class AuthService {
             catchError((err) => {
                 this.logout();
                 this.router.navigate(['/auth/login']);
+                return of(false);
+            })
+        );
+    }
+
+    isAdmin(): Observable<boolean>  {
+        return this.http.get(URL.IS_ADMIN).pipe(
+            map(() => true),
+            catchError((err) => {
+                this.router.navigate(['/product']);
+                return of(false);
+            })
+        );
+    }
+
+    isSeller(): Observable<boolean>  {
+        return this.http.get(URL.IS_ADMIN).pipe(
+            map(() => true),
+            catchError((err) => {
+                this.router.navigate(['/product']);
                 return of(false);
             })
         );

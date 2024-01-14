@@ -11,7 +11,6 @@ exports.carCheck = async (req, res, next) => {
     if (!car) {
         return res.status(404).json({message: 'Car not found !'});
     }
-    
     next();
 }
 

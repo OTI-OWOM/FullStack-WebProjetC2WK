@@ -13,14 +13,14 @@ exports.login = (req, res) => {
         .then(user => {
             if (!user) {
                 // 401 : unauthorized
-                return res.status(401).json({ message: 'Login or password incorrect.' });
+                return res.status(401).json({ error: 'Login or password incorrect.' });
             }
             // compare password with hash
             return bcrypt.compare(req.body.Password, user.Password)
                 .then((valid) => {
                     if (!valid) {
                         // 401 : unauthorized
-                        return res.status(401).json({ message: 'Login or password incorrect.' });
+                        return res.status(401).json({ error: 'Login or password incorrect.' });
                     }
                     // 200 : successful request (OK)
                     return res.status(200).json({

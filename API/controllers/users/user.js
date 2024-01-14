@@ -49,6 +49,27 @@ exports.getOneUser = (req, res) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+/**
+ * getOneUser - Retrieve a single user from the database.
+ *
+ * @param {Object} req  The request object containing information about the HTTP request.
+ * @param {Object} res  The response object used to send back the response to the client.
+ *
+ * @returns {Object}  The user object, or an error object if the user was not found
+ *                    or the request was not authorized.
+ */
+exports.isSeller = (req, res) => {
+    return User.findByPk(req.auth.userId)
+        .then(async user => {
+            if (user.isSeller) {
+                return res.status(200);
+            } else {
+                return res.status(500);
+            }
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
 
 /**
 * Get data from the user

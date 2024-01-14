@@ -6,7 +6,7 @@ const CompanyLogo = db.CompanyLogo;
 const Company = db.Company;
 
 exports.carFormat = async (car) => {
-    const company = await Company.findByPk(user.CompanyID);
+    const company = await Company.findByPk(car.CompanyID);
     const imageUrl = await CompanyLogo.findOne({where: {CompanyID: company.id}})
     const modelBrandObj = await ModelBrand.findByPk(car.ModelBrandID);
     const brandObj = await Brand.findByPk(ModelBrandObj.BrandID);

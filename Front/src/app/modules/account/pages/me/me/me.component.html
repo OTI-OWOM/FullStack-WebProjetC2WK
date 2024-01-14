@@ -10,7 +10,7 @@
                 <div style="display: flex; flex-direction: row; margin-top: 3rem;">
                     <button *ngIf="isMe" class="button" (click)="toggleEditMode()">Modify
                         account</button>
-                    <button class="button" (click)="createProduct()">Create Product</button>
+                    <button *ngIf="isSeller" class="button" (click)="createProduct()">Create Product</button>
                 </div>
                 <div class="products-text">
                     <p routerLink="/product/car/user/{{ userID }}" class="products-link">

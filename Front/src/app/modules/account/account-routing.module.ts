@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MeComponent } from './pages/me/me/me.component';
-import { AuthGuard } from '@core/guards/auth.guard';
 import { DeleteUserComponent } from './pages/delete-user/delete-user/delete-user.component';
 import { UserComponent } from './pages/user/user/user.component';
 import { UsersComponent } from './pages/users/users/users.component';

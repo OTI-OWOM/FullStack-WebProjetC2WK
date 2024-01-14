@@ -12,6 +12,9 @@ const userController = require('../controllers/users/user');
 router.get('/me', authorize.jwtUserAuth, userController.getCurrentUser);
 
 // route to current user info
+router.get('/seller/verify', authorize.jwtUserAuth, userController.isSeller);
+
+// route to current user info
 router.put('/me', authorize.jwtUserAuth, emailValidation, passwordValidation, userController.modifyUser);
 
 // route to current user info

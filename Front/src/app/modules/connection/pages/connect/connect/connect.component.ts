@@ -25,8 +25,8 @@ export class ConnectComponent implements OnDestroy {
                       next: () => {
                           this.router.navigateByUrl('/product');
                       },
-                      error: (err: any) => {
-                          this.message = err.error.message;
+                      error: async (err: any) => {
+                          this.message = "Login or password incorrect.";
                       },
                   });
           

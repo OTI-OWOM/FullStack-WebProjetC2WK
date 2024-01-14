@@ -15,6 +15,7 @@ export class MeComponent implements OnInit, OnDestroy {
     protected role: boolean = false;
 
     protected userID: string = '';
+    protected isSeller: boolean = false;
     protected isVisitorAllowed = false;
     protected data: Partial<User> = {} as User;
 
@@ -40,13 +41,14 @@ export class MeComponent implements OnInit, OnDestroy {
                     this.isVisitorAllowed = true;
                 }),
         );
+        this.usersService.me().subscribe((res:any) => {
+                this.isSeller = res.isSeller;
+            })
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
-
-
 
     userDelete(): void {
         this.router.navigateByUrl(`account/user/delete/${this.userID}`);
