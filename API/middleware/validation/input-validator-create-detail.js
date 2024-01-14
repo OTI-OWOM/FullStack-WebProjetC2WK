@@ -1,7 +1,5 @@
 const Validator = require('validatorjs');
-const helper = require('../helpers/validationHelper')
-const db = require('../db/models');
-const Car = db.Car;
+const helper = require('../../helpers/validationHelper')
 
 module.exports = async (req, res, next) => {
     let data = helper.dataPass(req);
@@ -16,19 +14,11 @@ module.exports = async (req, res, next) => {
 
     if (!validation.passes()) {
         // 422 : Unprocessable Entity
-        return res.status(422).json({ 
+        return res.status(422).json({
             message: 'invalid input: did not pass validation',
             errors: validation.errors.all()
-         });
+        });
     }
 
-    try {
-        const carExists = await Car.findByPk(req.params.carId);
-        if(carExists.SellerID !== req.auth.userId) {
-            return res.status(401).json({ message: 'Not authorized' });
-        }
-        next();
-    } catch (error) {
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
+    next();
 };

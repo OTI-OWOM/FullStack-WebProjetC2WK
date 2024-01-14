@@ -2,24 +2,24 @@ const jwt = require('jsonwebtoken');
 const db = require('../db/models');
 const User = db.User;
 const Car = db.Car;
-const CarImage = db.CarImage;
-const CarDetail = db.CarDetail;
 
-async function isUserAdmin(userId) {
+async function getUserRoleCompany(userId) {
     const user = await User.findOne({ where: { id: userId } });
-    return user.Role;
+    return {role: user.Role, companyId: user.CompanyID};
 }
 
-exports.JWTAthorization = async (req, res, next) => {
+exports.jwtUserAuth = async (req, res, next) => {
     try {
         // const token = req.cookies['token'];
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
         const { userId } = decodedToken;
-        const isAdmin = await isUserAdmin(userId);
+        const role = (await getUserRoleCompany(userId)).role;
+        const companyId = (await getUserRoleCompany(userId)).companyId;
         req.auth = {
             userId,
-            isAdmin,
+            role,
+            companyId
         };
         next();
     } catch (error) {
@@ -28,51 +28,39 @@ exports.JWTAthorization = async (req, res, next) => {
     }
 };
 
-exports.adminOrUserCheck = async (req, res, next) => {
-    const user = await User.findByPk(req.params.userId);
-    if (!user) {
-        return res.status(404).json({message: 'User not found'});
+exports.sellerAuth = async (req, res, next) => {
+    const carExists = await Car.findByPk(req.params.carId);
+    if(carExists.SellerID !== req.auth.userId && req.auth.role > 0) {
+        return res.status(401).json({ message: 'Not authorized' });
     }
-
-    if (req.auth.userId !== user.id && !req.auth.isAdmin) {
-        return res.status(401).json({message: 'Unauthorized'});
-    } else {
-        next();
-    }
-}
-
-exports.carCheck = async (req, res, next) => {
-    const car = await Car.findByPk(req.params.carId);
-    if (!car) {
-        return res.status(404).json({message: 'Car not found !'});
-    }
-    
-    req.params.userId = car.SellerID;
-    next();
-}
-
-exports.imageCheck = async (req, res, next) => {
-    const image = await CarImage.findByPk(req.params.imageId);
-    if (!image) {
-        return res.status(404).json({message: 'Image not found'});
-    }
-    
-    req.params.carId = image.CarID;
-    next();
-}
-
-exports.detailCheck = async (req, res, next) => {
-    const detail = await CarDetail.findByPk(req.params.detailId);
-    if (!detail) {
-        return res.status(404).json({message: 'Detail not found'});
-    }
-
-    req.params.carId = detail.CarID;
     next();
 }
 
 exports.adminAuth = (req, res, next) => {
-    if (!req.auth.isAdmin) {
+    if (!req.auth.role > 0) {
+        return res.status(401).json({message: 'Unauthorized'});
+    }
+    next();
+}
+
+exports.superAdminAuth = (req, res, next) => {
+    if (req.auth.role !== 2) {
+        return res.status(401).json({message: 'Unauthorized'});
+    }
+    next();
+}
+
+exports.belongsToCompanyUser = async (req, res, next) => {
+    const user = await User.findByPk(req.params.userId);
+    
+    if (req.auth.companyId !== user.CompanyID && req.auth.role !== 2) {
+        return res.status(401).json({message: 'Unauthorized'});
+    }
+    next();
+}
+
+exports.belongsToCompanySelf = async (req, res, next) => {
+    if (req.auth.companyId !== req.params.companyId && req.auth.role !== 2) {
         return res.status(401).json({message: 'Unauthorized'});
     }
     next();

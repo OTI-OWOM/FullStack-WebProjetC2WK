@@ -12,7 +12,7 @@ import { UsersService } from '@core/services/users.service';
 })
 export class MeComponent implements OnInit, OnDestroy {
     protected subscription: Subscription = new Subscription();
-    protected isAdmin: boolean = false;
+    protected role: boolean = false;
 
     protected userID: string = '';
     protected isVisitorAllowed = false;

@@ -1,6 +1,6 @@
 const Validator = require('validatorjs');
-const helper = require('../helpers/validationHelper')
-const db = require('../db/models');
+const helper = require('../../helpers/validationHelper')
+const db = require('../../db/models');
 const ModelBrand = db.ModelBrand;
 
 module.exports = async (req, res, next) => {
@@ -8,11 +8,10 @@ module.exports = async (req, res, next) => {
 
     // Schema that our data must match to
     const inputSchema = {
-        Year: ['required', 'integer', `between: 1886, ${new Date().getFullYear()}`],
-        Description: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
-        Available: ['required', 'integer', 'between: 0, 1'],
-        Price : ['required', 'integer', 'between: 0, 9007199254740991'],
-        ModelBrandID: ['required', 'integer', 'between: 0, 9007199254740991'],
+        Year: ['integer', `between: 1886, ${new Date().getFullYear()}`],
+        Description: ['regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#\\-]+$/', 'max:200'],
+        Available: ['integer', 'between: 0, 1'],
+        ModelBrandID: ['integer', 'between: 0, 9007199254740991'],
     };
 
     // Check for additional fields not in the schema
@@ -37,8 +36,19 @@ module.exports = async (req, res, next) => {
     try {
         // Verify ModelBrandID
         const modelBrandExists = await ModelBrand.findByPk(data.ModelBrandID);
-        if (!modelBrandExists) {
-            return res.status(404).json({ message: 'Model Brand not found' });
+        const carExists = await Car.findByPk(req.params.id);
+
+        if (data.ModelBrandID) {
+            if (!modelBrandExists) {
+                return res.status(404).json({ message: 'Model Brand not found' });
+            }
+        }
+
+        // Verify that the user has access to change the car
+        if (!carExists) {
+            return res.status(404).json({ message: 'Car not found !' });
+        } else if(carExists.SellerID !== req.auth.userId) {
+            return res.status(401).json({ message: 'Not authorized' });
         }
 
         next();

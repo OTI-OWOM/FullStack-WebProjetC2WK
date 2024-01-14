@@ -2,39 +2,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('CompanyLogos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Name: {
-        type: Sequelize.STRING
-      },
-      LastName: {
-        type: Sequelize.STRING
-      },
-      Email: {
-        type: Sequelize.STRING,
-        unique: true
-      },
-      Password: {
-        type: Sequelize.STRING
-      },
-      IsSeller: {
-        type: Sequelize.BOOLEAN
-      },
-      Role: {
-        type: Sequelize.BOOLEAN
-      },
-      Address: {
-        type: Sequelize.STRING
-      },
-      City: {
-        type: Sequelize.STRING
-      },
-      PostalCode: {
+      ImageURL: {
         type: Sequelize.STRING
       },
       CompanyID: {
@@ -59,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('CompanyLogos');
   }
 };

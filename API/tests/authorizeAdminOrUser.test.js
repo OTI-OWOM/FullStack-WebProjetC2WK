@@ -23,7 +23,7 @@ describe('adminOrUserCheck', () => {
 
     it('should call next() for an existing user and authorized request', async () => {
         sandbox.stub(User, 'findByPk').returns(Promise.resolve({ id: '12345' })); // User exists
-        req.auth = { userId: '12345', isAdmin: false }; // Authenticated as the same user
+        req.auth = { userId: '12345', role: false }; // Authenticated as the same user
 
         await adminOrUserCheck(req, res, next);
 
@@ -41,7 +41,7 @@ describe('adminOrUserCheck', () => {
 
     it('should send 401 for an unauthorized request', async () => {
         sandbox.stub(User, 'findByPk').returns(Promise.resolve({ id: '12345' })); // User exists
-        req.auth = { userId: 'anotherUserId', isAdmin: false }; // Authenticated as a different, non-admin user
+        req.auth = { userId: 'anotherUserId', role: false }; // Authenticated as a different, non-admin user
 
         await adminOrUserCheck(req, res, next);
 

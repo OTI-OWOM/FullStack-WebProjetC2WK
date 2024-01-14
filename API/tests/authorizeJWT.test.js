@@ -3,11 +3,11 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const jwt = require('jsonwebtoken');
-const { JWTAthorization } = require('../middleware/authorize');
+const { jwtUserAuth } = require('../middleware/authorize');
 const db = require('../db/models');
 const User = db.User;
 
-describe('JWTAthorization', () => {
+describe('jwtUserAuth', () => {
     let sandbox;
     let req, res, next;
 
@@ -27,9 +27,9 @@ describe('JWTAthorization', () => {
         sandbox.stub(jwt, 'verify').returns({ userId: fakeUserId });
         sandbox.stub(User, 'findOne').returns(Promise.resolve({ Role: false })); // Stubbing the User.findOne method
 
-        await JWTAthorization(req, res, next);
+        await jwtUserAuth(req, res, next);
 
-        expect(req.auth).to.deep.equal({ userId: fakeUserId, isAdmin: false });
+        expect(req.auth).to.deep.equal({ userId: fakeUserId, role: false });
         sinon.assert.calledOnce(next);
     });
 
@@ -38,16 +38,16 @@ describe('JWTAthorization', () => {
         sandbox.stub(jwt, 'verify').returns({ userId: fakeUserId });
         sandbox.stub(User, 'findOne').returns(Promise.resolve({ Role: true })); // User is an admin
 
-        await JWTAthorization(req, res, next);
+        await jwtUserAuth(req, res, next);
 
-        expect(req.auth).to.deep.equal({ userId: fakeUserId, isAdmin: true });
+        expect(req.auth).to.deep.equal({ userId: fakeUserId, role: true });
         sinon.assert.calledOnce(next);
     });
 
     it('should return 401 when token is invalid', async () => {
         sandbox.stub(jwt, 'verify').throws(new Error('Invalid token'));
 
-        await JWTAthorization(req, res, next);
+        await jwtUserAuth(req, res, next);
 
         sinon.assert.calledWith(res.status, 401);
         sinon.assert.calledOnce(res.json);
@@ -56,7 +56,7 @@ describe('JWTAthorization', () => {
     it('should return 401 when authorization header is missing', async () => {
         delete req.headers.authorization;
 
-        await JWTAthorization(req, res, next);
+        await jwtUserAuth(req, res, next);
 
         sinon.assert.calledWith(res.status, 401);
         sinon.assert.calledOnce(res.json);

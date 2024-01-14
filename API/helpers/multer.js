@@ -11,6 +11,16 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const storage2 = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'images/companies');
+    },
+    filename: function (req, file, cb) {
+        // Generating a new filename with the appropriate file extension
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
 
-module.exports = upload;
+
+exports.uploadCar = multer({ storage: storage });
+exports.uploadCompany = multer({ storage: storage2 });

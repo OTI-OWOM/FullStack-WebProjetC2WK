@@ -33,7 +33,7 @@ export class UserComponent extends MeComponent implements OnInit, OnDestroy {
                         this.title = this.data.Name || "Your Account";
                         this.isMe = false;
                         this.isVisitorAllowed = true;
-                        this.isAdmin = res.Role;
+                        this.role = res.Role;
                         
                     }
                 }),

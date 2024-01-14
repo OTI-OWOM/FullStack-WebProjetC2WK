@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const db = require('../db/models');
+const db = require('../../db/models');
+
+const imageHelper = require('../../helpers/imageHelper');
 const CarImage = db.CarImage;
 
 /**
@@ -54,19 +56,20 @@ exports.getImageURLs = async (req, res) => {
 * @param {object} res - response
 */
 exports.getImage = async (req, res) => {
-    const image = await CarImage.findByPk(req.params.imageId);
-    let imagePath;
-    try{
-        imagePath = path.join(__dirname, '..', image.ImageURL);
-    } catch(err) {
-        res.status(500).json({error : err})
-    }
+    imageHelper.getImage(CarImage, req.params.imageId, res);
+    // const image = await CarImage.findByPk(req.params.imageId);
+    // let imagePath;
+    // try{
+    //     imagePath = path.join(__dirname, '..', image.ImageURL);
+    // } catch(err) {
+    //     res.status(500).json({error : err})
+    // }
     
-    if (fs.existsSync(imagePath)) {
-        res.sendFile(imagePath);
-    } else {
-        res.status(404).json({ error: 'Image not found!' });
-    }
+    // if (fs.existsSync(imagePath)) {
+    //     res.sendFile(imagePath);
+    // } else {
+    //     res.status(404).json({ error: 'Image not found!' });
+    // }
 };
 
 /**
@@ -75,15 +78,16 @@ exports.getImage = async (req, res) => {
 * @param {object} res - response
 */
 exports.deleteImage = async (req, res) => {
-    const image = await CarImage.findByPk(req.params.imageId);
-    const imagePath = path.join(__dirname, '..', image.ImageURL);
+    imageHelper.deleteImage(CarImage, req.params.imageId, res);
+    // const image = await CarImage.findByPk(req.params.imageId);
+    // const imagePath = path.join(__dirname, '..', image.ImageURL);
     
-    fs.unlink(imagePath, (err) => {
-        if (err) {
-            console.error('Error deleting the file:', err);
-        } else {
-            image.destroy();
-            res.status(200).json({ message: 'Image deleted!' });
-        }
-    });
+    // fs.unlink(imagePath, (err) => {
+    //     if (err) {
+    //         console.error('Error deleting the file:', err);
+    //     } else {
+    //         image.destroy();
+    //         res.status(200).json({ message: 'Image deleted!' });
+    //     }
+    // });
 };

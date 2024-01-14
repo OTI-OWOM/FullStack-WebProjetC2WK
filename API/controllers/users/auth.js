@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const db = require('../db/models');
+const db = require('../../db/models');
 const User = db.User;
 
 /**
@@ -61,7 +61,6 @@ exports.login = (req, res) => {
  * @param {Object} res  The response object used to send back the response to the client.
  */
 const register = (role) => (req, res) => {
-    if (!req.body.Password || !req.body.Email) return res.status(400).json({ message: 'Invalid request' });
     // we salt the password 10 times
     return bcrypt.hash(req.body.Password, 10)
         .then((hash) => {
@@ -71,10 +70,11 @@ const register = (role) => (req, res) => {
                 Password: hash,
                 Email: req.body.Email,
                 IsSeller: req.body.IsSeller,
-                Role: 0,
+                Role: role,
                 Address: req.body.Address,
                 City: req.body.City,
                 PostalCode: req.body.PostalCode,
+                CompanyID: req.params.companyId
             })
                 // 201 : successfully created a user (Created)
                 .then((response) => res.status(201).json({
@@ -102,3 +102,4 @@ const register = (role) => (req, res) => {
 
 exports.registerUser = register(0); // Role for regular user
 exports.registerAdmin = register(1); // Role for admin
+exports.registerSuperAdmin = register(2); // Role for super admin

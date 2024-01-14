@@ -1,6 +1,5 @@
 const db = require('../db/models');
 const Brand = db.Brand;
-const User = db.User;
 const ModelBrand = db.ModelBrand;
 const CarDetail = db.CarDetail;
 

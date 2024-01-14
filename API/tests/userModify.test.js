@@ -33,7 +33,7 @@ describe('modifyUser()', () => {
         // Call modifyUser() with a user ID that is the same as the authenticated user's ID,
         // and with a user that is not an admin
         const req = {
-            auth: { userId: '5e86809283e28b96d2d38537', isAdmin: false },
+            auth: { userId: '5e86809283e28b96d2d38537', role: false },
             params: { userId: '5e86809283e28b96d2d38537' },
             body: {
                 Name: 'John Doe',

@@ -11,6 +11,9 @@ const authRoutes = require('./routes/auth');
 const carDetailRoutes = require('./routes/car-details');
 const carImagesRoutes = require('./routes/car-images');
 const carBrandsRoutes = require('./routes/car-brands');
+const superAdminRoutes = require('./routes/super-admin');
+const adminRoutes = require('./routes/admin');
+const companyRoutes = require('./routes/company');
 
 db.sequelize.sync()
   .then(() => {
@@ -49,5 +52,8 @@ app.use(authRoutes);
 app.use(carBrandsRoutes);
 app.use(carDetailRoutes);
 app.use(carImagesRoutes);
+app.use(superAdminRoutes);
+app.use(adminRoutes);
+app.use(companyRoutes);
 
 module.exports = app;

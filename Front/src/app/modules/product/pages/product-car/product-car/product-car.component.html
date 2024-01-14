@@ -35,9 +35,9 @@
         </div>
         <div class="controls">
             <a routerLink="/product" class="back-btn button">Back</a>
-            <a *ngIf="isOwnProduct || isAdmin" routerLink="/product/car/modify/{{ product.id }}"
+            <a *ngIf="isOwnProduct || role" routerLink="/product/car/modify/{{ product.id }}"
                 class="modify-btn button">Modify</a>
-            <a *ngIf="isOwnProduct || isAdmin" routerLink="/product/car/delete/{{ product.id }}"
+            <a *ngIf="isOwnProduct || role" routerLink="/product/car/delete/{{ product.id }}"
                 class="delete-btn button">Delete</a>
         </div>
     </div>

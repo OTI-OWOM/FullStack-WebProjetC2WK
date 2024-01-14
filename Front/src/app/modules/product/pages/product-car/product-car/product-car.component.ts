@@ -22,7 +22,7 @@ export class ProductCarComponent implements OnInit, OnDestroy {
 
     isOwnProduct: boolean = false;
 
-    isAdmin: boolean = false;
+    role: boolean = false;
 
     images: string[] = [];
 

@@ -25,7 +25,7 @@ export class AuthService {
 
     private userId = sessionStorage.getItem('userId') ?? '';
 
-    private isAdmin = false;
+    private role = false;
 
     constructor(private http: HttpClient, private router: Router) {}
 
@@ -65,17 +65,17 @@ export class AuthService {
         return this.http
             .post<{
             userId: string;
-            isAdmin: boolean;
+            role: boolean;
             token: any;
         }>(URL.LOGIN, { Email, Password })
             .pipe(map(response => {
-                const { userId, isAdmin, token } = response;
+                const { userId, role, token } = response;
                 sessionStorage.setItem('token', token);
                 sessionStorage.setItem('userId', userId); // DELETE ME When UserId becomes obselete
 
                 this.userId = userId;
                 this.authToken = token;
-                this.isAdmin = isAdmin;
+                this.role = role;
 
                 this.updateAuthStatus();
                 return response;
@@ -92,7 +92,7 @@ export class AuthService {
     
         this.authToken = '';
         this.userId = '';
-        this.isAdmin = false;
+        this.role = false;
 
         this.updateAuthStatus();
         this.router.navigate(['/auth/login']);

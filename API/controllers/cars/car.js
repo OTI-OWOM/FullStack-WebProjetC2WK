@@ -1,9 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 
-const formatHelper = require('../helpers/formatHelper');
+const formatHelper = require('../../helpers/formatHelper');
 
-const db = require('../db/models');
+const db = require('../../db/models');
 const Car = db.Car;
 const CarDetail = db.CarDetail;
 const CarImage = db.CarImage;
@@ -44,6 +44,23 @@ exports.getAllcarsFromUser = (req, res) => {
         });
 };
 
+/**
+* For a company, get all its cars from the api
+* @param {object} req - request
+* @param {object} res - response
+*/
+exports.getAllcarsFromCompany = (req, res) => {
+    return Car.findAll({ where: { SellerID: req.params.companyId } })
+        .then(async cars => {
+            const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+            res.status(200).json(formattedCars);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(400).json({ error })
+        });
+};
+
 
 /**
 * Get a car in particular from the api
@@ -70,6 +87,7 @@ exports.getOnecar = (req, res) => {
 exports.createCar = (req, res) => {
     let carObject = req.body;
     carObject.SellerID = req.auth.userId;
+    carObject.CompanyID = req.auth.companyId;
 
     return Car.create(carObject)
         .then(car => res.status(201).json({ message: 'Car added!',  carId: car.id}))
