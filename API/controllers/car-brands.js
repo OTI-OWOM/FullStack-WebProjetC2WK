@@ -1,4 +1,3 @@
-
 const db = require('../db/models');
 const Brand = db.Brand;
 const ModelBrand = db.ModelBrand;

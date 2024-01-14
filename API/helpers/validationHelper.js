@@ -9,6 +9,5 @@ exports.dataPass = (req) => {
     } else {
         data = req.body;
     }
-
     return data;
 }

@@ -3,18 +3,16 @@ const User = db.User;
 const userHelper = require('../helpers/userHelper');
 
 /**
-* Get data for the current user
-* @param {object} req - request
+* Get all the users data
 * @param {object} res - response
 */
-exports.getCurrentUser = (req, res) => {
-    return User.findByPk(req.auth.userId, {
+exports.getAllUsers = (req, res) => {
+    return User.findAll({
         attributes: { exclude: ['Password'] }
     })
-        .then(user => res.status(200).json(user))
+        .then(users => res.status(200).json(users))
         .catch(error => res.status(500).json({ error }));
 };
-
 
 /**
  * modifyUser - Let an admin or the user modify its data.
@@ -26,7 +24,7 @@ exports.getCurrentUser = (req, res) => {
  * or the request was not authorized.
  */
 exports.modifyUser = async (req, res) => {
-    await userHelper.modifyUserData(req.auth.userId, req.body, res);
+    await userHelper.modifyUserData(req.params.userId, req.body, res);
     // try {
     //     let updatedFields = req.body;
     //     const user = await User.findByPk(req.params.userId);
@@ -76,8 +74,8 @@ exports.getOneUser = (req, res) => {
 * @param {object} req - request
 * @param {object} res - response
 */
-exports.deleteUser =  (req, res) => {
-    userHelper.deleteUser(req.auth.userId, res);
+exports.deleteUser = (req, res) => {
+    userHelper.deleteUser(req.params.userId, res);
     // return User.findByPk(req.params.userId)
     //     .then(user => {
     //         return user.destroy()

@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
+const authRoutes = require('./routes/auth');
 const carDetailRoutes = require('./routes/car-details');
 const carImagesRoutes = require('./routes/car-images');
 const carBrandsRoutes = require('./routes/car-brands');
@@ -44,6 +45,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(productRoutes);
 app.use(userRoutes);
+app.use(authRoutes);
 app.use(carBrandsRoutes);
 app.use(carDetailRoutes);
 app.use(carImagesRoutes);
