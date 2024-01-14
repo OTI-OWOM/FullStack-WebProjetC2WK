@@ -42,11 +42,9 @@ export class AuthService {
     }
 
     isAuthenticated(): Observable<boolean>  {
-        console.log('Went here');
         if (!this.authToken) {
             
             this.router.navigate(['/auth/login']);
-            console.log('Here too');
             
             return of(false);
         }

@@ -34,7 +34,7 @@ router.get('/cars/', authorize.jwtUserAuth, carController.getAllcars);
 router.get('/cars/:userId', authorize.jwtUserAuth, authorize.adminAuth, authorize.belongsToCompanyUser, checks.userCheck,  carController.getAllcarsFromUser);
 
 // route to get all cars of a company
-router.get('/cars/:companyId', authorize.jwtUserAuth, authorize.adminAuth, carController.getAllcarsFromCompany);
+router.get('/company/cars/:companyId', authorize.jwtUserAuth, authorize.adminAuth, carController.getAllcarsFromCompany);
 
 // ----------------------------- Images -----------------------------
 // route to get all car images

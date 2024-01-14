@@ -16,10 +16,10 @@ router.post('/register', userValidation, emailValidation, passwordValidation, au
 router.post('/register/seller/:companyId',authorize.jwtUserAuth, checks.companyCheck ,authorize.adminAuth, authorize.belongsToCompanySelf, userValidation, emailValidation, passwordValidation, authController.registerUser);
 
 // route to sign up
-router.post('/admin/register/:companyId', authorize.jwtUserAuth, checks.companyCheck ,authorize.adminAuth, authorize.belongsToCompanySelf, emailValidation, passwordValidation, authController.registerAdmin);
+router.post('/register/admin/:companyId', authorize.jwtUserAuth, checks.companyCheck ,authorize.adminAuth, authorize.belongsToCompanySelf, emailValidation, passwordValidation, authController.registerAdmin);
 
 // route to sign up
-router.post('/super/admin/register', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, passwordValidation, authController.registerSuperAdmin);
+router.post('/register/super/admin/', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, passwordValidation, authController.registerSuperAdmin);
 
 // route to login
 router.post('/login', authController.login);

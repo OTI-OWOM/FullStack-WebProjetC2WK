@@ -64,8 +64,7 @@ export class MeComponent implements OnInit, OnDestroy {
         if (this.isEditMode) {
             this.subscription.add(
                 this.usersService
-                    .modifyUser(
-                        this.userID,
+                    .modifyUserSelf(
                         this.data
                     )
                     .subscribe((res: any) => {

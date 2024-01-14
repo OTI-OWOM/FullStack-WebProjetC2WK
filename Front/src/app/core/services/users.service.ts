@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URL, USERS_URL } from '../constants/url';
+import { URL } from '../constants/url';
 import { User } from '../models/Users';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class UsersService {
     constructor(private http: HttpClient) { }
 
     public getAllUsers() {
-        return this.http.get<User[]>(USERS_URL);
+        return this.http.get<User[]>(URL.USERS);
     }
 
     public me() {
@@ -47,5 +47,13 @@ export class UsersService {
 
     public deleteUser(id: string) {
         return this.http.delete(URL.USER + id);
+    }
+
+    public modifyUserSelf(user: Partial<User>) {
+        return this.http.put(URL.ME, user);
+    }
+
+    public deleteUserSelf(id: string) {
+        return this.http.delete(URL.ME);
     }
 }

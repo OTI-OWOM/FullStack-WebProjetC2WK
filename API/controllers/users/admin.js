@@ -11,7 +11,10 @@ exports.getAllUsers = (req, res) => {
     return User.findAll({
         attributes: { exclude: ['Password'] }
 })
-        .then(users => {res.status(200).json(users.map(user => formatHelper.userFormat(user)))})
+        .then(async users => {
+            const usersFormatted = await Promise.all(users.map(user => formatHelper.carFormat(user)));
+            res.status(200).json(usersFormatted)
+        })
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -24,7 +27,10 @@ exports.getAllUsersFromCompany = (req, res) => {
         where: {companyId: req.params.companyId},
         attributes: { exclude: ['Password'] }
 })
-        .then(users => {res.status(200).json(users.map(user => formatHelper.userFormat(user)))})
+        .then(async users => {
+            const usersFormatted = await Promise.all(users.map(user => formatHelper.carFormat(user)));
+            res.status(200).json(usersFormatted)
+        })
         .catch(error => res.status(500).json({ error }));
 };
 
@@ -56,7 +62,7 @@ exports.getOneUser = (req, res) => {
     return User.findByPk(req.params.userId, {
         attributes: { exclude: ['Password'] }
     })
-        .then(user => res.status(200).json(formatHelper.userFormat(user)))
+        .then(async user => res.status(200).json(await formatHelper.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
 };
 

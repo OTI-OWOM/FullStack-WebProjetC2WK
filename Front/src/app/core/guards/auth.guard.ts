@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate {
     constructor(private authService: AuthService) {}
 
     canActivate(): Observable<boolean> {
-        console.log("Guard called");
         return this.authService.isAuthenticated();
     }
 }
