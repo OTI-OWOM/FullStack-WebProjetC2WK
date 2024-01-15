@@ -12,7 +12,7 @@
                 <li><a routerLink="/contact">Contact</a></li>
             </ul>
             <ul>
-                <li *ngIf="admin" ><a routerLink="/admin">Users</a><br></li>
+                <li *ngIf="admin" ><a routerLink="/admin">Admin</a><br></li>
                 <li *ngIf="loggedIn"><a routerLink="/auth/logout">Logout</a><br></li>
                 <li *ngIf="!loggedIn"><a routerLink="/auth/login">Login</a><br></li>
                 <li><a routerLink="/account/me">Account</a><br></li>
