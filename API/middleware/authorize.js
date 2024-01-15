@@ -59,9 +59,17 @@ exports.superAdminAuth = (req, res, next) => {
 
 exports.belongsToCompanyUser = async (req, res, next) => {
     const user = await User.findByPk(req.params.userId);
-    
-    if (req.auth.companyId != user.CompanyID && req.auth.role !== 2) {
-        return res.status(401).json({message: 'Unauthorized'});
+    if (req.auth.role === 2) {
+        return next();
+    }
+
+    try {
+        if (req.auth.companyId != user.CompanyID) {
+            return res.status(401).json({message: 'Unauthorized'});
+        }
+    } catch (err){
+        console.log(err);
+        return res.status(500).json(err);
     }
     next();
 }

@@ -19,7 +19,6 @@ import { FormsModule } from '@angular/forms';
     UserCreateModifyModule,
     RouterModule,
     UserDisplayModule,
-    MessageModule,
     CommonModule
   ]
 })

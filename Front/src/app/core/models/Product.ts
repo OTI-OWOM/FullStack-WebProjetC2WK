@@ -10,5 +10,8 @@ export interface Product {
     ModelBrandName: string;
     ModelBrandID: number | null;
     BrandName: string;
+    SellerName: string,
+    SellerLastName: string,
+    SellerEmail: string,
     CarDetails: Partial<CarDetail>[];
 }

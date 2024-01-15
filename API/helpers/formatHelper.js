@@ -2,12 +2,11 @@ const db = require('../db/models');
 const Brand = db.Brand;
 const ModelBrand = db.ModelBrand;
 const CarDetail = db.CarDetail;
-const CompanyLogo = db.CompanyLogo;
 const Company = db.Company;
+const User = db.User;
 
 exports.carFormat = async (car) => {
-    const company = await Company.findByPk(car.CompanyID);
-    const imageUrl = await CompanyLogo.findOne({where: {CompanyID: company.id}})
+    const user = await User.findByPk(car.SellerID);
     const modelBrandObj = await ModelBrand.findByPk(car.ModelBrandID);
     const brandObj = await Brand.findByPk(modelBrandObj.BrandID);
     const CarDetails = await CarDetail.findAll({ where: { CarID: car.id } })
@@ -25,12 +24,9 @@ exports.carFormat = async (car) => {
         ModelBrandName,
         BrandName,
         CarDetails,
-        CompanyName: company ? company.Name : null,
-        CompanyAdress: company ? company.Address : null,
-        CompanyCity: company ? company.City : null,
-        CompanyPostalCode: company ? company.PostalCode : null,
-        CompanyLogo: imageUrl ? imageUrl.ImageURL : null,
-        CompanyPhone: company ? company.Phone : null,
+        SellerName: user.Name,
+        SellerLastName: user.LastName,
+        SellerEmail: user.Email,
     }
 }
 

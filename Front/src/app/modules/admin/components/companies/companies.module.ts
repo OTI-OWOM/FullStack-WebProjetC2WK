@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompaniesComponent } from './companies/companies.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -8,7 +9,11 @@ import { CompaniesComponent } from './companies/companies.component';
   declarations: [
     CompaniesComponent
   ],
+  exports: [
+    CompaniesComponent
+  ],
   imports: [
+    RouterModule,
     CommonModule
   ]
 })

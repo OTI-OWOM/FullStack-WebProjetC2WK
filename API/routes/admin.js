@@ -9,6 +9,9 @@ const adminController = require('../controllers/users/admin');
 router.get('/admin/user/:userId', authorize.jwtUserAuth, authorize.belongsToCompanyUser, authorize.adminAuth, checks.userCheck, adminController.getOneUser);
 
 // route to current user info
+router.get('/admin/users', authorize.jwtUserAuth, authorize.adminAuth, adminController.getAllUsers);
+
+// route to current user info
 router.get('/admin/verify', authorize.jwtUserAuth, authorize.adminAuth, adminController.isAdmin);
 
 // route to current user info

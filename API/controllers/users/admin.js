@@ -9,7 +9,7 @@ const formatHelper = require('../../helpers/formatHelper');
 */
 exports.getAllUsers = (req, res) => {
     return User.findAll({
-        where: req.auth.role === 1 ? { CompanyID: req.params.companyId } : {},
+        where: req.auth.role === 1 ? { CompanyID: req.auth.companyId } : {},
         attributes: { exclude: ['Password'] }
     })
         .then(async users => {

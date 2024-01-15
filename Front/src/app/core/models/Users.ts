@@ -8,5 +8,6 @@ export interface User {
     Address: string,
     City: string,
     PostalCode: string,
-    IsSeller: number
+    IsSeller: number,
+    CompanyName: string
 }

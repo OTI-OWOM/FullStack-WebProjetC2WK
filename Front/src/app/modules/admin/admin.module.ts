@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { UsersModule } from './components/users/users.module';
-import { CompaniesModule } from './components/companies/companies.module';
+import { AdminPageModule } from './pages/admin-page/admin-page.module';
+import { CompanyModule } from './pages/company/company.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CompaniesModule,
-    UsersModule,
+    CompanyModule,
+    AdminPageModule,
     CommonModule,
     AdminRoutingModule
   ]

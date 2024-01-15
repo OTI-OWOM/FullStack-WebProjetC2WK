@@ -9,6 +9,9 @@ import { RouterModule } from '@angular/router';
   declarations: [
     UsersComponent
   ],
+  exports: [
+    UsersComponent
+  ],
   imports: [
     RouterModule,
     CommonModule

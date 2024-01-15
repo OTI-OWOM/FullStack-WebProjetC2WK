@@ -31,10 +31,6 @@ export const URL:any = {
     USER: `${BASE_URL}/admin/user/`,
     IS_SELLER: `${BASE_URL}/serller/verify`,
     COMPANY: `${BASE_URL}/company/`,
-    COMPANY_LOGO: `${BASE_URL}/company/image/`,
-    IS_SUPER_ADMIN: `${BASE_URL}/super//admin/verify`,
-    SUPER_ADMIN: `${BASE_URL}/super/admin/user/`,
-    SUPER_ADMIN_USERS: `${BASE_URL}/super/admin/users/`,
-    SUPER_ADMIN_COMPANY: `${BASE_URL}/super/admin/company/`,
-    SUPER_ADMIN_COMPANIES: `${BASE_URL}/super/admin/companies/`,
+    COMPANIES: `${BASE_URL}/companies/`,
+    COMPANY_LOGO: `${BASE_URL}/company/image/`
 };
