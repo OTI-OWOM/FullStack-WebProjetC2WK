@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../helpers/multer')
+const upload = require('../services/multerService')
 const authorize = require('../middleware/authorize');
 const checks = require('../middleware/checks');
 
@@ -8,36 +8,33 @@ const validateInputCreate = require('../middleware/validation/input-validator-cr
 const passwordValidation = require('../middleware/validation/password-validator');
 const validateInputCreateDetail = require('../middleware/validation/input-validator-create-detail');
 
-const carController = require('../controllers/cars/car');
-const imagesController = require('../controllers/cars/car-images');
-const detailController = require('../controllers/cars/car-details');
-const brandController = require('../controllers/cars/car-brands');
+const productController = require('../controllers/product');
+const imagesController = require('../controllers/product/product-image');
+const detailController = require('../controllers/product/product-detail');
+const brandController = require('../controllers/product/product-brand');
 
 
 // ----------------------------- Cars -----------------------------
 // route to get a car
-router.get('/car/:carId', authorize.jwtUserAuth, checks.carCheck, carController.getOneCar);
+router.get('/car/:carId', authorize.jwtUserAuth, checks.carCheck, productController.getOneCar);
 
 // route to add a new car
-router.post('/car', authorize.jwtUserAuth, authorize.sellerAuth ,validateInputCreate, carController.createCar);
+router.post('/car', authorize.jwtUserAuth, authorize.sellerAuth ,validateInputCreate, productController.createCar);
 
 // route to update a car
-router.put('/car/:carId', authorize.jwtUserAuth, authorize.sellerAuth , checks.carCheck, passwordValidation, carController.modifyCar);
+router.put('/car/:carId', authorize.jwtUserAuth, authorize.sellerAuth , checks.carCheck, passwordValidation, productController.modifyCar);
 
 // route to delete a car
-router.delete('/car/:carId', authorize.jwtUserAuth, authorize.sellerAuth , checks.carCheck, carController.deleteCar);
+router.delete('/car/:carId', authorize.jwtUserAuth, authorize.sellerAuth , checks.carCheck, productController.deleteCar);
 
 // route to get all cars
-router.get('/cars/', authorize.jwtUserAuth, carController.getAllCars);
+router.get('/cars/', authorize.jwtUserAuth, productController.getAllCars);
 
 // route to get all cars of an user
-router.get('/cars/all/:userId', authorize.jwtUserAuth, authorize.adminOrSelfAuth, checks.userCheck,  carController.getAllCarsFromUser);
+router.get('/cars/all/:userId', authorize.jwtUserAuth, authorize.adminOrSelfAuth, checks.userCheck,  productController.getAllCarsFromUser);
 
 // route to get all cars of an user
-router.get('/cars/self/all', authorize.jwtUserAuth, authorize.adminOrSelfAuth, carController.getAllCarsFromSelf);
-
-// route to get all cars of a company
-router.get('/company/cars/:companyId', authorize.jwtUserAuth, authorize.adminAuth, carController.getAllCarsFromCompany);
+router.get('/cars/self/all', authorize.jwtUserAuth, authorize.adminOrSelfAuth, productController.getAllCarsFromSelf);
 
 // ----------------------------- Images -----------------------------
 // route to get all car images
@@ -61,9 +58,9 @@ router.delete('/car/detail/:detailId', authorize.jwtUserAuth, checks.detailCheck
 
 // ----------------------------- Brands -----------------------------
 // route to get all brands
-router.get('/brands', authorize.jwtUserAuth, brandController.getAllBrands);
+router.get('/car/brands/all', authorize.jwtUserAuth, brandController.getAllBrands);
 
 // route to get all models
-router.get('/models/:brandId', authorize.jwtUserAuth, brandController.getAllModelBrand);
+router.get('/car/models/:brandId', authorize.jwtUserAuth, brandController.getAllModelBrand);
 
 module.exports = router;

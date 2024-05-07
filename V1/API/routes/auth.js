@@ -6,7 +6,7 @@ const emailValidation = require('../middleware/validation/email-validator');
 const passwordValidation = require('../middleware/validation/password-validator');
 const userValidation = require('../middleware/validation/input-validator-create-user');
 const authorize = require('../middleware/authorize');
-const authController = require('../controllers/auth/auth');
+const authController = require('../controllers/auth');
 
 // route to sign up
 router.post('/register', userValidation, emailValidation, passwordValidation, authController.registerUser);

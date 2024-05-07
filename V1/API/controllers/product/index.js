@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const formatHelper = require('../../helpers/formatHelper');
+const formatHelper = require('../../services/formatService');
 
 const db = require('../../db/models');
 const User = db.User;
@@ -10,7 +10,7 @@ const CarDetail = db.CarDetail;
 const CarImage = db.CarImage;
 
 
-class CarController {
+class ProductController {
     /**
      * Get all existing cars from the API.
      */
@@ -156,4 +156,4 @@ class CarController {
 }
 
 // Export an instance of the class
-module.exports = new CarController();
+module.exports = new ProductController();

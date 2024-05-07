@@ -1,7 +1,7 @@
 const db = require('../../db/models');
 const User = db.User;
-const modelHelper = require('../../helpers/modelHelper');
-const formatHelper = require('../../helpers/formatHelper');
+const modelHelper = require('../../services/modelService');
+const formatHelper = require('../../services/formatService');
 
 class AdminController {
     /**

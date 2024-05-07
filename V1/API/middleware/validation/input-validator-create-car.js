@@ -1,5 +1,5 @@
 const Validator = require('validatorjs');
-const helper = require('../../helpers/validationHelper')
+const helper = require('../../services/validationService')
 const db = require('../../db/models');
 const ModelBrand = db.ModelBrand;
 

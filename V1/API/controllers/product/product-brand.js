@@ -2,11 +2,12 @@ const db = require('../../db/models');
 const Brand = db.Brand;
 const ModelBrand = db.ModelBrand;
 
-class BrandController {
+class ProductBrandController {
     /**
      * Get all existing brands from the API.
      */
     getAllBrands(req, res) {
+        console.log("Went here \n");
         Brand.findAll()
             .then(brands => res.status(200).json(brands.map(carBrand => {
                 return { id: carBrand.id, BrandName: carBrand.BrandName }; 
@@ -40,4 +41,4 @@ class BrandController {
 }
 
 // Export an instance of the class
-module.exports = new BrandController();
+module.exports = new ProductBrandController();

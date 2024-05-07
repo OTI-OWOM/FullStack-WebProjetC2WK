@@ -3,7 +3,7 @@ const router = express.Router();
 
 const authorize = require('../middleware/authorize');
 const checks = require('../middleware/checks');
-const adminController = require('../controllers/admin/admin');
+const adminController = require('../controllers/admin');
 
 // route to current user info
 router.get('/admin/user/:userId', authorize.jwtUserAuth, authorize.adminAuth, checks.userCheck, adminController.getOneUser);

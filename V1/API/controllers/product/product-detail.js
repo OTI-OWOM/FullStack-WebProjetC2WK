@@ -1,7 +1,7 @@
 const db = require('../../db/models');
 const CarDetail = db.CarDetail;
 
-class CarDetailController {
+class ProductDetailController {
     /**
      * Add new car details.
      */
@@ -51,4 +51,4 @@ class CarDetailController {
 }
 
 // Export an instance of the class
-module.exports = new CarDetailController();
+module.exports = new ProductDetailController();

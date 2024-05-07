@@ -1,9 +1,9 @@
 const db = require('../../db/models');
 
-const imageHelper = require('../../helpers/imageHelper');
+const imageHelper = require('../../services/imageService');
 const CarImage = db.CarImage;
 
-class CarImageController {
+class ProductImageController {
     /**
      * Upload car images to the DB and API.
      */
@@ -60,4 +60,4 @@ class CarImageController {
 }
 
 // Export an instance of the class
-module.exports = new CarImageController();
+module.exports = new ProductImageController();
