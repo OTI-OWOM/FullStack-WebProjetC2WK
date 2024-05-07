@@ -6,7 +6,7 @@ const checks = require('../middleware/checks');
 const adminController = require('../controllers/users/admin');
 
 // route to current user info
-router.get('/admin/user/:userId', authorize.jwtUserAuth, authorize.belongsToCompanyUser, authorize.adminAuth, checks.userCheck, adminController.getOneUser);
+router.get('/admin/user/:userId', authorize.jwtUserAuth, authorize.adminAuth, checks.userCheck, adminController.getOneUser);
 
 // route to current user info
 router.get('/admin/users', authorize.jwtUserAuth, authorize.adminAuth, adminController.getAllUsers);
@@ -15,9 +15,9 @@ router.get('/admin/users', authorize.jwtUserAuth, authorize.adminAuth, adminCont
 router.get('/admin/verify', authorize.jwtUserAuth, authorize.adminAuth, adminController.isAdmin);
 
 // route to current user info
-router.put('/admin/user/:userId', authorize.jwtUserAuth, authorize.belongsToCompanyUser, authorize.adminAuth, checks.userCheck, adminController.modifyUser);
+router.put('/admin/user/:userId', authorize.jwtUserAuth, authorize.adminAuth, checks.userCheck, adminController.modifyUser);
 
 // route to current user info
-router.delete('/admin/user/:userId', authorize.jwtUserAuth, authorize.belongsToCompanyUser, authorize.adminAuth, checks.userCheck, adminController.deleteUser)
+router.delete('/admin/user/:userId', authorize.jwtUserAuth, authorize.adminAuth, checks.userCheck, adminController.deleteUser)
 
 module.exports = router;

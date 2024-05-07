@@ -32,14 +32,6 @@ exports.detailCheck = async (req, res, next) => {
     next();
 }
 
-exports.companyCheck = async (req, res, next) => {
-    const company = await Company.findAll({where : {id: req.params.companyId}});
-    if (company.length === 0) {
-        return res.status(404).json({message: 'Company not found'});
-    }
-    next();
-}
-
 exports.imageExistsCheck = async (req, res, next) => {
     const companyLogo = await CompanyLogo.findOne({where : {CompanyID: req.params.companyId}});
     if (companyLogo) {

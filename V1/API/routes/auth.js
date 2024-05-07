@@ -13,10 +13,10 @@ const authController = require('../controllers/users/auth');
 router.post('/register', userValidation, emailValidation, passwordValidation, authController.registerUser);
 
 // route to sign up
-router.post('/register/seller/:companyId',authorize.jwtUserAuth, checks.companyCheck ,authorize.adminAuth, authorize.belongsToCompanySelf, userValidation, emailValidation, passwordValidation, authController.registerUser);
+router.post('/register/seller/:companyId',authorize.jwtUserAuth, authorize.adminAuth, userValidation, emailValidation, passwordValidation, authController.registerUser);
 
 // route to sign up
-router.post('/register/admin/:companyId', authorize.jwtUserAuth, checks.companyCheck ,authorize.adminAuth, authorize.belongsToCompanySelf, emailValidation, passwordValidation, authController.registerAdmin);
+router.post('/register/admin/:companyId', authorize.jwtUserAuth, authorize.adminAuth, emailValidation, passwordValidation, authController.registerAdmin);
 
 // route to sign up
 router.post('/register/super/admin/', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, passwordValidation, authController.registerSuperAdmin);

@@ -53,7 +53,7 @@ class ImageHelper {
         }
 
         const imagePath = path.join(__dirname, '..', image.ImageURL);
-
+        console.log(imagePath);
         fs.unlink(imagePath, err => {
             if (err) {
                 console.error('Error deleting the file:', err);

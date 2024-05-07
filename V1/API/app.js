@@ -9,7 +9,6 @@ const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
-const companyRoutes = require('./routes/company');
 
 db.sequelize.sync()
   .then(() => {
@@ -47,6 +46,5 @@ app.use(productRoutes);
 app.use(userRoutes);
 app.use(authRoutes);
 app.use(adminRoutes);
-app.use(companyRoutes);
 
 module.exports = app;

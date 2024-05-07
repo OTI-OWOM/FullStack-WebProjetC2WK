@@ -137,9 +137,9 @@ class CarController {
         details.forEach(detail => {
             detail.destroy();
         });
-
+        
         images.forEach(image => {
-            const imagePath = path.join(__dirname, '..', image.ImageURL);
+            const imagePath = path.join(__dirname, '..', '..', image.ImageURL);
             fs.unlink(imagePath, (err) => {
                 if (err) {
                     console.error('Error deleting the file:', err);

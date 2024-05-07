@@ -2,7 +2,6 @@ const db = require('../db/models');
 const Brand = db.Brand;
 const ModelBrand = db.ModelBrand;
 const CarDetail = db.CarDetail;
-const Company = db.Company;
 const User = db.User;
 
 class FormatHelper {
@@ -37,7 +36,6 @@ class FormatHelper {
      * @param {object} user - User object to format.
      */
     async userFormat(user) {
-        const company = await Company.findByPk(user.CompanyID);
 
         return {
             id: user.id,
@@ -48,9 +46,7 @@ class FormatHelper {
             Role: user.Role,
             Address: user.Address,
             City: user.City,
-            PostalCode: user.PostalCode,
-            CompanyID: user.CompanyID,
-            CompanyName: company ? company.Name : null
+            PostalCode: user.PostalCode
         };
     }
 }

@@ -15,6 +15,7 @@ class UserController {
             });
             res.status(200).json(await formatHelper.userFormat(user));
         } catch (error) {
+            console.log(User.class)
             res.status(500).json({ error });
         }
     }
