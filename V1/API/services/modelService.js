@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-class ModelHelper {
+class ModelService {
     /**
      * Modify a model instance with provided fields.
      */
@@ -41,4 +41,4 @@ class ModelHelper {
 }
 
 // Export an instance of the class
-module.exports = new ModelHelper();
+module.exports = new ModelService();

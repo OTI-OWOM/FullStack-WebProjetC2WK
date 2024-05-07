@@ -1,7 +1,7 @@
 const db = require('../../db/models');
 const User = db.User;
-const modelHelper = require('../../services/modelService');
-const formatHelper = require('../../services/formatService');
+const modelService = require('../../services/modelService');
+const formatService = require('../../services/formatService');
 
 class UserController {
     constructor() {}
@@ -13,7 +13,7 @@ class UserController {
             const user = await User.findByPk(req.auth.userId, {
                 attributes: { exclude: ['Password'] }
             });
-            res.status(200).json(await formatHelper.userFormat(user));
+            res.status(200).json(await formatService.userFormat(user));
         } catch (error) {
             console.log(User.class)
             res.status(500).json({ error });
@@ -26,7 +26,7 @@ class UserController {
     * @returns {Object}  The user object, or an error object if the user was not found or the request was not authorized.
     */
     async modifyUser(req, res) {
-        await modelHelper.modifyModel(User, req.auth.userId, req.body, res);
+        await modelService.modifyModel(User, req.auth.userId, req.body, res);
     }
 
     /**
@@ -39,7 +39,7 @@ class UserController {
             const user = await User.findByPk(req.params.userId, {
                 attributes: { exclude: ['Password'] }
             });
-            res.status(200).json(await formatHelper.userFormat(user));
+            res.status(200).json(await formatService.userFormat(user));
         } catch (error) {
             res.status(500).json({ error });
         }
@@ -67,7 +67,7 @@ class UserController {
     * Get data from the user
     */
     deleteUser(req, res) {
-        modelHelper.deleteModel(User, req.auth.userId, res);
+        modelService.deleteModel(User, req.auth.userId, res);
     }
 }
 

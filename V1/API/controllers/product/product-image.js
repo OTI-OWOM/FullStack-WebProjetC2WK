@@ -1,6 +1,6 @@
 const db = require('../../db/models');
 
-const imageHelper = require('../../services/imageService');
+const imageService = require('../../services/imageService');
 const CarImage = db.CarImage;
 
 class ProductImageController {
@@ -48,14 +48,14 @@ class ProductImageController {
      * Get a specific image.
      */
     getImage(req, res) {
-        imageHelper.getImage(CarImage, req.params.imageId, res);
+        imageService.getImage(CarImage, req.params.imageId, res);
     }
 
     /**
      * Delete a specific image.
      */
     async deleteImage(req, res) {
-        imageHelper.deleteImage(CarImage, req.params.imageId, res);
+        imageService.deleteImage(CarImage, req.params.imageId, res);
     }
 }
 

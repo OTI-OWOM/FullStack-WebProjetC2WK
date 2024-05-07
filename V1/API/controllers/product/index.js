@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const formatHelper = require('../../services/formatService');
+const formatService = require('../../services/formatService');
 
 const db = require('../../db/models');
 const User = db.User;
@@ -17,7 +17,7 @@ class ProductController {
     getAllCars(req, res) {
         return Car.findAll()
             .then(async cars => {
-                const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+                const formattedCars = await Promise.all(cars.map(car => formatService.carFormat(car)));
                 return res.status(200).json(formattedCars);
             })
             .catch(error => {
@@ -32,7 +32,7 @@ class ProductController {
     getAllCarsFromUser(req, res) {
         return Car.findAll({ where: { SellerID: req.params.userId } })
             .then(async cars => {
-                const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+                const formattedCars = await Promise.all(cars.map(car => formatService.carFormat(car)));
                 res.status(200).json(formattedCars);
             })
             .catch(error => {
@@ -47,7 +47,7 @@ class ProductController {
     getAllCarsFromSelf(req, res) {
         return Car.findAll({ where: { SellerID: req.auth.userId } })
             .then(async cars => {
-                const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+                const formattedCars = await Promise.all(cars.map(car => formatService.carFormat(car)));
                 res.status(200).json(formattedCars);
             })
             .catch(error => {
@@ -62,7 +62,7 @@ class ProductController {
     getAllCarsFromCompany(req, res) {
         return Car.findAll({ where: { SellerID: req.params.companyId } })
             .then(async cars => {
-                const formattedCars = await Promise.all(cars.map(car => formatHelper.carFormat(car)));
+                const formattedCars = await Promise.all(cars.map(car => formatService.carFormat(car)));
                 res.status(200).json(formattedCars);
             })
             .catch(error => {
@@ -80,7 +80,7 @@ class ProductController {
                 if (!car) {
                     return res.status(404).json({ error: 'Car not found' });
                 }
-                res.status(200).json(await formatHelper.carFormat(car));
+                res.status(200).json(await formatService.carFormat(car));
             })
             .catch(error => {
                 console.log(error);

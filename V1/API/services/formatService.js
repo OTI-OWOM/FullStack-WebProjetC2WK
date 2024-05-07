@@ -4,7 +4,7 @@ const ModelBrand = db.ModelBrand;
 const CarDetail = db.CarDetail;
 const User = db.User;
 
-class FormatHelper {
+class FormatService {
     /**
      * Format car details.
      * @param {object} car - Car object to format.
@@ -52,4 +52,4 @@ class FormatHelper {
 }
 
 // Export an instance of the class
-module.exports = new FormatHelper();
+module.exports = new FormatService();

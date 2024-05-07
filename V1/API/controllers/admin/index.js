@@ -1,7 +1,7 @@
 const db = require('../../db/models');
 const User = db.User;
-const modelHelper = require('../../services/modelService');
-const formatHelper = require('../../services/formatService');
+const modelService = require('../../services/modelService');
+const formatService = require('../../services/formatService');
 
 class AdminController {
     /**
@@ -13,7 +13,7 @@ class AdminController {
             attributes: { exclude: ['Password'] }
         })
         .then(async users => {
-            const usersFormatted = await Promise.all(users.map(user => formatHelper.userFormat(user)));
+            const usersFormatted = await Promise.all(users.map(user => formatService.userFormat(user)));
             res.status(200).json(usersFormatted);
         })
         .catch(error => {
@@ -26,7 +26,7 @@ class AdminController {
      * Modify a user's data.
      */
     modifyUser(req, res) {
-        modelHelper.modifyModel(User, req.params.userId, req.body, res);
+        modelService.modifyModel(User, req.params.userId, req.body, res);
     }
 
     /**
@@ -36,7 +36,7 @@ class AdminController {
         return User.findByPk(req.params.userId, {
             attributes: { exclude: ['Password'] }
         })
-        .then(async user => res.status(200).json(await formatHelper.userFormat(user)))
+        .then(async user => res.status(200).json(await formatService.userFormat(user)))
         .catch(error => res.status(500).json({ error }));
     }
 
@@ -58,7 +58,7 @@ class AdminController {
      * Delete a user.
      */
     deleteUser(req, res) {
-        modelHelper.deleteModel(User, req.params.userId, res);
+        modelService.deleteModel(User, req.params.userId, res);
     }
 }
 

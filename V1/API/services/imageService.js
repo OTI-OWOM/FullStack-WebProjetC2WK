@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-class ImageHelper {
+class ImageService {
     /**
      * Upload images associated with a model.
      */
@@ -67,4 +67,4 @@ class ImageHelper {
 }
 
 // Export an instance of the class
-module.exports = new ImageHelper();
+module.exports = new ImageService();
