@@ -1,8 +1,0 @@
-<h3>Add image</h3>
-<div class="add-image-container">
-    <div *ngFor="let preview of imagePreviews; let i = index">
-        <img [src]="preview" (click)="removeImage(i)">
-    </div>
-    <label *ngIf="imagePreviews.length !== 10" for="add-single-img">+</label>
-    <input type="file" (change)="onImagesSelected($event)" id="add-single-img" accept="image/jpeg" multiple />
-</div>
