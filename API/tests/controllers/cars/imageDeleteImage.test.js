@@ -6,7 +6,7 @@ const { deleteImage  } = require('../controllers/car-images');
 const path = require('path');
 const fs = require('fs');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const CarImage = db.CarImage;
 
 describe('deleteImage', () => {

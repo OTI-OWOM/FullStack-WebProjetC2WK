@@ -18,6 +18,7 @@ db.sequelize.sync()
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
   });
+
 const app = express();
 const allowedOrigins = ['http://localhost:4200', 'https://mileristovski.fr'];
 // We use helmet to secure our application headers

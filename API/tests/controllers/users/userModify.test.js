@@ -4,7 +4,7 @@ const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const User = db.User;
 
 chai.use(sinonChai);

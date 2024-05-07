@@ -16,7 +16,7 @@ const brandController = require('../controllers/cars/car-brands');
 
 // ----------------------------- Cars -----------------------------
 // route to get a car
-router.get('/car/:carId', authorize.jwtUserAuth, checks.carCheck, carController.getOnecar);
+router.get('/car/:carId', authorize.jwtUserAuth, checks.carCheck, carController.getOneCar);
 
 // route to add a new car
 router.post('/car', authorize.jwtUserAuth, authorize.sellerAuth ,validateInputCreate, carController.createCar);
@@ -28,16 +28,16 @@ router.put('/car/:carId', authorize.jwtUserAuth, authorize.sellerAuth , checks.c
 router.delete('/car/:carId', authorize.jwtUserAuth, authorize.sellerAuth , checks.carCheck, carController.deleteCar);
 
 // route to get all cars
-router.get('/cars/', authorize.jwtUserAuth, carController.getAllcars);
+router.get('/cars/', authorize.jwtUserAuth, carController.getAllCars);
 
 // route to get all cars of an user
-router.get('/cars/all/:userId', authorize.jwtUserAuth, authorize.adminOrSelfAuth, authorize.belongsToCompanyUser, checks.userCheck,  carController.getAllcarsFromUser);
+router.get('/cars/all/:userId', authorize.jwtUserAuth, authorize.adminOrSelfAuth, authorize.belongsToCompanyUser, checks.userCheck,  carController.getAllCarsFromUser);
 
 // route to get all cars of an user
-router.get('/cars/self/all', authorize.jwtUserAuth, authorize.adminOrSelfAuth, carController.getAllcarsFromSelf);
+router.get('/cars/self/all', authorize.jwtUserAuth, authorize.adminOrSelfAuth, carController.getAllCarsFromSelf);
 
 // route to get all cars of a company
-router.get('/company/cars/:companyId', authorize.jwtUserAuth, authorize.adminAuth, carController.getAllcarsFromCompany);
+router.get('/company/cars/:companyId', authorize.jwtUserAuth, authorize.adminAuth, carController.getAllCarsFromCompany);
 
 // ----------------------------- Images -----------------------------
 // route to get all car images
@@ -64,6 +64,6 @@ router.delete('/car/detail/:detailId', authorize.jwtUserAuth, checks.detailCheck
 router.get('/brands', authorize.jwtUserAuth, brandController.getAllBrands);
 
 // route to get all models
-router.get('/models/:brandId', authorize.jwtUserAuth, brandController.getAllModelbrand);
+router.get('/models/:brandId', authorize.jwtUserAuth, brandController.getAllModelBrand);
 
 module.exports = router;

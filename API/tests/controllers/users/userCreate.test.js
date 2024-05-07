@@ -5,7 +5,7 @@ const { expect } = require('chai');
 const bcrypt = require('bcrypt');
 const { register } = require('../controllers/user');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const User = db.User;
 
 describe('register', () => {

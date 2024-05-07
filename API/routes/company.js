@@ -9,31 +9,31 @@ const checks = require('../middleware/checks');
 const companyController = require('../controllers/companies/company');
 const companyImageController = require('../controllers/companies/company-image');
 
-// route to current user info
+// route to get the company the user is in
 router.get('/company', authorize.jwtUserAuth, authorize.adminAuth, companyController.getCompany);
 
-// route to user info
+// route to create a company
 router.post('/company', authorize.jwtUserAuth, authorize.superAdminAuth, companyController.createCompany);
 
-// route to current user info
+// route to modify a company
 router.put('/company/:companyId', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, companyController.modifyCompany);
 
-// route to user info
+// route to get a specific company
 router.get('/company/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.superAdminAuth, companyController.getOneCompany);
 
-// route to delete company
+// route to delete a company
 router.delete('/company/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.superAdminAuth, companyController.deleteCompany);
 
-// route to user info
+// route to get all companies
 router.get('/companies', authorize.jwtUserAuth, authorize.superAdminAuth, companyController.getAllCompanies);
 
-// route to add a new car image
+// route to add a new company image
 router.post('/company/image/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.adminAuth, authorize.belongsToCompanySelf, checks.imageExistsCheck, upload.uploadCompany.array('images', 1), companyImageController.uploadCompanyLogo);
 
-// route to add a new car image
+// route to get a company image
 router.get('/company/image/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.adminAuth, authorize.belongsToCompanySelf, checks.companyCheck, companyImageController.getImage);
 
-// route to add a new car image
+// route to delete a new company image
 router.delete('/company/image/:companyId', authorize.jwtUserAuth, checks.companyCheck, authorize.superAdminAuth, authorize.belongsToCompanySelf, companyImageController.getImage);
 
 module.exports = router;

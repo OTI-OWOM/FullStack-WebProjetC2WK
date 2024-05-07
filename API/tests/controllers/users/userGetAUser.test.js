@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 const { getOneUser } = require('../controllers/user');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const User = db.User;
 
 describe('getOneUser', () => {

@@ -2,7 +2,7 @@
 const PasswordValidator = require('password-validator');
 
 module.exports = (req, res, next) => {
-    if (!req.body.password) {
+    if (!req.body.Password) {
         next();
         return;
     }
@@ -17,8 +17,8 @@ module.exports = (req, res, next) => {
         .has().digits(1) // Must have at least 1 digits
         .has().not().spaces(); // Should not have spaces
 
-    const isValidPassword = passwordSchema.validate(req.body.password);
-
+    const isValidPassword = passwordSchema.validate(req.body.Password);
+    
     if (!isValidPassword) {
         const errorMsg = 'Invalid password, use a secure password.';
         // 422 : Unprocessable Entity

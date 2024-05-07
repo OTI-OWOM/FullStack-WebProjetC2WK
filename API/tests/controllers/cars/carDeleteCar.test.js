@@ -5,7 +5,7 @@ const { expect } = require('chai');
 const { deleteCar  } = require('../controllers/car');
 const fs = require('fs');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const Car = db.Car;
 const CarDetail = db.CarDetail;
 const CarImage = db.CarImage;

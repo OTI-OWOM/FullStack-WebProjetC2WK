@@ -22,6 +22,6 @@ router.post('/register/admin/:companyId', authorize.jwtUserAuth, checks.companyC
 router.post('/register/super/admin/', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, passwordValidation, authController.registerSuperAdmin);
 
 // route to login
-router.post('/login', authController.login);
+router.post('/login', userValidation, emailValidation, passwordValidation, authController.login);
 
 module.exports = router;

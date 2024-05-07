@@ -47,12 +47,15 @@ export class ProductCarComponent implements OnInit, OnDestroy {
             
             this.currentModelsLength = this.product.CarDetails.length!;
             
-            this.isOwnProduct = this.product.SellerID.toString() === sessionStorage.getItem('userId') ?? '';
-
             this.productsService.getAllImages(this.product.id)
             .subscribe((response: CarImage[]) => {
                 this.images = response.map(image => `${URL.IMAGE}${image.id}`);
+                console.log(this.images);
+
             });
+
+            this.isOwnProduct = this.product.SellerID.toString() === sessionStorage.getItem('userId') ?? '';
+
         });
     }
 

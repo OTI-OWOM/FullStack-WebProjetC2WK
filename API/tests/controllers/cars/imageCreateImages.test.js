@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 const { uploadCarImages  } = require('../controllers/car-images');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const CarImage = db.CarImage;
 
 describe('uploadCarImages', () => {

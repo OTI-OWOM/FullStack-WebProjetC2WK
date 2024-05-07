@@ -2,9 +2,9 @@
 
 const sinon = require('sinon');
 const { expect } = require('chai');
-const { carCheck  } = require('../middleware/authorize');
+const { carCheck  } = require('../../../middleware/authorize');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const Car = db.Car;
 
 describe('carCheck', () => {

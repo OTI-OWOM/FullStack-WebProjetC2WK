@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 const { getAllModelbrand  } = require('../controllers/car-brands');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const ModelBrand = db.ModelBrand;
 const Brand = db.Brand;
 

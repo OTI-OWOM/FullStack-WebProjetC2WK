@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 
 const sinon = require('sinon');
-const { adminOrUserCheck  } = require('../middleware/authorize');
+const { adminOrUserCheck  } = require('../../../middleware/authorize');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const User = db.User;
 
 describe('adminOrUserCheck', () => {

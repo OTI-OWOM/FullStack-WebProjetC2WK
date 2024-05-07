@@ -3,9 +3,9 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const { getOnecar  } = require('../controllers/car');
-const formatHelper = require('../helpers/formatHelper');
+const formatHelper = require('../../../helpers/formatHelper');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const Car = db.Car;
 
 describe('getOnecar', () => {

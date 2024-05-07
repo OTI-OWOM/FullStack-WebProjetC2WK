@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { login } = require('../controllers/user');
 
-const db = require('../db/models');
+const db = require('../../../db/models');
 const User = db.User;
 
 describe('login', () => {

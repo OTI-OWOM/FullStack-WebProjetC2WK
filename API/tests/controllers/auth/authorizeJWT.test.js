@@ -3,8 +3,8 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const jwt = require('jsonwebtoken');
-const { jwtUserAuth } = require('../middleware/authorize');
-const db = require('../db/models');
+const { jwtUserAuth } = require('../../../middleware/authorize');
+const db = require('../../../db/models');
 const User = db.User;
 
 describe('jwtUserAuth', () => {
