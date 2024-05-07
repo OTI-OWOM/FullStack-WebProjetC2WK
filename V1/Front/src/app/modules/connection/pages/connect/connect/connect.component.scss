@@ -1,0 +1,33 @@
+.main-panel {
+    width: 50rem;
+
+    .title {
+        font-size: 4rem;
+    }
+
+    .line {
+        width: 95%;
+    }
+
+    .register-text{
+        display: flex;
+        justify-content: center;
+
+        i {
+            color: var(--dark);
+            margin-right: 1rem;
+        }
+
+        .register-link {
+            cursor: pointer;
+            font-size: 1em;
+            color: #7187bc;
+            text-decoration: none;
+            text-align: center;
+        }
+    }
+
+    .button {
+        margin-top: 3rem;
+    }
+}

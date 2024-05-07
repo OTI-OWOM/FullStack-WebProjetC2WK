@@ -1,0 +1,22 @@
+<footer>
+    <div class="footer-container">
+        <h3>Elite Cars Vault</h3>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        Sell on the Vault
+                    </a>
+                </li>
+                <li><a routerLink="/legal">Terms and conditions</a></li>
+                <li><a routerLink="/contact">Contact</a></li>
+            </ul>
+            <ul>
+                <li *ngIf="admin" ><a routerLink="/admin">Admin</a><br></li>
+                <li *ngIf="loggedIn"><a routerLink="/auth/logout">Logout</a><br></li>
+                <li *ngIf="!loggedIn"><a routerLink="/auth/login">Login</a><br></li>
+                <li><a routerLink="/account/me">Account</a><br></li>
+            </ul>
+        </nav>
+    </div>
+</footer>

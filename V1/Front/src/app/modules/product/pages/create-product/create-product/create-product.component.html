@@ -1,0 +1,49 @@
+<div class="main-wrapper">
+    <div class="main-panel car-panel">
+        <h1 class="title">{{title}}</h1>
+        <div class="values">
+            <div>
+                <div class="line" style="justify-content: flex-start;">
+                    <i class="fa-solid fa-car" style="margin-right: 24px;"></i>
+                    <div>
+                        <select #brand class="brand-model" (change)="onBrandChange(brand.value)">
+                            <option *ngIf="!currentBrandId" value="" disabled selected>Choose a brand</option>
+                            <option *ngFor="let brand of brands" [value]="brand.id">{{brand.BrandName}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="models.length > 0">
+                        <select #model class="brand-model" [(ngModel)]="data.ModelBrandID">
+                            <option *ngFor="let model of models" [value]="model.id">{{model.ModelName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="line">
+                    <i class="fa-solid fa-calendar" style="padding: 0 1px 0 3px;"></i>
+                    <input [(ngModel)]="data.Year" [value]="product.Year" placeholder="Year of the product"
+                        class="input-form" type="number" id="year" name="year" />
+                </div>
+                <div class="line">
+                    <i class="fa-solid fa-eur" style="padding: 0 4px 0 3px;"></i>
+                    <input [(ngModel)]="data.Price" [value]="product.Price" placeholder="Price of the product in €"
+                        class="input-form" type="number" id="price" name="price" />
+                </div>
+                <div class="line">
+                    <i class="fa-solid fa-commenting"></i>
+                    <input [(ngModel)]="data.Description" [value]="product.Description"
+                        placeholder="Description of the product" class="input-form" type="text" id="desc" name="desc" />
+                </div>
+                <app-details [(carDetails)]="carDetails" (messageChange)="message=$event"></app-details>
+            </div>
+            <app-image-creation class="add-image" [imagePreviews]="imagePreviews"
+                (selectedImagesEmit)="selectedImages=$event"
+                (imageRemovedIndex)="removeImage($event)"></app-image-creation>
+        </div>
+        <div class="buttons">
+            <button class="button create-button" (click)="submit()" type="button">
+                {{createModify}} Product!</button><br />
+            <button class="button create-button cancel-button " (click)="cancel()" type="button">
+                Cancel!</button><br />
+        </div>
+        <app-message [message]="message"></app-message>
+    </div>
+</div>

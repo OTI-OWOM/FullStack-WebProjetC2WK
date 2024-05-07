@@ -1,0 +1,29 @@
+<div class="line">
+    <i class="fa fa-user"></i>
+    <input [(ngModel)]="data.Name" [value]="data.Name" autofocus placeholder="{{ data.Name }}" class="input-form" type="text" id="name" name="name" />
+</div>
+<div class="line">
+    <i class="fa fa-user"></i>
+    <input [(ngModel)]="data.LastName" [value]="data.LastName" placeholder="{{ data.LastName }}" class="input-form" type="text" id="lastName" name="lastName" />
+</div>    
+<div class="line">
+    <i class="fa-solid fa-at"></i>
+    <input [(ngModel)]="data.Email" [value]="data.Email"  placeholder="{{ data.Email }}" class="input-form" type="text" id="email" name="email" />
+</div>
+<div class="line">
+    <i class="fa-solid fa-location-dot"></i>
+    <input [(ngModel)]="data.Address" [value]="data.Address" placeholder="{{ data.Address }}" class="input-form" type="text" id="Addresss" name="Addresss" />
+</div>
+<div class="line">
+    <i class="fa-solid fa-city"></i>
+    <input [(ngModel)]="data.City" [value]="data.City" placeholder="City" class="input-form" type="text" id="city" name="city" style="padding-right: -20px;" />
+</div>
+<div class="line">
+    <i class="fa-regular fa-envelope"></i>
+    <input [(ngModel)]="data.PostalCode" [value]="data.Address" placeholder="Postal Code" class="input-form" type="text" id="postalCode" name="postalCode"
+    />
+</div>
+<div class="line">
+    <i class="fa-solid fa-lock"></i>
+    <input [(ngModel)]="data.Password" placeholder="Password" class="input-form" type="password" id="password" name="password" />
+</div>

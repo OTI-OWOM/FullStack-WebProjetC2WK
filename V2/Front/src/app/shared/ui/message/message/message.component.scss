@@ -1,0 +1,19 @@
+.message-container {
+    display: flex;
+    justify-content: center;
+
+    .message {
+        text-align: center;
+        // align-self: center;
+        // justify-self: center;
+        padding: 1rem;
+        border: 1px solid;
+        border-radius: 18px;
+        border-color: rgb(121, 121, 121);
+        font-size: 2rem;
+        min-width: 200px;
+        max-width: 200px;
+        min-height: 45px;
+        position: static;
+    }
+}

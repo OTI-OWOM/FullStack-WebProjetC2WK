@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <div class="users-container">
+        <div routerLink="/admin/company/{{ company.id }}" class="user-card" *ngFor="let company of companyList">
+            <div class="user-image">
+                <img src="../../../../../../assets/images/company_logo.jpg" alt="{{ company.Name }}">
+            </div>
+            <div class="user-text">
+                <h1 class="user-name">Name : {{ company.Name }}</h1>
+                <h3 class="user-details">Email : {{ company.Email }}</h3>
+                <hr class="solid">
+                <h3 class="user-details">Company : {{ company.Address }}, {{ company.City }} {{ company.PostalCode }}</h3>
+            </div>
+        </div>
+    </div>
