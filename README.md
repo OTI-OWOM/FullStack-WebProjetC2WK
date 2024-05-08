@@ -23,3 +23,11 @@ Mobile app using flutter.
 
 The docker containers.
 
+## Initiolize the DB
+```
+npx sequelize-cli db:migrate
+```
+
+```
+npx sequelize-cli db:seed:all
+```

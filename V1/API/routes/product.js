@@ -9,9 +9,6 @@ const passwordValidation = require('../middleware/validation/password-validator'
 const validateInputCreateDetail = require('../middleware/validation/input-validator-create-detail');
 
 const productController = require('../controllers/product');
-const imagesController = require('../controllers/product/product-image');
-const detailController = require('../controllers/product/product-detail');
-const brandController = require('../controllers/product/product-brand');
 
 
 // ----------------------------- Cars -----------------------------
@@ -38,29 +35,29 @@ router.get('/cars/self/all', authorize.jwtUserAuth, authorize.adminOrSelfAuth, p
 
 // ----------------------------- Images -----------------------------
 // route to get all car images
-router.get('/car/images/:carId', authorize.jwtUserAuth, imagesController.getImageURLs);
+router.get('/car/images/:carId', authorize.jwtUserAuth, productController.productImage.getImageURLs);
 
 // route to add a new car image
-router.post('/car/image/:carId', authorize.jwtUserAuth, checks.carCheck, authorize.sellerAuth, upload.uploadCar.array('images', 10), imagesController.uploadCarImages);
+router.post('/car/image/:carId', authorize.jwtUserAuth, checks.carCheck, authorize.sellerAuth, upload.uploadCar.array('images', 10), productController.productImage.uploadCarImages);
 
 // route to get an Image
-router.get('/car/image/:imageId', imagesController.getImage);
+router.get('/car/image/:imageId', productController.productImage.getImage);
 
 // route to delete an Image
-router.delete('/car/image/:imageId', authorize.jwtUserAuth, checks.imageCheck, authorize.sellerAuth, imagesController.deleteImage);
+router.delete('/car/image/:imageId', authorize.jwtUserAuth, checks.imageCheck, authorize.sellerAuth, productController.productImage.deleteImage);
 
 // ----------------------------- Details -----------------------------
 // route to add a new car detail
-router.post('/car/detail/:carId', authorize.jwtUserAuth, checks.carCheck, validateInputCreateDetail, detailController.createCarDetail);
+router.post('/car/detail/:carId', authorize.jwtUserAuth, checks.carCheck, validateInputCreateDetail, productController.productDetail.createCarDetail);
 
 // // route to add a new car detail
-router.delete('/car/detail/:detailId', authorize.jwtUserAuth, checks.detailCheck, detailController.deleteCarDetail);
+router.delete('/car/detail/:detailId', authorize.jwtUserAuth, checks.detailCheck, productController.productDetail.deleteCarDetail);
 
 // ----------------------------- Brands -----------------------------
 // route to get all brands
-router.get('/car/brands/all', authorize.jwtUserAuth, brandController.getAllBrands);
+router.get('/car/brands/all', authorize.jwtUserAuth, productController.productBrand.getAllBrands);
 
 // route to get all models
-router.get('/car/models/:brandId', authorize.jwtUserAuth, brandController.getAllModelBrand);
+router.get('/car/models/:brandId', authorize.jwtUserAuth, productController.productBrand.getAllModelBrand);
 
 module.exports = router;

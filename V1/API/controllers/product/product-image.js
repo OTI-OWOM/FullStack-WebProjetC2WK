@@ -1,7 +1,7 @@
 const db = require('../../db/models');
+const CarImage = db.CarImage;
 
 const imageService = require('../../services/imageService');
-const CarImage = db.CarImage;
 
 class ProductImageController {
     /**
@@ -60,4 +60,4 @@ class ProductImageController {
 }
 
 // Export an instance of the class
-module.exports = new ProductImageController();
+module.exports = ProductImageController;

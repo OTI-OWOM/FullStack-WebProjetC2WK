@@ -3,22 +3,22 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    username: process.env.MYSQL_NAME,
-    password: process.env.MYSQL_PWD,
-    database: "C2WK",
+    username: process.env.DEV_DB_USERNAME,
+    password: process.env.DEV_DB_PASSWORD,
+    database:  process.env.DEV_DB_NAME,
     host: process.env.DB_URL,
-    port: 3306,
+    port:  process.env.DEV_DB_PORT,
     dialect: 'mariadb',
     dialectOptions: {
       bigNumberStrings: true
     }
   },
-  test: {
-    username: process.env.CI_DB_USERNAME,
-    password: process.env.CI_DB_PASSWORD,
-    database: process.env.CI_DB_NAME,
-    host: '127.0.0.1',
-    port: 3306,
+  recette: {
+    username: process.env.RCT_USERNAME,
+    password: process.env.RCT_PASSWORD,
+    database: process.env.RCT_NAME,
+    host: process.env.RCT_URL,
+    port: process.env.RCT_PORT,
     dialect: 'mariadb',
     dialectOptions: {
       bigNumberStrings: true

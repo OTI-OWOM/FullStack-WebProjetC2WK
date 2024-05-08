@@ -51,4 +51,4 @@ class ProductDetailController {
 }
 
 // Export an instance of the class
-module.exports = new ProductDetailController();
+module.exports = ProductDetailController;

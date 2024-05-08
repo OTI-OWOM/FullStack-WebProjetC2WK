@@ -41,4 +41,4 @@ class ProductBrandController {
 }
 
 // Export an instance of the class
-module.exports = new ProductBrandController();
+module.exports = ProductBrandController;

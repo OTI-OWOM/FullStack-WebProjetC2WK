@@ -2,6 +2,9 @@ const path = require('path');
 const fs = require('fs');
 
 const formatService = require('../../services/formatService');
+const productBrand = require('./product-brand')
+const productImage = require('./product-image')
+const productDetail = require('./product-detail')
 
 const db = require('../../db/models');
 const User = db.User;
@@ -11,6 +14,12 @@ const CarImage = db.CarImage;
 
 
 class ProductController {
+
+    constructor() {
+        this.productBrand = new productBrand();
+        this.productImage = new productImage();
+        this.productDetail = new productDetail();
+    }
     /**
      * Get all existing cars from the API.
      */
@@ -57,21 +66,6 @@ class ProductController {
     }
 
     /**
-     * For a company, get all its cars from the API.
-     */
-    getAllCarsFromCompany(req, res) {
-        return Car.findAll({ where: { SellerID: req.params.companyId } })
-            .then(async cars => {
-                const formattedCars = await Promise.all(cars.map(car => formatService.carFormat(car)));
-                res.status(200).json(formattedCars);
-            })
-            .catch(error => {
-                console.log(error);
-                res.status(400).json({ error });
-            });
-    }
-
-    /**
      * Get a particular car from the API.
      */
     getOneCar(req, res) {
@@ -96,7 +90,7 @@ class ProductController {
         carObject.SellerID = req.auth.userId;
         carObject.CompanyID = req.auth.companyId;
 
-        await User.update({"IsSeller": true}, { where: { id: req.auth.userId } });
+        await User.update({ "IsSeller": true }, { where: { id: req.auth.userId } });
 
         return Car.create(carObject)
             .then(car => res.status(201).json({ message: 'Car added!', carId: car.id }))
@@ -137,7 +131,7 @@ class ProductController {
         details.forEach(detail => {
             detail.destroy();
         });
-        
+
         images.forEach(image => {
             const imagePath = path.join(__dirname, '..', '..', image.ImageURL);
             fs.unlink(imagePath, (err) => {
