@@ -11,6 +11,9 @@ const authController = require('../controllers/auth');
 // route to sign up
 router.post('/register', userValidation, emailValidation, passwordValidation, authController.registerUser);
 
+// route to login
+router.post('/login', userValidation, emailValidation, passwordValidation, authController.login);
+
 // route to sign up
 router.post('/register/seller/:companyId',authorize.jwtUserAuth, authorize.adminAuth, userValidation, emailValidation, passwordValidation, authController.registerUser);
 
@@ -19,8 +22,5 @@ router.post('/register/admin/:companyId', authorize.jwtUserAuth, authorize.admin
 
 // route to sign up
 router.post('/register/super/admin/', authorize.jwtUserAuth, authorize.superAdminAuth, emailValidation, passwordValidation, authController.registerSuperAdmin);
-
-// route to login
-router.post('/login', userValidation, emailValidation, passwordValidation, authController.login);
 
 module.exports = router;
