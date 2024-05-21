@@ -19,13 +19,9 @@ export class ProductCarComponent implements OnInit, OnDestroy {
     currentModelsLength: number = 0;
 
     image!: string;
-
     isOwnProduct: boolean = false;
-
     role: boolean = false;
-
     images: string[] = [];
-
     paramID: string = '';
 
     private subscription: Subscription = new Subscription();
@@ -43,15 +39,11 @@ export class ProductCarComponent implements OnInit, OnDestroy {
         .getProductById(this.paramID )
         .subscribe((response: Product) => {
             this.product = response;
-            console.log(this.product.CarDetails);
-            
             this.currentModelsLength = this.product.CarDetails.length!;
             
             this.productsService.getAllImages(this.product.id)
             .subscribe((response: CarImage[]) => {
                 this.images = response.map(image => `${URL.IMAGE}${image.id}`);
-                console.log(this.images);
-
             });
 
             this.isOwnProduct = this.product.SellerID.toString() === sessionStorage.getItem('userId') ?? '';

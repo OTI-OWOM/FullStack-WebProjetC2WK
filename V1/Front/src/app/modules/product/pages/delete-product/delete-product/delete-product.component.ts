@@ -10,9 +10,7 @@ import { DbService } from '../../../services/db.service';
 })
 export class DeleteProductComponent implements OnDestroy {
     private subscription: Subscription = new Subscription();
-
     message!: string;
-
     paramID!: string;
 
     constructor(

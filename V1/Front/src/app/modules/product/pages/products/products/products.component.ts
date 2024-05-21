@@ -14,20 +14,14 @@ import { URL } from '@core/constants/url';
     styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-    catchPhrase: string = '';
-
     private subscription:Subscription = new Subscription();
-
+    
+    catchPhrase: string = '';
     priceRange:number = 50000;
-
     maxPriceRange:number = 50000;
-
     searchString:string = '';
-
     productList:Product[] = [];
-
     resultList:Product[] = [];
-
     images: any = {};
 
     constructor(
