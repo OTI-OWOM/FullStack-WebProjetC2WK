@@ -10,9 +10,7 @@ import { UsersService } from '@core/services/users.service';
 })
 export class DeleteUserComponent implements OnDestroy {
     private subscription: Subscription = new Subscription();
-
     message!: string;
-
     paramID!: string;
 
     constructor(

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MeComponent } from './me/me.component';
-import { MessageModule } from '@ui';
+import { MessageModule } from '@ui/message/message.module';
 import { UserDisplayModule } from '../../components/user-display/user-display.module';
 import { RouterModule } from '@angular/router';
 import { UserCreateModifyModule } from '../../components/user-create-modify/user-create-modify.module';

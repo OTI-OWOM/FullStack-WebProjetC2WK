@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompanyComponent } from './company/company.component';
-import { MessageModule } from '@ui';
+import { MessageModule } from '@ui/message/message.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CompanyCreateModifyModule } from '../../components/company-create-modify/company-create-modify.module';

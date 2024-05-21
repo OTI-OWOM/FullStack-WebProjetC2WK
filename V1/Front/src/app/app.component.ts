@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent {
     id!: string;
+    title = 'C2WK';
 
     constructor(public router: Router, private route: ActivatedRoute) {
         if (sessionStorage.getItem('userId')) {

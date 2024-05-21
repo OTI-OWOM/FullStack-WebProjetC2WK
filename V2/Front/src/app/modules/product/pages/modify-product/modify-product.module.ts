@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DetailsModule } from 'src/app/modules/product/components/details/details.module';
 import { ImageCreationModule } from '../../components/image-creation/image-creation.module';
 import { ProductsListModule } from '../../components/products-list/products-list.module';
-import { MessageModule } from '@ui';
+import { MessageModule } from '@ui/message/message.module';
 
 
 

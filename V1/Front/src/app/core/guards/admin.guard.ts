@@ -10,7 +10,6 @@ export class AdminGuard implements CanActivate {
 
   constructor(private authService: AuthService) {
     console.log('Admin Guard');
-    
   }
 
   canActivate(): Observable<boolean> {

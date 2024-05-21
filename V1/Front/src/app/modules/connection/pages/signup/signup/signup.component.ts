@@ -9,7 +9,6 @@ import { UsersService } from '@core/services/users.service';
 })
 export class SignupComponent implements OnDestroy {
     private subscription: Subscription = new Subscription();
-
     message!: string;
 
     constructor(private user_service: UsersService) {}

@@ -47,12 +47,12 @@
         ],
         "paths": {
             "@core/*": ["src/app/core/*"],
-            "@ui": ["src/app/shared/ui"]
+            "@ui/*": ["src/app/shared/ui/*"]
         }
     },
     "exclude": [
         "build",
-        "node_modules"
+        // "node_modules"
     ],
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
