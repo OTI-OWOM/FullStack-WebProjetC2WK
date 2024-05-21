@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../../../core/models/Product';
-import { URL } from '../../../core/constants/url';
-import { CarImage } from '../../../core/models/Images';
-import { CarBrands } from '../../../core/models/Brands';
-import { CarModelBrands } from '../../../core/models/ModelBrands';
-import { CarDetail } from '../../../core/models/Details';
+import { Product } from '@core/models/Product';
+import { URL } from '@core/constants/url';
+import { CarImage } from '@core/models/Images';
+import { CarBrands } from '@core/models/Brands';
+import { CarModelBrands } from '@core/models/ModelBrands';
+import { CarDetail } from '@core/models/Details';
 
 @Injectable()
 export class DbService {

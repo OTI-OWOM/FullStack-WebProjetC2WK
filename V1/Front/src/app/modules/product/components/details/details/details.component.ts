@@ -35,5 +35,4 @@ export class DetailsComponent {
       this.messageChange.emit('Please fill in all car detail fields.');
     }
   }
-
 }
