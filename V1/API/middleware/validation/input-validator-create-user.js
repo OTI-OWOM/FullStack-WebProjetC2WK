@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     // Schema that our data must match to
     const inputSchema = {
         Email: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#@.\\-]+$/', 'max:200'],
-        Password: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#@*/^;()=?&:.-]+$/', 'max:200'],
+        Password: ['required', 'regex:/^[\' 0-9A-ZÀÂÄÇÉÈÊËÎÏÔÙÛÜa-zàâäçéèêëîïôùûü_+%#@*/^;()=?&:.-]+$/', 'max:200', 'min:8'],
     };
 
     const validation = new Validator(data, inputSchema);
@@ -15,8 +15,7 @@ module.exports = async (req, res, next) => {
     if (!validation.passes()) {
         // 422 : Unprocessable Entity
         return res.status(422).json({
-            message: 'invalid input: did not pass validation',
-            errors: validation.errors.all()
+            message: validation.errors.get("Email")[0] ? validation.errors.get("Email")[0] : validation.errors.get("Password")[0]
         });
     }
 

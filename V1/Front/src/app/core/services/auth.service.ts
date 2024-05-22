@@ -20,12 +20,9 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AuthService {
     private authToken = sessionStorage.getItem('token') ?? '';
-
     private authStatus = new BehaviorSubject<boolean>(this.hasToken());
-
-    private userId = sessionStorage.getItem('userId') ?? '';
-
-    private role = false;
+    public userId = sessionStorage.getItem('userId') ?? '';
+    public role = false;
 
     constructor(private http: HttpClient, private router: Router) {}
 
@@ -98,7 +95,7 @@ export class AuthService {
             }),
             catchError(error => {
                 // Handle error
-                return throwError(() => new Error(error));
+                return throwError(() => error);
             }));
     }
 
