@@ -47,7 +47,6 @@ export class ProductCarComponent implements OnInit, OnDestroy {
             });
 
             this.isOwnProduct = this.product.SellerID.toString() === sessionStorage.getItem('userId') ?? '';
-
         });
     }
 
