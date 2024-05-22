@@ -71,7 +71,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
             Array.from(files).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = (e: any) => {
-                    this.imagePreviews.push(e.target.result);
+                    this.imagePreviews.push(e.target?.result);
                 };
                 reader.readAsDataURL(file);
             });

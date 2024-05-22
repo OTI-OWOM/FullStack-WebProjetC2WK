@@ -29,7 +29,5 @@ import { MeProductsModule } from './pages/me-products/me-products.module';
   providers: [ProductService, DbService]
 })
 export class ProductModule { 
-  constructor() {
-    console.log("Called Product Module");
-  }
+  constructor() {}
 }
