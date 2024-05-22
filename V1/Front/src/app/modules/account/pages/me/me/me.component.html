@@ -20,6 +20,7 @@
                     </p>
                 </div>
                 <button class="button delete" (click)="userDelete()">Delete account</button>
+                <app-message [message]="message"></app-message>
             </div>
 
             <div *ngIf="isEditMode">
@@ -29,7 +30,6 @@
                     <button class="button" (click)="toggleEditMode()">Back</button>
                 </div>
             </div>
-            <app-message [message]="message"></app-message>
         </div>
     </ng-template>
     <ng-template #elseBlock>

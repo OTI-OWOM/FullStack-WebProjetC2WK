@@ -4,7 +4,7 @@
 </div>
 <div class="line">
     <i class="fa fa-user"></i>
-    <input [(ngModel)]="data.LastName" [value]="data.LastName" placeholder="{{ data.LastName }}" class="input-form" type="text" id="lastName" name="lastName" />
+    <input [(ngModel)]="data.LastName" [value]="data.LastName" placeholder="{{ data.LastName?data.LastName:'Last Name' }}" class="input-form" type="text" id="lastName" name="lastName" />
 </div>    
 <div class="line">
     <i class="fa-solid fa-at"></i>
@@ -12,15 +12,15 @@
 </div>
 <div class="line">
     <i class="fa-solid fa-location-dot"></i>
-    <input [(ngModel)]="data.Address" [value]="data.Address" placeholder="{{ data.Address }}" class="input-form" type="text" id="Addresss" name="Addresss" />
+    <input [(ngModel)]="data.Address" [value]="data.Address" placeholder="{{ data.Address?data.Address:'Address' }}" class="input-form" type="text" id="Addresss" name="Addresss" />
 </div>
 <div class="line">
     <i class="fa-solid fa-city"></i>
-    <input [(ngModel)]="data.City" [value]="data.City" placeholder="City" class="input-form" type="text" id="city" name="city" style="padding-right: -20px;" />
+    <input [(ngModel)]="data.City" [value]="data.City" placeholder="{{ data.City?data.City:'City'}}" class="input-form" type="text" id="city" name="city" style="padding-right: -20px;" />
 </div>
 <div class="line">
     <i class="fa-regular fa-envelope"></i>
-    <input [(ngModel)]="data.PostalCode" [value]="data.Address" placeholder="Postal Code" class="input-form" type="text" id="postalCode" name="postalCode"
+    <input [(ngModel)]="data.PostalCode" [value]="data.PostalCode" placeholder="{{ data.PostalCode?data.PostalCode:'Postal Code'}}" class="input-form" type="text" id="postalCode" name="postalCode"
     />
 </div>
 <div class="line">
