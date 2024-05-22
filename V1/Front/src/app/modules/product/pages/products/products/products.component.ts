@@ -14,14 +14,14 @@ import { URL } from '@core/constants/url';
     styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-    private subscription:Subscription = new Subscription();
-    
+    private subscription: Subscription = new Subscription();
+
     catchPhrase: string = '';
-    priceRange:number = 50000;
-    maxPriceRange:number = 50000;
-    searchString:string = '';
-    productList:Product[] = [];
-    resultList:Product[] = [];
+    priceRange: number = 50000;
+    maxPriceRange: number = 50000;
+    searchString: string = '';
+    productList: Product[] = [];
+    resultList: Product[] = [];
     images: any = {};
 
     constructor(
@@ -31,11 +31,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.setRandomCatchPhrase();
         this.productsService.getAllProducts()
-            .subscribe((response:Product[]) => {
+            .subscribe((response: Product[]) => {
                 this.productList = response;
                 this.resultList = this.productList;
                 this.sortByAscendingPrice();
-                this.maxPriceRange = Number(this.getMaxPrice().toPrecision(10));
+                this.maxPriceRange = Math.ceil(this.getMaxPrice() / 10) * 10;
                 this.priceRange = this.maxPriceRange;
                 this.setImages();
             });
@@ -47,7 +47,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     setRandomCatchPhrase() {
         const randomNumber = Math.floor(Math.random() * 10);
-        const randomCatchPhrases:string[] = ['What color is your Bugatti? 😎', 'When Lambo? How about now? 🚀', 'Drive it like you stole it 🚨', 'Just pick one, they all make the same sound 🔔', 'Harder, Better, Fastest, Stronger 🏎️', 'Do you feel the need? 🚦', 'You can\'t handle the thrust 🏁', 'There\'s no place like home, but a McLaren comes close 🏠'];
+        const randomCatchPhrases: string[] = ['What color is your Bugatti? 😎', 'When Lambo? How about now? 🚀', 'Drive it like you stole it 🚨', 'Just pick one, they all make the same sound 🔔', 'Harder, Better, Fastest, Stronger 🏎️', 'Do you feel the need? 🚦', 'You can\'t handle the thrust 🏁', 'There\'s no place like home, but a McLaren comes close 🏠'];
         const randomIndex = randomNumber % randomCatchPhrases.length;
         this.catchPhrase = randomCatchPhrases[randomIndex];
     }
@@ -55,24 +55,25 @@ export class ProductsComponent implements OnInit, OnDestroy {
     setImages() {
         for (const product of this.productList) {
             this.productsService.getAllImages(product.id)
-            .subscribe((response: CarImage[]) => {
-                this.images[product.id] = response.map(image => `${URL.IMAGE}${image.id}`)[0];
-            });
+                .subscribe((response: CarImage[]) => {
+                    this.images[product.id] = response.map(image => `${URL.IMAGE}${image.id}`)[0];
+                });
         }
     }
 
     getMaxPrice(): number {
-        let maxPrice = 0;
-        for (let i = 0; i < this.productList.length; i += 1) {
+        let maxPrice = this.productList[0].Price;
+        
+        for (let i = 1; i < this.productList.length; i += 1) {
             if (this.productList[i].Price > maxPrice) {
                 maxPrice = this.productList[i].Price;
             }
         }
-        
-        return (maxPrice / 100) + 100;
+
+        return Math.ceil(maxPrice / 100);
     }
 
-    sortByAscendingPrice():void {
+    sortByAscendingPrice(): void {
         this.resultList.sort((a, b) => a.Price - b.Price);
     }
 
@@ -85,11 +86,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
             const name = product.BrandName.toLowerCase();
             const description = product.Description.toLowerCase();
             const search = this.searchString.toLowerCase();
-    
+
             const isNameMatch = name.includes(search);
             const isDescriptionMatch = description.includes(search);
             const isWithinPriceRange = product.Price <= this.priceRange * 100;
-    
+
             return (isNameMatch || isDescriptionMatch) && isWithinPriceRange;
         });
     }

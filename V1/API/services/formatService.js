@@ -18,7 +18,7 @@ class FormatService {
         return {
             id: car.id,
             Year: car.Year,
-            Price: car.Price,
+            Price: parseFloat(car.Price),
             Description: car.Description,
             Available: car.Available,
             SellerID: car.SellerID,
