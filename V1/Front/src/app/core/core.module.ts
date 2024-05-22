@@ -12,7 +12,6 @@ import { HttpRequestInterceptor } from './interceptors/http-request.interceptor'
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
-import { AdminGuard } from './guards/admin.guard';
 
 
 
