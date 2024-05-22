@@ -20,9 +20,8 @@ module.exports = (req, res, next) => {
     const isValidPassword = passwordSchema.validate(req.body.Password);
     
     if (!isValidPassword) {
-        const errorMsg = 'Invalid password, use a secure password.';
         // 422 : Unprocessable Entity
-        res.status(422).json({ error: errorMsg });
+        res.status(422).json({ message: 'Invalid password, use a secure password.' });
         return;
     }
     next();

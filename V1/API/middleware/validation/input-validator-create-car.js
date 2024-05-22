@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
     if (!validation.passes()) {
         // 422 : Unprocessable Entity
         return res.status(422).json({ 
-            message: 'invalid input: did not pass validation',
+            message: Object.values(validation.errors.all())[0],
             errors: validation.errors.all()
          });
     }

@@ -28,7 +28,7 @@ module.exports = async (req, res, next) => {
     if (!validation.passes()) {
         // 422 : Unprocessable Entity
         return res.status(422).json({ 
-            message: 'invalid input: did not pass validation',
+            message: validation.errors.first()[0],
             errors: validation.errors.all()
          });
     }
@@ -53,6 +53,6 @@ module.exports = async (req, res, next) => {
 
         next();
     } catch (error) {
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 };
