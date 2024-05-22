@@ -9,14 +9,13 @@ import { User } from '@core/models/Users';
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent implements OnInit, OnDestroy   {
+export class FooterComponent implements OnInit, OnDestroy {
     private authSubscription!: Subscription;
 
     private isAdmin: boolean = false;
     loggedIn = false;
 
-    constructor(private authService: AuthService,
-        private usersService: UsersService,) {}
+    constructor(private authService: AuthService, private usersService: UsersService) {}
 
     ngOnInit(): void {
         this.authSubscription = this.authService.isLoggedIn.subscribe(
@@ -30,12 +29,12 @@ export class FooterComponent implements OnInit, OnDestroy   {
     }
 
     ngOnDestroy(): void {
-        this.authSubscription.unsubscribe();
+        if (this.authSubscription) {
+            this.authSubscription.unsubscribe();
+        }
     }
 
-    
     public get admin() : boolean {
         return this.isAdmin;
     }
-    
 }

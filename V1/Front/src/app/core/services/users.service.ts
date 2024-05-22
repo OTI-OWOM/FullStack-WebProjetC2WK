@@ -21,26 +21,6 @@ export class UsersService {
         return this.http.get<Partial<User>>(URL.USER + id);
     }
 
-    public registerUser(
-        Name: string,
-        LastName: string,
-        Password: string,
-        Email: string,
-        Address: string,
-        City: string,
-        PostalCode: string,
-    ) {
-        return this.http.post(URL.REGISTER, {
-            Name,
-            LastName,
-            Password,
-            Email,
-            Address,
-            City,
-            PostalCode,
-        });
-    }
-
     public modifyUser(id: string, user: Partial<User>) {
         return this.http.put(URL.USER + id, user);
     }

@@ -98,6 +98,45 @@ export class AuthService {
                 return throwError(() => error);
             }));
     }
+    
+    public registerUser(
+        Name: string,
+        LastName: string,
+        Password: string,
+        Email: string,
+        Address: string,
+        City: string,
+        PostalCode: string,
+    ) {
+        return this.http.post<{
+            message: string;
+            userId: string;
+            token: any;
+        }>(URL.REGISTER, {
+            Name,
+            LastName,
+            Password,
+            Email,
+            Address,
+            City,
+            PostalCode,
+        })            
+        .pipe(map(response => {
+            const { message, userId, token } = response;
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('userId', userId); // DELETE ME When UserId becomes obselete
+
+            this.userId = userId;
+            this.authToken = token;
+
+            this.updateAuthStatus();
+            return response;
+        }),
+        catchError(error => {
+            // Handle error
+            return throwError(() => error);
+        }));
+    }
 
     logout() {
         sessionStorage.removeItem('token');
