@@ -10,6 +10,8 @@ import { MeComponent } from '../../me/me/me.component';
     styleUrls: ['./user.component.scss'],
 })
 export class UserComponent extends MeComponent implements OnInit, OnDestroy {
+    protected role: boolean = false;
+
     constructor(
         usersService: UsersService,
         router: Router,
@@ -26,6 +28,14 @@ export class UserComponent extends MeComponent implements OnInit, OnDestroy {
     override ngOnInit(): void {
         this.subscription.add(
             this.usersService
+                .me()
+                .subscribe((res: any) => {
+                    this.role = res.Role == 2;
+                }),
+        );
+
+        this.subscription.add(
+            this.usersService
                 .userSelect(this.userID)
                 .subscribe({
                     next: (res: any) => {
@@ -33,8 +43,6 @@ export class UserComponent extends MeComponent implements OnInit, OnDestroy {
                         this.title = this.data.Name || "Your Account";
                         this.isMe = false;
                         this.isVisitorAllowed = true;
-                        this.role = res.Role;
-                        
                     }
                 }),
         );

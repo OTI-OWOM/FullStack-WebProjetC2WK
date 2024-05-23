@@ -8,7 +8,7 @@
                 <h1 class="user-name">Name : {{ user.LastName }} {{ user.Name }}</h1>
                 <h3 class="user-details">Email : {{ user.Email }}</h3>
                 <hr class="solid">
-                <h3 class="user-details">Company : {{ user.CompanyName }}</h3>
+                <h3 class="user-details">Address :{{ user.Address }}{{', '+ user.PostalCode }} {{ user.City }}</h3>
             </div>
         </div>
     </div>

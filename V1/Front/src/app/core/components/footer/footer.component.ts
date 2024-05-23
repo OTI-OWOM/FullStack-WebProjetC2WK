@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
         this.usersService.me()
         .subscribe((res: Partial<User>) => {
-          this.isAdmin = parseInt(res.Role!) > 0;
+          this.isAdmin = parseInt(res.Role!) == 2;
         });
     }
 

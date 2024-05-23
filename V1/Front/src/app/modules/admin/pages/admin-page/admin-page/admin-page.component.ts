@@ -6,16 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-page.component.scss']
 })
 export class AdminPageComponent {
-  showUsers: boolean = true;
-  showCompanies: boolean = false;
-
-  toggleUsers(): void {
-    this.showUsers = true;
-    this.showCompanies = false;
-  }
-
-  toggleCompanies(): void {
-    this.showUsers = false;
-    this.showCompanies = true;
-  }
 }

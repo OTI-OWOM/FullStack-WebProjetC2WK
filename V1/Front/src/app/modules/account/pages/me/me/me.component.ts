@@ -12,7 +12,6 @@ import { UsersService } from '@core/services/users.service';
 })
 export class MeComponent implements OnInit, OnDestroy {
     protected subscription: Subscription = new Subscription();
-    protected role: boolean = false;
     protected userID: string = '';
     protected isVisitorAllowed = false;
     protected data: Partial<User> = {} as User;

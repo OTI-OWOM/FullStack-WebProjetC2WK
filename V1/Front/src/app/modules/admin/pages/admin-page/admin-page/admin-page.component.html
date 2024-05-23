@@ -9,14 +9,11 @@
             <hr class="solid">
             <div class="info-wrapper">
                 <div class="button-panel">
-                    <button class="button-admin" (click)="toggleUsers()">Users</button>
-                    <button class="button-admin" (click)="toggleCompanies()">Companies</button>
+                    <button class="button-admin" disabled>Users</button>
+                    <!-- <button class="button-admin" (click)="toggleCompanies()">Companies</button> -->
                 </div>
-                <div *ngIf="showUsers">
+                <div>
                     <app-users></app-users>
-                </div>
-                <div *ngIf="showCompanies">
-                    <app-companies></app-companies>
                 </div>
             </div>
         </div>

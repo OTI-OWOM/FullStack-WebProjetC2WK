@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { UsersModule } from '../../components/users/users.module';
-import { CompaniesModule } from '../../components/companies/companies.module';
 import { FormsModule } from '@angular/forms';
 
 
@@ -14,7 +13,6 @@ import { FormsModule } from '@angular/forms';
   imports: [
     FormsModule,
     UsersModule,
-    CompaniesModule,
     CommonModule
   ]
 })

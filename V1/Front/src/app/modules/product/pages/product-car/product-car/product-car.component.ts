@@ -6,6 +6,7 @@ import { DbService } from '../../../services/db.service';
 import { Product } from '@core/models/Product';
 import { CarImage } from '@core/models/Images';
 import { URL } from '@core/constants/url';
+import { UsersService } from '@core/services/users.service';
 
 @Component({
     selector: 'app-product-car',
@@ -29,12 +30,20 @@ export class ProductCarComponent implements OnInit, OnDestroy {
     constructor(
         private productsService: DbService,
         private route: ActivatedRoute,
+        private usersService: UsersService,
     ) {}
 
     ngOnInit(): void {
         this.route.params.subscribe((params) => {
             this.paramID = params['id'];
         });
+        this.subscription.add(
+            this.usersService
+                .me()
+                .subscribe((res: any) => {
+                    this.role = res.Role == 2;
+                }),
+        );
         this.productsService
         .getProductById(this.paramID )
         .subscribe((response: Product) => {
