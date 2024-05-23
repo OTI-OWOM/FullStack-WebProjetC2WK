@@ -34,10 +34,6 @@ export class ImageCreationComponent {
   }
 
   removeImage(index: number): void {
-    if (index >= 0 && index < this.imagePreviews.length) {
-      this.imagePreviews.splice(index, 1);
-      this.selectedImages.splice(index, 1);
-      this.imageRemovedIndex.emit(index);
-    }
+    this.imageRemovedIndex.emit(index);
   }
 }

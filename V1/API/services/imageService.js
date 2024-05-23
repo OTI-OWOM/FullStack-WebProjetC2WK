@@ -55,11 +55,10 @@ class ImageService {
         const imagePath = path.join(__dirname, '..', image.ImageURL);
         console.log(imagePath);
         fs.unlink(imagePath, err => {
+            image.destroy();
             if (err) {
                 console.error('Error deleting the file:', err);
-                return res.status(500).json({ error: 'Failed to delete the image.' });
             } else {
-                image.destroy();
                 res.status(200).json({ message: 'Image deleted!' });
             }
         });

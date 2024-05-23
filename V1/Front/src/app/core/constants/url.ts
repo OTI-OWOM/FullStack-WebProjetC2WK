@@ -25,6 +25,6 @@ export const URL:any = {
     // ---------------------Car-Details-Endpoints--------------------------
     DETAIL: `${BASE_URL}/car/detail/`,
     // ---------------------Car-Brands-Endpoints--------------------------
-    MODELS: `${BASE_URL}/models/`,
-    BRANDS: `${BASE_URL}/brands/`,
+    MODELS: `${BASE_URL}/car/models/`,
+    BRANDS: `${BASE_URL}/car/brands/all/`,
 };
