@@ -66,17 +66,50 @@ export class ProductService {
     }
   }
 
+  findMissingKeyValuePairs(list1: Partial<CarDetail>[], list2: Partial<CarDetail>[]): Partial<CarDetail>[] {
+    const missingPairs: Partial<CarDetail>[] = [];
+
+    for (let i = 0; i < list1.length; i++) {
+      const map1 = list1[i];
+      const map2 = list2[i] || {};
+
+      const missingInMap: Partial<CarDetail> = {};
+      for (const key in map1) {
+        if (map1.hasOwnProperty(key) && !map2.hasOwnProperty(key)) {
+          (missingInMap as any)[key] = map1[key as keyof CarDetail];
+        }
+      }
+
+      if (Object.keys(missingInMap).length > 0) {
+        missingPairs.push(missingInMap);
+      }
+    }
+
+    return missingPairs;
+  }
+
   async submitModify(
     data: Partial<Product>,
     selectedImages: File[],
     carDetails: Partial<CarDetail>[],
+    oldCarDetails: Partial<CarDetail>[],
     productId: string,
     imagesToRemove: number[]
   ): Promise<Message> {
 
     let message: Message;
     let productCreationResponse: { message: string };
-
+    let removedDetails: Partial<CarDetail>[] = this.findMissingKeyValuePairs(oldCarDetails, carDetails);
+    
+    for (const detail of removedDetails) {
+      try {
+        if (detail.id) {
+          productCreationResponse = await firstValueFrom(this.dbService.deleteCarDetail(detail.id)) as { message: string };
+        }
+      } catch (err) {
+        return { Value: `Error deleting detail!`, ok: false };
+      }
+    }
     try {
       productCreationResponse = await firstValueFrom(this.dbService.modifyProduct(productId, data)) as { message: string };
     } catch (err) {
@@ -94,7 +127,7 @@ export class ProductService {
         await firstValueFrom(this.dbService.deleteCarImage(imageId));
       }
     } catch (err) {
-      return { Value: `Error uploading details!`, ok: false };
+      return { Value: `Error removing images!`, ok: false };
     }
     message = await this.submitCarDetails(carDetails, parseInt(productId))
       .then(() => {
@@ -105,5 +138,5 @@ export class ProductService {
       });
 
     return message;
-}
+  }
 }

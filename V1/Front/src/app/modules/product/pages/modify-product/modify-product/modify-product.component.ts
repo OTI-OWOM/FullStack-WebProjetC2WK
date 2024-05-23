@@ -7,6 +7,7 @@ import { CreateProductComponent } from '../../create-product/create-product/crea
 import { DbService } from 'src/app/modules/product/services/db.service';
 import { ProductService } from '../../../services/product.service';
 import { Message } from '@core/models/Message';
+import { CarDetail } from '@core/models/Details';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ModifyProductComponent extends CreateProductComponent implements On
     images: string[] = [];
     imagesToRemove: number[] = [];
     existingImages: { id: number, url: string }[] = [];
+    oldCarDetails: Partial<CarDetail>[] = [];
     image!: string;
 
     selectedModelId: number | null = null;
@@ -48,7 +50,8 @@ export class ModifyProductComponent extends CreateProductComponent implements On
         this.dbService.getProductById(this.paramID)
             .subscribe((response: Product) => {
                 this.product = response;
-                this.carDetails = this.product.CarDetails;
+                this.carDetails = JSON.parse(JSON.stringify(this.product.CarDetails));
+                this.oldCarDetails = JSON.parse(JSON.stringify(this.product.CarDetails));
 
                 this.dbService.getAllImages(this.product.id)
                     .subscribe((response: CarImage[]) => {
@@ -77,7 +80,7 @@ export class ModifyProductComponent extends CreateProductComponent implements On
     }
 
     override submit() {
-        this.productService.submitModify(this.data, this.selectedImages, this.carDetails, this.product.id, this.imagesToRemove)
+        this.productService.submitModify(this.data, this.selectedImages, this.carDetails, this.oldCarDetails, this.product.id, this.imagesToRemove)
         .then((message: Message) => {
             if (message.ok) {
                 this.message = message.Value;

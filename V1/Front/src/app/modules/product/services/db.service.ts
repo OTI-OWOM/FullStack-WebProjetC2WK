@@ -45,6 +45,10 @@ export class DbService {
         });
     }
 
+    public deleteCarDetail(detailId: number) {
+        return this.http.delete(`${URL.DETAIL}${detailId}`);
+    }
+
     public deleteCarImage(imageId: number | null) {
         return this.http.delete(`${URL.IMAGE}${imageId}`);
     }
