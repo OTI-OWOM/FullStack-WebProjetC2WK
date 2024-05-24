@@ -14,11 +14,11 @@ module.exports = {
     }
   },
   recette: {
-    username: process.env.RCT_USERNAME,
-    password: process.env.RCT_PASSWORD,
-    database: process.env.RCT_NAME,
-    host: process.env.RCT_URL,
-    port: process.env.RCT_PORT,
+    username: process.env.RCT_DB_USERNAME,
+    password: process.env.RCT_DB_PASSWORD,
+    database: process.env.RCT_DB_NAME,
+    host: process.env.RCT_DB_URL,
+    port: process.env.RCT_DB_PORT,
     dialect: 'mariadb',
     dialectOptions: {
       bigNumberStrings: true
