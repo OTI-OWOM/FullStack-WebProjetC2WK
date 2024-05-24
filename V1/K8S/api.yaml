@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  db-url: c2wk-rct.cywnblyoo1nd.eu-west-3.rds.amazonaws.com
+  db_port: "3306"
+  db_name: "c2wk_db"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,32 +25,37 @@ spec:
     spec:
       containers:
         - name: api
-          image: mileristo/api:v1
+          image: public.ecr.aws/z0b4y2d8/api:delete
           ports:
             - containerPort: 80
           env:
-            - name: USER_NAME
+            - name: RCT_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secret
-                  key: mongo-user
-            - name: USER_PWD
+                  name: db-secret
+                  key: db-user
+            - name: RCT_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secret
-                  key: mongo-password
-            - name: TOKEN_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-secret
-                  key: api-token
-            - name: DB_URL
+                  name: db-secret
+                  key: db-password
+            - name: RCT_DB_URL
               valueFrom:
                 configMapKeyRef:
-                  name: mongo-config
-                  key: mongo-url
-            - name: PORT
-              value: "80"
+                  name: db-config
+                  key: db-url
+            - name: RCT_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: db_port
+            - name: RCT_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: db_name
+            - name: NODE_ENV
+              value: 'recette'
 ---
 apiVersion: v1
 kind: Service

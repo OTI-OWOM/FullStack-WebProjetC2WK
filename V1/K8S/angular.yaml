@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: angular
-          image: mileristovski/front:v3
+          image: public.ecr.aws/z0b4y2d8/frontend:V2
           ports:
             - containerPort: 80
 ---
