@@ -1,20 +1,14 @@
 version: "3.1"
-
 services:
   angular:
-    image: public.ecr.aws/z0b4y2d8/frontend:V1
+    image: public.ecr.aws/z0b4y2d8/frontend:V2
     restart: always
     ports:
-      - 8000:80
-    environment:
-      API_URL: localhost
+      - 4200:80
   api:
-    image: public.ecr.aws/z0b4y2d8/api:V1
+    image: public.ecr.aws/z0b4y2d8/api:V2
     restart: always
     ports:
       - 3000:3000
-    environment:
-      USER_NAME: admin
-      USER_PWD: password
-      DB_URL: mongo:27017
-      TOKEN_SECRET: g58Rt7Y5kN3IuE3pVOOeVCgXOY1gnAvrIvWwExDDsX4x5EPm
+    env_file:
+          - .env
