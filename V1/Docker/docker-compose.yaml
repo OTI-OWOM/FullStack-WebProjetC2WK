@@ -2,14 +2,14 @@ version: "3.1"
 
 services:
   angular:
-    image: mileristo/angular:v2
+    image: public.ecr.aws/z0b4y2d8/frontend:V1
     restart: always
     ports:
       - 8000:80
     environment:
       API_URL: localhost
   api:
-    image: mileristo/api:v1
+    image: public.ecr.aws/z0b4y2d8/api:V1
     restart: always
     ports:
       - 3000:3000
@@ -18,25 +18,3 @@ services:
       USER_PWD: password
       DB_URL: mongo:27017
       TOKEN_SECRET: g58Rt7Y5kN3IuE3pVOOeVCgXOY1gnAvrIvWwExDDsX4x5EPm
-  mongo:
-    image: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
-    volumes:
-      - mongo-data:/data/db
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password
-      ME_CONFIG_MONGODB_SERVER: mongo
-volumes:
-  mongo-data:
-    driver: local
