@@ -7,7 +7,7 @@ module.exports = {
     password: process.env.DEV_DB_PASSWORD,
     database:  process.env.DEV_DB_NAME,
     host: process.env.DB_URL,
-    port:  process.env.DEV_DB_PORT,
+    port:  Number(process.env.DEV_DB_PORT),
     dialect: 'mariadb',
     dialectOptions: {
       bigNumberStrings: true
