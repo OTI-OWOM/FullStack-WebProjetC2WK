@@ -1,4 +1,4 @@
-const BASE_URL = 'http://192.168.247.134:3000';
+const BASE_URL = 'https://c2wk-api.mileristovski.fr';
 
 export const URL:any = {
     // ----------------------Normal-User-Endpoints------------------------
